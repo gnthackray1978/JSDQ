@@ -36,63 +36,97 @@
 </head> 
 <body> 
 
-<div data-role="page">
-   
-    <div data-role="header">
-  
-        <div id ='debug'></div>
-        <div class="ui-grid-b">
-            <h2 id = 'title' class="ui-block-a">test</h2>
-             
-        </div> 
 
-        <div data-role="controlgroup" data-type="horizontal" >
-            <a id = 'main' data-theme="a"  data-role="button" style="margin-left: 7px; width: 80px" >Main</a>
-            <a id = 'select' data-theme="a"  data-role="button" style="width: 85px" >Questions</a>
-            <a id = 'submit' data-theme="a"  data-role="button" >Answer</a>
-            <a id = 'show-answer' data-theme="a"  data-role="button" >Give up</a>
-        </div>
 
-        
-
+<div data-role="header">
+	<!-- <div class="ui-grid-c">
+	
+		<div class="ui-block-a"><div class="ui-bar ui-bar-a" style="height:60px">Block A</div></div>
+		<div class="ui-block-b"><div class="ui-bar ui-bar-a" style="height:60px">Block B</div></div>
+		<div class="ui-block-c"><div class="ui-bar ui-bar-a" style="height:60px">Block C</div></div>
+		<div class="ui-block-d"><div class="ui-bar ui-bar-a" style="height:60px">Block D</div></div>
+		
+	</div>/grid-c -->
+	
+	
+	<div class="ui-grid-b">
+		<h2 id = 'title' class="ui-block-a">None Selected</h2>
+        <h2 id = 'usr_nam' class="ui-block-b">User Unknown</h2>   
     </div> 
-
-        
-    <div id="panelA" class = "displayPanel">
-        
-        
-        
-
-        <div id ="question" class="ui-grid-solo">
-            <div id ='mainbody' class="ui-block-a">some crap</div>        
-            <div id ='imgPanel' class = "displayPanel">
-                <img id = 'sourceid' src="https://c9.io/gnthackray1978/jsquestionnaire/workspace/question_images/G13_EnvironTree_Icon.jpg" alt="tree" width="42" height="42">
-            </div>       
+	
+    <div id='header-answer-block' class="ui-grid-c hidePanel">
+        <div class="ui-block-a"><button type="button" id='main' data-theme="c">Finish Test</button> </div>
+        <div class="ui-block-b"><button type="button" id='select' data-theme="c">Questions</button></div>
+        <div class="ui-block-c"><button type="button" id='submit' data-theme="c">Answer</button></div>
+        <div class="ui-block-d"><button type="button" id='show-answer' data-theme="c">Give up</button></div>
+    </div>
+	
+    <div id='header-home-block' class="ui-grid-c displayPanel">
+        <div class="ui-block-a"><button type="button" id='taketest' data-theme="c">Take Test</button></div>
+        <div class="ui-block-b"><button type="button" id='login' data-theme="c">Login</button></div>
+        <div class="ui-block-c"><button type="button" id='choosetest' data-theme="c">Select Test</button></div>
+        <div class="ui-block-d">
+            <button type="button" id='history' data-theme="c">Test History</button>
+        </div>
+    </div>
+		
+</div><!-- /header -->
+    
+    
+    <div id="panelA" class="displayPanel">
+        <div id="question" class="ui-grid-solo">
+            <div id='mainbody' class="ui-block-a">some crap</div>
+            <div id='imgPanel' class="displayPanel">
+                <img id='sourceid' src="https://c9.io/gnthackray1978/jsquestionnaire/workspace/question_images/G13_EnvironTree_Icon.jpg" alt="tree" width="42" height="42">
+            </div>
         </div>
 
         <div class="ui-grid-solo">
-            <div id ='answer' class="ui-block-a">   
-                <input id = 'answer-box' type="text" name="name"  value="" />
+            <div id='answer' class="ui-block-a">
+                <input id='answer-box' type="text" name="name" value="" />
             </div>
         </div>
         <div class="ui-grid-solo">
-            <div id ='answer-so-far' class="ui-block-a" ></div>
+            <div id='answer-so-far' class="ui-block-a"></div>
         </div>
 
         <div class="ui-grid-solo">
-            <div id ='correct-answer' class="ui-block-a" ></div>
+            <div id='correct-answer' class="ui-block-a"></div>
         </div>
-    </div> 
         
-    <div id="panelB" class = "hidePanel">
-        <div id ='categories' class="ui-grid-solo"></div>
-    </div>
-    <div id="panelC" class = "hidePanel">
-        <div id ='csv-list' class="ui-grid-solo"></div>
-    </div>
-     
-    <div data-role="footer" data-id="foo1" data-position="fixed">
         
+        
+                      
+    </div>
+
+    <div id="panelB" class="hidePanel">
+        <div id='categories' class="ui-grid-solo"></div>
+    </div>
+
+    <div id="panelC" class="hidePanel">
+        <div id='csv-list' class="ui-grid-solo"></div>
+    </div>    
+    
+    
+    <div id="panelD" class="hidePanel">
+        <div id="1"></div>
+    </div>
+
+    <div id="panelE" class="hidePanel">
+ 
+		<div id='webcategories' class="ui-grid-solo"></div>
+    </div>    
+    
+    <div id="panelF" class="hidePanel">
+        <div>history</div>
+    </div>  
+    
+    
+
+
+    <div data-role="footer" data-position="fixed">
+
+
         <div id = 'answer-block' class = "displayPanel">
                       
             <div id = "score-nav"class="ui-grid-b" class = "displayPanel">         
@@ -103,12 +137,12 @@
                    
             <div data-role="navbar">
                 
-                <div id = "question-nav" class="ui-grid-a" class = "displayPanel">
+                <div id = "question-nav" class="ui-grid-a displayPanel" >
                     <div id = 'prev' class="ui-block-a"><button type="button" data-theme="c">Previous</button></div>
                     <div id = 'next' class="ui-block-b"><button type="button" data-theme="c">Next</button></div>	   
                 </div>
                 
-                <div id = "test-sel" class="ui-grid-a" class = "hidePanel">
+                <div id = "test-sel" class="ui-grid-a hidePanel" >
                     <div id = 'cats' class="ui-block-a"><button type="button" data-theme="c">Cats</button></div>
                     <div id = 'csvs' class="ui-block-b"><button type="button" data-theme="c">CSVs</button></div>	   
                 </div>
@@ -118,11 +152,9 @@
         </div>
 
         
-        
 
-    </div><!-- /footer -->
-
-</div>
+	
+</div><!-- /footer -->
 
 </body>
 </html>
