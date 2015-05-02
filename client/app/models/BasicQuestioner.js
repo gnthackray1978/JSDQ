@@ -287,7 +287,10 @@ BasicQuestioner.prototype = {
 		});
     },
 
+    Answer: function (e) {
 
+ 
+    },
 
     // scoring and answering functionality
 

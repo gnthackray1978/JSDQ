@@ -322,7 +322,7 @@ View.prototype.QryCsvBtn = function (callback, context) {//context.listtests();
 };
 //GetAnswer
 View.prototype.QryAnswer = function (action){
-    action($('#answer-box').val());
+   // action($('#answer-box').val());
 };
  
 // View.prototype.QryTabChanged = function (action){
