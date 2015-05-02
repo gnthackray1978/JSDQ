@@ -1,23 +1,15 @@
 
 
-var QuestionModel = function () {
+var BasicQuestioner = function (view) {
 
 
 	this.catsurl ='http://local.gnthackray.net:8080/cats';
 	this.qsurl ='http://local.gnthackray.net:8080/ques';
 	
 	
-    this.view = new QView();
+    this.view = view;
 
-    this.is_keyboard = false;
-    this.is_landscape = false;
-    this.initial_screen_size = window.innerHeight;
-    this.qryStrUtils = new QryStrUtils();
-    this.ancUtils = new AncUtils();
-
-
-
-
+   
     this.selectedcategory = '';
     this.selectedCSV = 3;
     this.testcategories = [];
@@ -37,16 +29,10 @@ var QuestionModel = function () {
 
     this.tests = [];
 
-     
-
-
-
-
-
 };
 
 
-QuestionModel.prototype = {
+BasicQuestioner.prototype = {
     
     endTest: function () {
         this.view.CmdSwitchHeaderContent(1);
