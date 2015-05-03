@@ -16,7 +16,7 @@ var QuestionController = function (view, model) {
     this.view.QrySubmitEvt($.proxy(this.qrySubmitEvt, this)); // this.view.bindSubmitEvt(this.answerQuestion, this);
     this.view.QryAnswerButtonPress($.proxy(this.qryAnswerButtonPress, this)); // this.view.bindAnswerButtonPress(this.answerQuestion, this);
     this.view.QryCorrectAnswerButtonPress($.proxy(this.qryCorrectAnswerButtonPress, this)); // this.view.bindCorrectAnswerButtonPress(this.toggleAnswer, this);
-    this.view.QrySelectTestBtn($.proxy(this.qrySelectTestBtn, this));
+    this.view.QrySelectTestBtn(this.qrySelectTestBtn, this);
     this.view.QryCatBtn($.proxy(this.qryCatBtn, this));
     this.view.QryCsvBtn($.proxy(this.qryCsvBtn, this)); // this.view.bindCsvBtn(this.listcsvs, this);
  //   this.view.QryAnswer($.proxy(this.qryAnswer, this));
