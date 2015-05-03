@@ -1,29 +1,29 @@
 var QuestionController = function (view, model) {
-    this._view = view;
+    this.view = view;
 
     this.model = model;
     
     this.init();
     
-    this._view.QryLoginEvt($.proxy(this.qryLoginEvt, view));// this.view.bindLoginEvt(this.login, this);
-    this._view.QryStartTestEvt($.proxy(this.qryStartTestEvt, view));  // this.view.bindStartTestEvt(this.startTest, this);    
-    this._view.QrySelectTestEvt($.proxy(this.qrySelectTestEvt, view));// this.view.bindSelectTestEvt(this.selectTest, this);
-    this._view.QryTestHistorytEvt($.proxy(this.qryTestHistorytEvt, view));// this.view.bindTestHistorytEvt(this.testHistory, this);
-    //this._view.QryEndTestEvt($.proxy(this.qryEndTestEvt, view));
-    this._view.QryMainSelectBtn($.proxy(this.qryMainSelectBtn, view));// this.view.bindMainSelectBtn(this.endTest, this);//end test
-    this._view.QryPrevQuestionEvt($.proxy(this.qryPrevQuestionEvt, view)); // this.view.bindPrevQuestionEvt(this.displayQuestion, this);
-    this._view.QryNextQuestionEvt($.proxy(this.qryNextQuestionEvt, view)); //this.view.bindNextQuestionEvt(this.displayQuestion, this);
-    this._view.QrySubmitEvt($.proxy(this.qrySubmitEvt, view)); // this.view.bindSubmitEvt(this.answerQuestion, this);
-    this._view.QryAnswerButtonPress($.proxy(this.qryAnswerButtonPress, view)); // this.view.bindAnswerButtonPress(this.answerQuestion, this);
-    this._view.QryCorrectAnswerButtonPress($.proxy(this.qryCorrectAnswerButtonPress, view)); // this.view.bindCorrectAnswerButtonPress(this.toggleAnswer, this);
-    this._view.QrySelectTestBtn($.proxy(this.qrySelectTestBtn, view));
-    this._view.QryCatBtn($.proxy(this.qryCatBtn, view));
-    this._view.QryCsvBtn($.proxy(this.qryCsvBtn, view)); // this.view.bindCsvBtn(this.listcsvs, this);
-  //  this._view.QryAnswer($.proxy(this.qryAnswer, view));
-    //this._view.QryTabChanged($.proxy(this.qryTabChanged, view));
-    this._view.QryCategoryChanged($.proxy(this.qryCategoryChanged, view));
-    this._view.QryCSVChanged($.proxy(this.qryCSVChanged, view));
-  //  this._view.QryModeChanged($.proxy(this.qryModeChanged, view));
+    this._view.QryLoginEvt($.proxy(this.qryLoginEvt, this));// this.view.bindLoginEvt(this.login, this);
+    this._view.QryStartTestEvt($.proxy(this.qryStartTestEvt, this));  // this.view.bindStartTestEvt(this.startTest, this);    
+    this._view.QrySelectTestEvt($.proxy(this.qrySelectTestEvt, this));// this.view.bindSelectTestEvt(this.selectTest, this);
+    this._view.QryTestHistorytEvt($.proxy(this.qryTestHistorytEvt, this));// this.view.bindTestHistorytEvt(this.testHistory, this);
+    //this._view.QryEndTestEvt($.proxy(this.qryEndTestEvt, this));
+    this._view.QryMainSelectBtn($.proxy(this.qryMainSelectBtn, this));// this.view.bindMainSelectBtn(this.endTest, this);//end test
+    this._view.QryPrevQuestionEvt($.proxy(this.qryPrevQuestionEvt, this)); // this.view.bindPrevQuestionEvt(this.displayQuestion, this);
+    this._view.QryNextQuestionEvt($.proxy(this.qryNextQuestionEvt, this)); //this.view.bindNextQuestionEvt(this.displayQuestion, this);
+    this._view.QrySubmitEvt($.proxy(this.qrySubmitEvt, this)); // this.view.bindSubmitEvt(this.answerQuestion, this);
+    this._view.QryAnswerButtonPress($.proxy(this.qryAnswerButtonPress, this)); // this.view.bindAnswerButtonPress(this.answerQuestion, this);
+    this._view.QryCorrectAnswerButtonPress($.proxy(this.qryCorrectAnswerButtonPress, this)); // this.view.bindCorrectAnswerButtonPress(this.toggleAnswer, this);
+    this._view.QrySelectTestBtn($.proxy(this.qrySelectTestBtn, this));
+    this._view.QryCatBtn($.proxy(this.qryCatBtn, this));
+    this._view.QryCsvBtn($.proxy(this.qryCsvBtn, this)); // this.view.bindCsvBtn(this.listcsvs, this);
+  //  this._view.QryAnswer($.proxy(this.qryAnswer, this));
+    //this._view.QryTabChanged($.proxy(this.qryTabChanged, this));
+    this._view.QryCategoryChanged($.proxy(this.qryCategoryChanged, this));
+    this._view.QryCSVChanged($.proxy(this.qryCSVChanged, this));
+  //  this._view.QryModeChanged($.proxy(this.qryModeChanged, this));
 
 };
 
