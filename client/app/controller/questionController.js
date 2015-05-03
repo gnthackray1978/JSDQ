@@ -19,7 +19,7 @@ var QuestionController = function (view, model) {
     this._view.QrySelectTestBtn($.proxy(this.qrySelectTestBtn, this));
     this._view.QryCatBtn($.proxy(this.qryCatBtn, this));
     this._view.QryCsvBtn($.proxy(this.qryCsvBtn, this)); // this.view.bindCsvBtn(this.listcsvs, this);
-  //  this._view.QryAnswer($.proxy(this.qryAnswer, this));
+ //   this._view.QryAnswer($.proxy(this.qryAnswer, this));
     //this._view.QryTabChanged($.proxy(this.qryTabChanged, this));
     this._view.QryCategoryChanged($.proxy(this.qryCategoryChanged, this));
     this._view.QryCSVChanged($.proxy(this.qryCSVChanged, this));
