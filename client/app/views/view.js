@@ -298,7 +298,7 @@ View.prototype.QryCorrectAnswerButtonPress = function (callback, context) {
 
 View.prototype.QrySelectTestBtn = function (callback, context) {//context.listtests();
     $('#choosetest').bind("vclick", function () {
-            this.CmdSetTab(1, function () { });
+            context.CmdSetTab(1, function () { });
             callback.apply(context);
         }
     );
@@ -315,7 +315,7 @@ View.prototype.QryCatBtn = function (callback, context) {//context.listtests();
 View.prototype.QryCsvBtn = function (callback, context) {//context.listtests();
 
     $('#csvs').bind("vclick", function () {
-            this.CmdSetTab(2, function () { });
+            context.CmdSetTab(2, function () { });
             callback.apply(context);
         }
     );
