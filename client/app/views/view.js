@@ -297,7 +297,7 @@ View.prototype.QryCorrectAnswerButtonPress = function (callback, context) {
 };
 
 View.prototype.QrySelectTestBtn = function (callback, context) {//context.listtests();
-    $('#select').bind("vclick", function () {
+    $('#choosetest').bind("vclick", function () {
             context.view.switchtab(1, function () { });
             callback.apply(context);
         }
@@ -322,7 +322,7 @@ View.prototype.QryCsvBtn = function (callback, context) {//context.listtests();
 };
 //GetAnswer
 View.prototype.QryAnswer = function (action){
-   // action($('#answer-box').val());
+    action($('#answer-box').val());
 };
  
 // View.prototype.QryTabChanged = function (action){
