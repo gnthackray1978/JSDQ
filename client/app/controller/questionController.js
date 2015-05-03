@@ -91,7 +91,7 @@ QuestionController.prototype = {
     },
     qrySelectTestBtn:function(evt){
         if (this.model !== null) {
-            this.model.SelectTestBtn(evt);
+            this.model.processTestSelect(evt);
         }
     },
     qryCatBtn:function(evt){
