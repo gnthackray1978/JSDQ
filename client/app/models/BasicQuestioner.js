@@ -12,7 +12,7 @@ var BasicQuestioner = function (view) {
    
     this.selectedcategory = '';
     this.selectedCSV = 3;
-    this.testcategories = [];
+    this.listoftests = [];
     this.questionset = [];
     this.answerset = [];
 
@@ -68,7 +68,7 @@ BasicQuestioner.prototype = {
     },
     
 	init: function () {
-        this._getCats(true, function () {});
+        this._getTestList(true, function () {});
     },
 	
     writelog: function (message) {
@@ -89,7 +89,7 @@ BasicQuestioner.prototype = {
     },
 
 	// get categories from db
-	_getCats: function (callselect, action) {
+	_getTestList: function (callselect, action) {
 
 
 
@@ -99,15 +99,24 @@ BasicQuestioner.prototype = {
 				var idx =0;
 				
 				while(idx < result.length){
-					this.testcategories.push({ key: result[idx].setId, value: result[idx].description });
+					this.listoftests.push({ key: result[idx].setId, value: result[idx].description });
 					idx++;
 				}
 
-				this.view.createCSVList(this.testcategories, this.processTestSelect, this);
+				this.view.CmdDisplayCSVList(this.listoftests, this.processTestSelect, this);
 				
                 action();
             };
 
+            var dummyTestList =[];
+
+            dummyTestList.push({ setId: 1, description: 'Test 1' });
+            dummyTestList.push({ setId: 2, description: 'Test 2' });
+            dummyTestList.push({ setId: 3, description: 'Test 3' });
+            dummyTestList.push({ setId: 4, description: 'Test 4' });
+            
+            finished(dummyTestList);
+            
             //INSERT CALL TO GOOGLE SHEETS!
             
             // $.ajax({
@@ -123,11 +132,6 @@ BasicQuestioner.prototype = {
 
     },
 
-	
-	
-   
-
-	
 	
 	
     hideAnswer: function () {
@@ -178,11 +182,19 @@ BasicQuestioner.prototype = {
 
     },
 
-    listtests: function () {
-
-
-        this.view.createCatList(this.testcategories, this.processSelect, this);
+    listcats: function () {
+        console.log('categories not implemented');
+ 
     },
+
+    listcsvs: function () {
+        console.log('listing csvs(tests)');
+        
+        this._getTestList();
+        
+        this.view.CmdDisplayCSVList(this.listoftests, this.processTestSelect, this);
+    },
+
 
 
     // get questions from db
@@ -452,8 +464,6 @@ BasicQuestioner.prototype = {
         this.view.updateBoxs(this.currentQuestionState, this.questionset[this.currentQuestionIdx].answer, this.questionset[this.currentQuestionIdx].question, '');
     },
 
-
-
     displayQuestion: function (pos) {
 
         this.currentQuestionState = [];
@@ -533,30 +543,22 @@ BasicQuestioner.prototype = {
         ithat.view.setTitle(cat);
     },
 
-
-    processTestSelect: function (cat) {
+    //csvs contain questions
+    processTestSelect: function (csv) {
 
         var ithat = this;
 
-		ithat.selectedCSV = cat;
+		ithat.selectedCSV = csv;
 	
         var idx = 0;
  
-        while (idx < ithat.testcategories.length) {
+        while (idx < ithat.listoftests.length) {
 
-            if (ithat.testcategories[idx].key == cat)
-                ithat.view.setCSV(ithat.testcategories[idx].value);
+            if (ithat.listoftests[idx].key == csv)
+                ithat.view.setCSV(ithat.listoftests[idx].value);
             idx++;
         }
-
-       // console.log(cat + ' ' + ithat.selectedCSV);
-
-     //   ithat.view.switchtab(1, function () {
-
-            
-       // });
-
-        
+ 
     }
 
     

@@ -96,7 +96,7 @@ QuestionController.prototype = {
     },
     qryCatBtn:function(evt){
         if (this.model !== null) {
-            this.model.CatBtn(evt);
+            this.model.listcats(evt);
         }
     },
     qryCsvBtn:function(evt){

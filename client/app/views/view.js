@@ -306,7 +306,7 @@ View.prototype.QrySelectTestBtn = function (callback, context) {//context.listte
 
 View.prototype.QryCatBtn = function (callback, context) {//context.listtests();
     $('#cats').bind("vclick", function () {
-            context.view.switchtab(1, function () { });
+            context.view.CmdSetTab(1, function () { });
             callback.apply(context);
         }
     );
