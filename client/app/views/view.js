@@ -103,7 +103,7 @@ View.prototype.CmdDisplayCSVList = function (catList, context) {
     }
     $('#webcategories').html(cats);
     
-    listHelper.addlinks(selectEvents, this.csvChanged, context);
+    listHelper.Addlinks(selectEvents, this.csvChanged, context);
 };
 //updateBoxs
 View.prototype.CmdUpdateMiscTextBoxs = function(currentQuestionState, answer, content, answerBox){
