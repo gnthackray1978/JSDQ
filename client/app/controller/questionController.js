@@ -91,14 +91,16 @@ QuestionController.prototype = {
         }
     },
     qryCatBtn:function(evt){
-        if (this.model !== null) {
-            this.model.listcats(evt);
-        }
+        // button in ui commented out
+        // if (this.model !== null) {
+        //     this.model.listcats(evt);
+        // }
     },
     qryCsvBtn:function(evt){
-        if (this.model !== null) {
-            this.model.listcsvs(evt);
-        }
+        // button in ui commented out
+        // if (this.model !== null) {
+        //     this.model.listcsvs(evt);
+        // }
     },
     qryAnswer:function(evt){
         if (this.model !== null) {

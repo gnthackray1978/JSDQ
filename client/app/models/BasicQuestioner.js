@@ -181,12 +181,12 @@ BasicQuestioner.prototype = {
 
     },
 
-    listcats: function () {
-        console.log('categories not implemented');
+    // listcats: function () {
+    //     console.log('categories not implemented');
  
-    },
+    // },
 
-    listcsvs: function () {
+    listtests: function () {
         console.log('listing csvs(tests)');
         var that = this;
         
@@ -194,7 +194,7 @@ BasicQuestioner.prototype = {
             that.view.CmdDisplayCSVList(that.listoftests, that.processTestSelect, that);
         });
     },
-
+ 
 
 
     // get questions from db

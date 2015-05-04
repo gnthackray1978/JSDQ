@@ -304,6 +304,8 @@ View.prototype.QrySelectTestBtn = function (callback, context) {//context.listte
     );
 };
 
+//now unused as cats has been commented out
+// we dont currently need that functionality 
 View.prototype.QryCatBtn = function (callback, context) {//context.listtests();
     $('#cats').bind("vclick", function () {
             context.view.CmdSetTab(1, function () { });
@@ -311,7 +313,8 @@ View.prototype.QryCatBtn = function (callback, context) {//context.listtests();
         }
     );
 };
-    
+    //now unused as csv has been commented out
+// we dont currently need that functionality 
 View.prototype.QryCsvBtn = function (callback, context) {//context.listtests();
 
     $('#csvs').bind("vclick", function () {
