@@ -315,7 +315,7 @@ View.prototype.QryCatBtn = function (callback, context) {//context.listtests();
 View.prototype.QryCsvBtn = function (callback, context) {//context.listtests();
 
     $('#csvs').bind("vclick", function () {
-            context.CmdSetTab(2, function () { });
+            context.view.CmdSetTab(2, function () { });
             callback.apply(context);
         }
     );
