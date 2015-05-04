@@ -7,7 +7,6 @@ var QuestionController = function (view, model) {
     
     this.view.QryLoginEvt(this.qryLoginEvt, this);
     this.view.QryStartTestEvt(this.qryStartTestEvt, this);  
-    this.view.QrySelectTestEvt(this.qrySelectTestEvt, this);
     this.view.QryTestHistorytEvt(this.qryTestHistorytEvt, this);
     this.view.QryMainSelectBtn(this.qryMainSelectBtn, this);
     this.view.QryPrevQuestionEvt(this.qryPrevQuestionEvt, this); 

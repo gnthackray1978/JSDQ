@@ -228,11 +228,7 @@ View.prototype.QryStartTestEvt= function (callback, context) {
     var myArray = [1];
     $('#taketest').bind("vclick", function () { callback.apply(context, myArray); });
 };
-    
-View.prototype.QrySelectTestEvt= function (callback, context) {
-    var myArray = [1];
-    $('#choosetest').bind("vclick", function () { callback.apply(context, myArray); });
-};
+ 
     
 View.prototype.QryTestHistorytEvt= function (callback, context) {
     var myArray = [1];
@@ -298,7 +294,7 @@ View.prototype.QryCorrectAnswerButtonPress = function (callback, context) {
 
 View.prototype.QrySelectTestBtn = function (callback, context) {//context.listtests();
     $('#choosetest').bind("vclick", function () {
-            context.view.CmdSetTab(1, function () { });
+            context.view.CmdSetTab(5, function () { });
             callback.apply(context);
         }
     );
