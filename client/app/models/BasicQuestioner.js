@@ -189,10 +189,11 @@ BasicQuestioner.prototype = {
 
     listcsvs: function () {
         console.log('listing csvs(tests)');
+        var that = this;
         
-        this._getTestList();
-        
-        this.view.CmdDisplayCSVList(this.listoftests, this.processTestSelect, this);
+        this._getTestList(function(){
+            that.view.CmdDisplayCSVList(that.listoftests, that.processTestSelect, that);
+        });
     },
 
 
