@@ -34,6 +34,10 @@ var BasicQuestioner = function (view) {
 
 BasicQuestioner.prototype = {
     
+    CSVChanged: function(evt){
+        console.log('csv changed');
+    },
+    
     endTest: function () {
         this.view.CmdSwitchHeaderContent(1);
     },
