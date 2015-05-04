@@ -89,7 +89,7 @@ BasicQuestioner.prototype = {
     },
 
 	// get categories from db
-	_getTestList: function (callselect, action) {
+	_getTestList: function ( action) {
 
 
 
