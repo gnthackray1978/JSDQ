@@ -333,6 +333,11 @@ View.prototype.QryCategoryChanged = function (action){
    this.categoryChanged = action;
 };
 
-View.prototype.QryCSVChanged = function (action){
-   this.csvChanged = action;
+View.prototype.QryCSVChanged = function (action, context){
+   
+   this.csvChanged = function(e) {
+       action.call(context,e);
+   };
+   
+ 
 };
