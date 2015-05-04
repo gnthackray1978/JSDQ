@@ -5,25 +5,21 @@ var QuestionController = function (view, model) {
     
     this.init();
     
-    this.view.QryLoginEvt($.proxy(this.qryLoginEvt, this));// this.view.bindLoginEvt(this.login, this);
-    this.view.QryStartTestEvt($.proxy(this.qryStartTestEvt, this));  // this.view.bindStartTestEvt(this.startTest, this);    
-    this.view.QrySelectTestEvt($.proxy(this.qrySelectTestEvt, this));// this.view.bindSelectTestEvt(this.selectTest, this);
-    this.view.QryTestHistorytEvt($.proxy(this.qryTestHistorytEvt, this));// this.view.bindTestHistorytEvt(this.testHistory, this);
-    //this.view.QryEndTestEvt($.proxy(this.qryEndTestEvt, this));
-    this.view.QryMainSelectBtn($.proxy(this.qryMainSelectBtn, this));// this.view.bindMainSelectBtn(this.endTest, this);//end test
-    this.view.QryPrevQuestionEvt($.proxy(this.qryPrevQuestionEvt, this)); // this.view.bindPrevQuestionEvt(this.displayQuestion, this);
-    this.view.QryNextQuestionEvt($.proxy(this.qryNextQuestionEvt, this)); //this.view.bindNextQuestionEvt(this.displayQuestion, this);
-    this.view.QrySubmitEvt($.proxy(this.qrySubmitEvt, this)); // this.view.bindSubmitEvt(this.answerQuestion, this);
-    this.view.QryAnswerButtonPress($.proxy(this.qryAnswerButtonPress, this)); // this.view.bindAnswerButtonPress(this.answerQuestion, this);
-    this.view.QryCorrectAnswerButtonPress($.proxy(this.qryCorrectAnswerButtonPress, this)); // this.view.bindCorrectAnswerButtonPress(this.toggleAnswer, this);
+    this.view.QryLoginEvt(this.qryLoginEvt, this);
+    this.view.QryStartTestEvt(this.qryStartTestEvt, this);  
+    this.view.QrySelectTestEvt(this.qrySelectTestEvt, this);
+    this.view.QryTestHistorytEvt(this.qryTestHistorytEvt, this);
+    this.view.QryMainSelectBtn(this.qryMainSelectBtn, this);
+    this.view.QryPrevQuestionEvt(this.qryPrevQuestionEvt, this); 
+    this.view.QryNextQuestionEvt(this.qryNextQuestionEvt, this); 
+    this.view.QrySubmitEvt(this.qrySubmitEvt, this); 
+    this.view.QryAnswerButtonPress(this.qryAnswerButtonPress, this);
+    this.view.QryCorrectAnswerButtonPress(this.qryCorrectAnswerButtonPress, this); 
     this.view.QrySelectTestBtn(this.qrySelectTestBtn, this);
-    this.view.QryCatBtn($.proxy(this.qryCatBtn, this));
-    this.view.QryCsvBtn($.proxy(this.qryCsvBtn, this)); // this.view.bindCsvBtn(this.listcsvs, this);
- //   this.view.QryAnswer($.proxy(this.qryAnswer, this));
-    //this.view.QryTabChanged($.proxy(this.qryTabChanged, this));
-    this.view.QryCategoryChanged($.proxy(this.qryCategoryChanged, this));
-    this.view.QryCSVChanged($.proxy(this.qryCSVChanged, this));
-  //  this.view.QryModeChanged($.proxy(this.qryModeChanged, this));
+    this.view.QryCatBtn(this.qryCatBtn, this);
+    this.view.QryCsvBtn(this.qryCsvBtn, this); 
+    this.view.QryCategoryChanged(this.qryCategoryChanged, this);
+    this.view.QryCSVChanged(this.qryCSVChanged, this);
 
 };
 
