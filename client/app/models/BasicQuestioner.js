@@ -103,8 +103,6 @@ BasicQuestioner.prototype = {
 					idx++;
 				}
 
-				this.view.CmdDisplayCSVList(this.listoftests, this.processTestSelect, this);
-				
                 action();
             };
 
