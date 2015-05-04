@@ -92,14 +92,15 @@ BasicQuestioner.prototype = {
 	_getTestList: function ( action) {
 
 
-
+        var that = this;
+        
         try {
             var finished = function (result) {
  
 				var idx =0;
 				
 				while(idx < result.length){
-					this.listoftests.push({ key: result[idx].setId, value: result[idx].description });
+					that.listoftests.push({ key: result[idx].setId, value: result[idx].description });
 					idx++;
 				}
 
