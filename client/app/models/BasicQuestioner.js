@@ -150,10 +150,7 @@ BasicQuestioner.prototype = {
 
 	
 	
-    hideAnswer: function () {
-        this.view.DisplayCorrectAnswer('');
-        this.isAnswerDisplayed = false;
-    },
+     
     toggleAnswer: function () {
 
 
@@ -500,43 +497,42 @@ BasicQuestioner.prototype = {
             default:
                 this.currentQuestionIdx = 0;
         }
-        this.hideAnswer();
         
-        //  $('#answer-so-far').html('');
-
-        //updateAnswerSoFar
-        this.view.updateAnswerSoFar('');
-
+        this.view.CmdDisplayCorrectAnswer('');
+        this.view.CmdUpdateAnswerSoFar('');
+        
+        this.isAnswerDisplayed = false;
+        
         if (this.questionset !== undefined && this.questionset.length > 0) {
             var type = this.questionset[this.currentQuestionIdx].type;
 
             this.questionset[this.currentQuestionIdx].answer = this.questionset[this.currentQuestionIdx].constAnswers;
 
-            this.view.DisplayScore('0');
+            this.view.CmdDisplayScore('0');
 
             this.questionscore = 0;
 
             switch (type) {
                 case 0:
-                    this.view.displayStandardQuestion(this.questionset[this.currentQuestionIdx].question, this.answerset[this.currentQuestionIdx]);
+                    this.view.CmdDisplayStandardQuestion(this.questionset[this.currentQuestionIdx].question, this.answerset[this.currentQuestionIdx]);
                     break;
                 case 1:
-                    this.view.displayMultipleChoice(this.questionset[this.currentQuestionIdx].question, this.questionset[this.currentQuestionIdx].constAnswers, parseInt(this.answerset[this.currentQuestionIdx]) + 1);
+                    this.view.CmdDisplayMultipleChoice(this.questionset[this.currentQuestionIdx].question, this.questionset[this.currentQuestionIdx].constAnswers, parseInt(this.answerset[this.currentQuestionIdx]) + 1);
                     break;
                 case 2:
-                    this.view.displayImageQuestion(this.questionset[this.currentQuestionIdx].question, this.answerset[this.currentQuestionIdx]);
+                    this.view.CmdDisplayImageQuestion(this.questionset[this.currentQuestionIdx].question, this.answerset[this.currentQuestionIdx]);
                     break;
                 case 3:// multi answer
-                    this.view.displayMultiAnswerQuestion(this.questionset[this.currentQuestionIdx].question);
+                    this.view.CmdDisplayMultiAnswerQuestion(this.questionset[this.currentQuestionIdx].question);
                     break;
                 case 4:// multi ordered answer
-                    this.view.displayMultiAnswerQuestion(this.questionset[this.currentQuestionIdx].question);
+                    this.view.CmdDisplaySortedMultiAnswerQuestion(this.questionset[this.currentQuestionIdx].question);
                     break;
             }
-            this.view.updateCurrentQuestionLabel(this.currentQuestionIdx + 1, this.questionset.length);
+            this.view.CmdUpdateCurrentQuestionLabel(this.currentQuestionIdx + 1, this.questionset.length);
 
         } else {
-            this.view.displayNoQuestion();
+            this.view.CmdDisplayNoQuestion();
         }
 
 

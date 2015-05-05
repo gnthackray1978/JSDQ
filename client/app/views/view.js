@@ -5,14 +5,14 @@ function View() {
    this.modeChanged =null;
 } 
 
-View.prototype.SetDisplayScore = function (questionScore, testScore){
+View.prototype.CmdDisplayScore = function (questionScore, testScore){
       $('#question-score').html(questionScore + '%');
 
         if (testScore != undefined)
             $('#perc-correct').html(testScore + '%');
 };
 
-View.prototype.SetDisplayCorrectAnswer = function (answer){
+View.prototype.CmdDisplayCorrectAnswer = function (answer){
     $('#correct-answer').html(answer);
 };
 
