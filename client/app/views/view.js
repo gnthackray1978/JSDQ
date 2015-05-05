@@ -51,7 +51,7 @@ View.prototype.CmdSetTab = function (tabidx,tabChanged){
     if (tabidx == 4) {                                                          //show web cats
         $("#pnlWebCategories").removeClass("hidePanel").addClass("displayPanel"); 
         $("#test-sel").removeClass("hidePanel").addClass("displayPanel");       //show test selectors
-        
+        $("#answer-block").removeClass("hidePanel").addClass("displayPanel");
         tabChanged();
     }
     

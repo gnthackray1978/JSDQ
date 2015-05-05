@@ -232,7 +232,7 @@ BasicQuestioner.prototype = {
         
         this._getTestList(function(){
             that.view.CmdDisplayCSVList(that.listoftests, that);
-            that.view.CmdSetTab(2, function () { });
+            that.view.CmdSetTab(4, function () { });
         });
     },
  
