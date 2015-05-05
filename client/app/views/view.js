@@ -271,7 +271,7 @@ View.prototype.QryCorrectAnswerButtonPress = function (callback, context) {
 
 View.prototype.QrySelectTestBtn = function (callback, context) {//context.listtests();
     $('#choosetest').bind("vclick", function () {
-            context.view.CmdSetTab(2, function () { });
+            
             callback.apply(context);
         }
     );

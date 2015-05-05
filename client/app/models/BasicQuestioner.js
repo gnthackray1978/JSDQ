@@ -223,6 +223,7 @@ BasicQuestioner.prototype = {
 
     questionSelectionsEnabled: function () {
         console.log('Question Selections Enabled');
+        this.view.CmdSetTab(2, function () { });
     },
 
     listtests: function () {
