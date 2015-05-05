@@ -212,8 +212,6 @@ View.prototype.CmdSetCatName= function (title) {
     $('#cat_name').html(title);
 };
 
-
-
 View.prototype.QryModeChanged= function(switchFunc){
     this.modeChanged = switchFunc;
 };
@@ -228,7 +226,6 @@ View.prototype.QryStartTestEvt= function (callback, context) {
     $('#taketest').bind("vclick", function () { callback.apply(context, myArray); });
 };
  
-    
 View.prototype.QryTestHistorytEvt= function (callback, context) {
     var myArray = [1];
     $('#history').bind("vclick", function () { callback.apply(context, myArray); });
@@ -293,7 +290,7 @@ View.prototype.QryCorrectAnswerButtonPress = function (callback, context) {
 
 View.prototype.QrySelectTestBtn = function (callback, context) {//context.listtests();
     $('#choosetest').bind("vclick", function () {
-            context.view.CmdSetTab(4, function () { });
+            context.view.CmdSetTab(1, function () { });
             callback.apply(context);
         }
     );

@@ -224,10 +224,9 @@ BasicQuestioner.prototype = {
 
     },
 
-    // listcats: function () {
-    //     console.log('categories not implemented');
- 
-    // },
+    questionSelectionsEnabled: function () {
+        console.log('Question Selections Enabled');
+    },
 
     listtests: function () {
         console.log('listing csvs(tests)');
