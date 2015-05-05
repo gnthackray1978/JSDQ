@@ -16,56 +16,42 @@ View.prototype.CmdDisplayCorrectAnswer = function (answer){
     $('#correct-answer').html(answer);
 };
 
- //switchtab: function (tabidx, tab1) {
 View.prototype.CmdSetTab = function (tabidx,tabChanged){
+    $("#pnlCategories").removeClass("displayPanel").addClass("hidePanel");      //hide categories
+    $("#test-sel").removeClass("displayPanel").addClass("hidePanel");           //hide test selectors
+    $("#answer-block").removeClass("displayPanel").addClass("hidePanel");       //hide answer block
+    $("#pnlQuestions").removeClass("displayPanel").addClass("hidePanel");       //hide questions panel
+    $("#pnlCSVList").removeClass("displayPanel").addClass("hidePanel");         //hide csvs
+    $("#pnlWebCategories").removeClass("displayPanel").addClass("hidePanel");   //hide web categories
+    $("#score-nav").removeClass("displayPanel").addClass("hidePanel");          //hide score 
+    $("#question-nav").removeClass("displayPanel").addClass("hidePanel");       //hide question navs
 
-    var panels = new Panels();
-
-    if (tabidx == 0) {
-        panels.masterShowTab(1);
+    if (tabidx == 0) {                                                          //show questions
+        $("#pnlQuestions").removeClass("hidePanel").addClass("displayPanel");   //show questions panel
         $("#answer-block").removeClass("hidePanel").addClass("displayPanel");
         $("#score-nav").removeClass("hidePanel").addClass("displayPanel");
         $("#question-nav").removeClass("hidePanel").addClass("displayPanel");
-        $("#test-sel").addClass("hidePanel").removeClass("displayPanel");
         tabChanged();
     }
 
-    if (tabidx == 1) {
-        panels.masterShowTab(2);
-
-        $("#answer-block").removeClass("hidePanel").addClass("displayPanel");
-        $("#score-nav").addClass("hidePanel").removeClass("displayPanel");
-        $("#question-nav").addClass("hidePanel").removeClass("displayPanel");
-        $("#test-sel").removeClass("hidePanel").addClass("displayPanel");
-
+    if (tabidx == 1) {                                                           
+        $("#pnlCategories").removeClass("hidePanel").addClass("displayPanel");  //show categories
+        $("#test-sel").removeClass("hidePanel").addClass("displayPanel");       //show test selectors
         tabChanged();
     }
 
-    if (tabidx == 2) {
-        panels.masterShowTab(3);
-
-        $("#answer-block").removeClass("hidePanel").addClass("displayPanel");
-        $("#score-nav").addClass("hidePanel").removeClass("displayPanel");
-        $("#question-nav").addClass("hidePanel").removeClass("displayPanel");
-        $("#test-sel").addClass("displayPanel").removeClass("hidePanel");
-
+    if (tabidx == 2) {                                                          
+        $("#pnlCSVList").removeClass("hidePanel").addClass("displayPanel");     //show csv list
+        $("#test-sel").removeClass("hidePanel").addClass("displayPanel");       //show test selectors
         tabChanged();
     }
 
-    if (tabidx == 3) {
-        panels.masterShowTab(4); 
-        tabChanged();          
-    }
-
-    if (tabidx == 4) {
-        panels.masterShowTab(5);
+    if (tabidx == 4) {                                                          //show web cats
+        $("#pnlWebCategories").removeClass("hidePanel").addClass("displayPanel"); 
+        $("#test-sel").removeClass("hidePanel").addClass("displayPanel");       //show test selectors
         tabChanged();
     }
     
-    if (tabidx == 5) {
-        panels.masterShowTab(6);
-        tabChanged();
-    }
 };
 
 View.prototype.CmdDisplayCategoryList = function (catList, context){
@@ -216,11 +202,6 @@ View.prototype.QryModeChanged= function(switchFunc){
     this.modeChanged = switchFunc;
 };
 
-View.prototype.QryLoginEvt= function (callback, context) {
-    var myArray = [1];
-    $('#login').bind("vclick", function () { callback.apply(context, myArray); });
-};
-    
 View.prototype.QryStartTestEvt= function (callback, context) {
     var myArray = [1];
     $('#taketest').bind("vclick", function () { callback.apply(context, myArray); });
@@ -290,7 +271,7 @@ View.prototype.QryCorrectAnswerButtonPress = function (callback, context) {
 
 View.prototype.QrySelectTestBtn = function (callback, context) {//context.listtests();
     $('#choosetest').bind("vclick", function () {
-            context.view.CmdSetTab(1, function () { });
+            context.view.CmdSetTab(2, function () { });
             callback.apply(context);
         }
     );
@@ -300,17 +281,16 @@ View.prototype.QrySelectTestBtn = function (callback, context) {//context.listte
 // we dont currently need that functionality 
 View.prototype.QryCatBtn = function (callback, context) {//context.listtests();
     $('#cats').bind("vclick", function () {
-            context.view.CmdSetTab(1, function () { });
             callback.apply(context);
         }
     );
 };
-    //now unused as csv has been commented out
+
+//now unused as csv has been commented out
 // we dont currently need that functionality 
 View.prototype.QryCsvBtn = function (callback, context) {//context.listtests();
 
     $('#csvs').bind("vclick", function () {
-            context.view.CmdSetTab(2, function () { });
             callback.apply(context);
         }
     );

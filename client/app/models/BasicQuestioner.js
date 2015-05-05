@@ -82,10 +82,7 @@ BasicQuestioner.prototype = {
 	
 	},
 	
-    login: function () {
-        var that = this;
-        that.view.CmdSetTab(3, function () { });
-    },
+   
 
     selectTest: function () {
         var that = this;
@@ -234,6 +231,7 @@ BasicQuestioner.prototype = {
         
         this._getTestList(function(){
             that.view.CmdDisplayCSVList(that.listoftests, that);
+            that.view.CmdSetTab(2, function () { });
         });
     },
  
@@ -243,6 +241,7 @@ BasicQuestioner.prototype = {
         
         this._getCategoriesFromTest(function(){
             that.view.CmdDisplayCategoryList(that.listofcategories, that);
+            that.view.CmdSetTab(1, function () { });
         });
     },
 

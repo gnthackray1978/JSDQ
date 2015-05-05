@@ -54,9 +54,7 @@ var Questionnaire = function () {
     this.view.bindCsvBtn(this.listcsvs, this);
 
 
-
-    this.view.bindLoginEvt(this.login, this);
-    
+ 
 
 
     this.view.bindSelectTestEvt(this.selectTest, this);
@@ -106,16 +104,7 @@ Questionnaire.prototype = {
 	
 	},
 	
-	
-    login: function () {
-        var ithat = this;
-        
-        ithat.view.switchtab(3, function () {
-          
-		  
-		  
-        });
-    },
+	 
 
     selectTest: function () {
         var ithat = this;

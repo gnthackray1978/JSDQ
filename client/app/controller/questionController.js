@@ -33,11 +33,7 @@ QuestionController.prototype = {
     //     }
     // },
     
-    qryLoginEvt:function(evt){
-        if (this.model !== null) {
-            this.model.login(evt);
-        }
-    },
+     
     qryStartTestEvt:function(evt){
         if (this.model !== null) {
             this.model.startTest(evt);

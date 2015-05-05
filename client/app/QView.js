@@ -25,52 +25,33 @@ QView.prototype = {
 
         var panels = new Panels();
 
+        // QUESTIONS VISIBLE cat and csv not visible
         if (tabidx == 0) {
-
             panels.masterShowTab(1);
-
             $("#answer-block").removeClass("hidePanel").addClass("displayPanel");
             $("#score-nav").removeClass("hidePanel").addClass("displayPanel");
             $("#question-nav").removeClass("hidePanel").addClass("displayPanel");
             $("#test-sel").addClass("hidePanel").removeClass("displayPanel");
-
             tab1();
-
-
-
         }
 
+        //TEST SELECTION shows csv and cat buttons
         if (tabidx == 1) {
-
-
             panels.masterShowTab(2);
-
-            $("#answer-block").removeClass("hidePanel").addClass("displayPanel");
-            $("#score-nav").addClass("hidePanel").removeClass("displayPanel");
-            $("#question-nav").addClass("hidePanel").removeClass("displayPanel");
-            $("#test-sel").removeClass("hidePanel").addClass("displayPanel");
-
-
-
-            tab1();
-            //   this.listtests(); test-sel
-
-        }
-
-        if (tabidx == 2) {
-
-
-            panels.masterShowTab(3);
-
-            $("#answer-block").removeClass("hidePanel").addClass("displayPanel");
+            $("#answer-block").addClass("displayPanel").removeClass("hidePanel");
             $("#score-nav").addClass("hidePanel").removeClass("displayPanel");
             $("#question-nav").addClass("hidePanel").removeClass("displayPanel");
             $("#test-sel").addClass("displayPanel").removeClass("hidePanel");
-
-
             tab1();
-            //   this.listtests();
+        }
 
+        if (tabidx == 2) {
+            panels.masterShowTab(3);
+            $("#answer-block").addClass("displayPanel").removeClass("hidePanel");
+            $("#score-nav").addClass("hidePanel").removeClass("displayPanel");
+            $("#question-nav").addClass("hidePanel").removeClass("displayPanel");
+            $("#test-sel").addClass("displayPanel").removeClass("hidePanel");
+            tab1();
         }
 
 
