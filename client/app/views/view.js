@@ -37,18 +37,21 @@ View.prototype.CmdSetTab = function (tabidx,tabChanged){
     if (tabidx == 1) {                                                           
         $("#pnlCategories").removeClass("hidePanel").addClass("displayPanel");  //show categories
         $("#test-sel").removeClass("hidePanel").addClass("displayPanel");       //show test selectors
+        $("#answer-block").removeClass("hidePanel").addClass("displayPanel");
         tabChanged();
     }
 
     if (tabidx == 2) {                                                          
         $("#pnlCSVList").removeClass("hidePanel").addClass("displayPanel");     //show csv list
         $("#test-sel").removeClass("hidePanel").addClass("displayPanel");       //show test selectors
+        $("#answer-block").removeClass("hidePanel").addClass("displayPanel");
         tabChanged();
     }
 
     if (tabidx == 4) {                                                          //show web cats
         $("#pnlWebCategories").removeClass("hidePanel").addClass("displayPanel"); 
         $("#test-sel").removeClass("hidePanel").addClass("displayPanel");       //show test selectors
+        
         tabChanged();
     }
     
