@@ -13,7 +13,7 @@ var BasicQuestioner = function (view) {
     this.selectedcategory = '';
     this.selectedCSV = 3;
     this.listoftests = [];
-    this.listofcategories =[];
+    this.listofcategories = new UniqueList();
     this.listofCSVData =[];
     
     
@@ -159,13 +159,13 @@ BasicQuestioner.prototype = {
 	_getCategoriesFromTest : function (action){
 	    // do we have selected test
 	    
-	    this.listofcategories =[];
+	    this.listofcategories = new UniqueList();
 	    
 	    if(this.listofCSVData){
 	        var idx=0;
 	        
 	        while(idx < this.listofCSVData.length){
-	             this.listofcategories.push( this.listofCSVData[idx][0]);
+	             this.listofcategories.Add( this.listofCSVData[idx][0]);
 	             idx++;
 	        }
 	        
@@ -239,7 +239,7 @@ BasicQuestioner.prototype = {
         var that = this;
         
         this._getCategoriesFromTest(function(){
-            that.view.CmdDisplayCategoryList(that.listofcategories, that);
+            that.view.CmdDisplayCategoryList(that.listofcategories.D, that);
             that.view.CmdSetTab(1, function () { });
         });
     },
@@ -253,7 +253,7 @@ BasicQuestioner.prototype = {
             var idx = 1;
             
             this.listofCSVData = [];
-            this.listofcategories =[];
+            this.listofcategories = new UniqueList();
             
             try {
                 while (idx < rows.length) {
@@ -262,7 +262,7 @@ BasicQuestioner.prototype = {
                     this.listofCSVData.push(cols);
                     
                     if(cols.length >= 1)
-                        this.listofcategories.push(cols[1]);
+                        this.listofcategories.Add(cols[1]);
                     
                     idx++;
                 }
