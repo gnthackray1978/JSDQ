@@ -34,8 +34,21 @@ var BasicQuestioner = function (view) {
 
 BasicQuestioner.prototype = {
     
-    CSVChanged: function(evt){
+    CSVChanged: function(csv){
         console.log('csv changed');
+        
+        
+        var that = this;
+
+        that.selectedCSV = csv;
+
+        that.view.CmdSetTab(0, function () {
+            that.createquestionset();
+        });
+
+        that.view.setTitle(csv);
+        
+        
     },
     
     endTest: function () {
@@ -195,7 +208,7 @@ BasicQuestioner.prototype = {
         var that = this;
         
         this._getTestList(function(){
-            that.view.CmdDisplayCSVList(that.listoftests, that.processTestSelect, that);
+            that.view.CmdDisplayCSVList(that.listoftests, that);
         });
     },
  
@@ -205,7 +218,7 @@ BasicQuestioner.prototype = {
     createquestionset: function () {
         //0 standard type
         //
-        this.writelog('cqs');
+        this.writelog('createquestionset');
 
         $('#mainbody').html('');
         $('#perc-correct').html('');
@@ -298,7 +311,8 @@ BasicQuestioner.prototype = {
 
 
         $.ajax({
-			url: this.qsurl + '?cat=' + this.selectedCSV,
+			//url: this.qsurl + '?cat=' + this.selectedCSV,
+			url: 'http://www.gnthackray.co.uk/q/app/data/test.csv',
 			success: $.proxy(finished, this)
 		});
     },
@@ -530,40 +544,40 @@ BasicQuestioner.prototype = {
         //how long did it take to work out i needed to call this - on a containing div not the content!!
         $("#rqs").trigger('create');
 
-    },
-
-
-
-    processSelect: function (cat) {
-
-        var ithat = this;
-
-        ithat.selectedcategory = cat;
-
-        ithat.view.switchtab(0, function () {
-            ithat.createquestionset();
-        });
-
-        ithat.view.setTitle(cat);
-    },
-
-    //csvs contain questions
-    processTestSelect: function (csv) {
-
-        var ithat = this;
-
-		ithat.selectedCSV = csv;
-	
-        var idx = 0;
- 
-        while (idx < ithat.listoftests.length) {
-
-            if (ithat.listoftests[idx].key == csv)
-                ithat.view.setCSV(ithat.listoftests[idx].value);
-            idx++;
-        }
- 
     }
+
+
+
+//     processSelect: function (cat) {
+
+//         var ithat = this;
+
+//         ithat.selectedcategory = cat;
+
+//         ithat.view.switchtab(0, function () {
+//             ithat.createquestionset();
+//         });
+
+//         ithat.view.setTitle(cat);
+//     },
+
+//     //csvs contain questions
+//     processTestSelect: function (csv) {
+
+//         var ithat = this;
+
+// 		ithat.selectedCSV = csv;
+	
+//         var idx = 0;
+ 
+//         while (idx < ithat.listoftests.length) {
+
+//             if (ithat.listoftests[idx].key == csv)
+//                 ithat.view.setCSV(ithat.listoftests[idx].value);
+//             idx++;
+//         }
+ 
+//     }
 
     
 
