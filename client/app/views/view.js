@@ -204,14 +204,13 @@ View.prototype.CmdUpdateAnswerSoFar= function (answerSoFar) {
     $('#answer-so-far').html(answerSoFar);
 };
     
-View.prototype.CmdSetTitle= function (title) {
-    $('#title').html(title);
+View.prototype.CmdSetTestName= function (title) {
+    $('#test_name').html(title);
 };
 
-View.prototype.CmdSetCSV= function (title) {
-    $('#title').html(title);
+View.prototype.CmdSetCatName= function (title) {
+    $('#cat_name').html(title);
 };
-
 
 
 
@@ -329,8 +328,12 @@ View.prototype.QryAnswer = function (action){
    
 // };
 
-View.prototype.QryCategoryChanged = function (action){
-   this.categoryChanged = action;
+View.prototype.QryCategoryChanged = function (action,context){
+  
+   
+   this.categoryChanged = function(e) {
+       action.call(context,e);
+   };
 };
 
 View.prototype.QryCSVChanged = function (action, context){

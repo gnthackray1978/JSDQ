@@ -90,28 +90,22 @@ QuestionController.prototype = {
         }
     },
     qryCatBtn:function(evt){
-        // button in ui commented out
-        // if (this.model !== null) {
-        //     this.model.listcats(evt);
-        // }
+        //button in ui commented out
+        if (this.model !== null) {
+            this.model.listcats(evt);
+        }
     },
     qryCsvBtn:function(evt){
         // button in ui commented out
-        // if (this.model !== null) {
-        //     this.model.listcsvs(evt);
-        // }
+        if (this.model !== null) {
+            this.model.listtests(evt);
+        }
     },
     qryAnswer:function(evt){
         if (this.model !== null) {
             this.model.Answer(evt);
         }
-    }
-    ,
-    // qryTabChanged:function(evt){
-    //     if (this.model !== null) {
-    //         this.model.TabChanged(evt);
-    //     }
-    // },
+    },
     qryCategoryChanged:function(evt){
         if (this.model !== null) {
             this.model.CategoryChanged(evt);
@@ -122,13 +116,5 @@ QuestionController.prototype = {
             this.model.CSVChanged(evt);
         }
     }
-    // ,
-    // qryModeChanged:function(evt){
-    //     if (this.model !== null) {
-    //         this.model.ModeChanged(evt);
-    //     }
-    // }
-    
-    
     
 }

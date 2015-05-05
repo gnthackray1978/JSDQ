@@ -13,6 +13,10 @@ var BasicQuestioner = function (view) {
     this.selectedcategory = '';
     this.selectedCSV = 3;
     this.listoftests = [];
+    this.listofcategories =[];
+    this.listofCSVData =[];
+    
+    
     this.questionset = [];
     this.answerset = [];
 
@@ -34,8 +38,17 @@ var BasicQuestioner = function (view) {
 
 BasicQuestioner.prototype = {
     
+     CategoryChanged: function(cat){
+        console.log('cat changed: ' + cat);
+        
+        var that = this;
+
+        that.selectedcategory = cat;
+        that.view.CmdSetCatName(cat);
+    },
+    
     CSVChanged: function(csv){
-        console.log('csv changed');
+        console.log('csv changed: ' + csv);
         
         
         var that = this;
@@ -43,10 +56,10 @@ BasicQuestioner.prototype = {
         that.selectedCSV = csv;
 
         that.view.CmdSetTab(0, function () {
-            that.createquestionset();
+            that.readCSV();
         });
 
-        that.view.CmdSetTitle(csv);
+        that.view.CmdSetTestName(csv);
         
         
     },
@@ -148,7 +161,23 @@ BasicQuestioner.prototype = {
 
     },
 
-	
+	_getCategoriesFromTest : function (action){
+	    // do we have selected test
+	    
+	    this.listofcategories =[];
+	    
+	    if(this.listofCSVData){
+	        var idx=0;
+	        
+	        while(idx < this.listofCSVData.length){
+	             this.listofcategories.push( this.listofCSVData[idx][0]);
+	             idx++;
+	        }
+	        
+	        action();
+	    }
+	    
+	},
 	
      
     toggleAnswer: function () {
@@ -209,8 +238,51 @@ BasicQuestioner.prototype = {
         });
     },
  
+    listcats: function () {
+        console.log('listing categories');
+        var that = this;
+        
+        this._getCategoriesFromTest(function(){
+            that.view.CmdDisplayCategoryList(that.listofcategories, that);
+        });
+    },
+
+    //all questions for 1 csv including different categories
+    readCSV : function(){
+        
+
+        var finished = function (result) {
+            var rows = result.split('\x0A');
+            var idx = 1;
+            
+            this.listofCSVData = [];
+            this.listofcategories =[];
+            
+            try {
+                while (idx < rows.length) {
+                    var cols = this._getColumns(rows[idx]);
+
+                    this.listofCSVData.push(cols);
+                    
+                    if(cols.length >= 1)
+                        this.listofcategories.push(cols[1]);
+                    
+                    idx++;
+                }
+            } catch (e) {
+                console.log(e);
+            }
+        };
 
 
+        $.ajax({
+			//url: this.qsurl + '?cat=' + this.selectedCSV,
+			url: 'http://www.gnthackray.co.uk/q/app/data/test.csv',
+			success: $.proxy(finished, this)
+		});
+    },
+    
+    
     // get questions from db
     createquestionset: function () {
         //0 standard type
@@ -224,94 +296,75 @@ BasicQuestioner.prototype = {
 
         var questionColIdx = 2;
         var multiAnswerStartIdx = 3;
+        var idx = 1;
+        this.questionset = [];
+        this.answerset = [];
 
-        var finished = function (result) {
-            //     var headersection = '';
-            var rows = result.split('\x0A');
-            var idx = 1;
-            this.questionset = [];
-            this.answerset = [];
+      
+        while (idx < this.listofCSVData.length) {
 
-            try {
+                //  this.writelog(idx);
 
+                var cols = this.listofCSVData[idx];
 
-                while (idx < rows.length) {
+                if (cols[1] == this.selectedcategory) {
 
-                    //  this.writelog(idx);
+                    var questionType = 0; // default option
 
-                    var cols = this._getColumns(rows[idx]);
+                    // questions with multiple answers
+                    if (cols.length > multiAnswerStartIdx+1) {
 
-                    if (cols[1] == this.selectedcategory) {
+                        var colIdx = multiAnswerStartIdx;
+                        var answer = []; // this can get over written
+                        var constAnswers = []; // to use a permanent answer collection
 
-                        var questionType = 0; // default option
-
-                        // questions with multiple answers
-                        if (cols.length > multiAnswerStartIdx+1) {
-
-                            var colIdx = multiAnswerStartIdx;
-                            var answer = []; // this can get over written
-                            var constAnswers = []; // to use a permanent answer collection
-
-                            while (colIdx < cols.length) {
-                                answer.push(cols[colIdx]);
-                                constAnswers.push(cols[colIdx]);
-                                colIdx++;
-                            }
-
-                            if (colIdx > multiAnswerStartIdx) {
-                                switch ($.trim(answer[0])) {
-                                    case 'MA':
-                                        questionType = 3; // multi answer
-                                        break;
-                                    case 'MS':
-                                        questionType = 4; // multi ordered answer
-                                        break;
-                                    default:
-                                        questionType = 1; //question is multiple choice
-                                        break;
-                                }
-                            }
-
-                            // questiontype is multiple choice
-                            if (questionType != 1) {
-                                answer.splice(0, 1);
-                                constAnswers.splice(0, 1);
-                            } else {
-                                this.answerset.push('');
-
-                            }
-
-
-                            this.questionset.push({ question: cols[questionColIdx], answer: answer, type: questionType, constAnswers: constAnswers, score: 0 });
-                        } else {
-
-                            questionType = (cols[1].indexOf(".jpg") !== -1) ? 2 : questionType;
-
-                            this.questionset.push({ question: cols[questionColIdx], answer: cols[multiAnswerStartIdx], type: questionType, constAnswers: cols[3], score: 0 });
-                            this.answerset.push('');
+                        while (colIdx < cols.length) {
+                            answer.push(cols[colIdx]);
+                            constAnswers.push(cols[colIdx]);
+                            colIdx++;
                         }
+
+                        if (colIdx > multiAnswerStartIdx) {
+                            switch ($.trim(answer[0])) {
+                                case 'MA':
+                                    questionType = 3; // multi answer
+                                    break;
+                                case 'MS':
+                                    questionType = 4; // multi ordered answer
+                                    break;
+                                default:
+                                    questionType = 1; //question is multiple choice
+                                    break;
+                            }
+                        }
+
+                        // questiontype is multiple choice
+                        if (questionType != 1) {
+                            answer.splice(0, 1);
+                            constAnswers.splice(0, 1);
+                        } else {
+                            this.answerset.push('');
+
+                        }
+
+
+                        this.questionset.push({ question: cols[questionColIdx], answer: answer, type: questionType, constAnswers: constAnswers, score: 0 });
+                    } else {
+
+                        questionType = (cols[1].indexOf(".jpg") !== -1) ? 2 : questionType;
+
+                        this.questionset.push({ question: cols[questionColIdx], answer: cols[multiAnswerStartIdx], type: questionType, constAnswers: cols[3], score: 0 });
+                        this.answerset.push('');
                     }
-
-
-                    idx++;
                 }
 
-                this.displayQuestion(0);
 
-
-            } catch (e) {
-                $('#debug').html('exc' + e);
+                idx++;
             }
 
+        this.displayQuestion(0);
 
-        };
-
-
-        $.ajax({
-			//url: this.qsurl + '?cat=' + this.selectedCSV,
-			url: 'http://www.gnthackray.co.uk/q/app/data/test.csv',
-			success: $.proxy(finished, this)
-		});
+ 
     },
 
     Answer: function (e) {
