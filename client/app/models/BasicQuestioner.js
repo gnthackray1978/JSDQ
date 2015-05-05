@@ -46,7 +46,7 @@ BasicQuestioner.prototype = {
             that.createquestionset();
         });
 
-        that.view.setTitle(csv);
+        that.view.CmdSetTitle(csv);
         
         
     },
