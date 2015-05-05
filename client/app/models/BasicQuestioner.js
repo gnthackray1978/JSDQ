@@ -55,10 +55,8 @@ BasicQuestioner.prototype = {
 
         that.selectedCSV = csv;
 
-        that.view.CmdSetTab(0, function () {
-            that.readCSV();
-        });
-
+        that.readCSV();
+        
         that.view.CmdSetTestName(csv);
         
         
