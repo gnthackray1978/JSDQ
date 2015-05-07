@@ -206,8 +206,10 @@ View.prototype.QryModeChanged= function(switchFunc){
 };
 
 View.prototype.QryStartTestEvt= function (callback, context) {
-    var myArray = [1];
-    $('#taketest').bind("vclick", function () { callback.apply(context, myArray); });
+    $('#taketest').bind("vclick", function () 
+    { 
+        callback.apply(context); 
+    });
 };
  
 View.prototype.QryTestHistorytEvt= function (callback, context) {

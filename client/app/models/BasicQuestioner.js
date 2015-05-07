@@ -63,10 +63,12 @@ BasicQuestioner.prototype = {
     },
     
     endTest: function () {
+        console.log('end test');
         this.view.CmdSwitchHeaderContent(1);
     },
 
     startTest: function () {
+        console.log('start test');
         var that = this;
 		if(that.selectedCSV !==''){
 			that.resetTest();
