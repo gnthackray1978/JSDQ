@@ -87,7 +87,7 @@ BasicQuestioner.prototype = {
     },
   
 	resetTest:function(){
-	
+	    this.createquestionset();
 	},
 	
    
