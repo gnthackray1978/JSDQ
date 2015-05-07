@@ -18,7 +18,7 @@ var QuestionController = function (view, model) {
     this.view.QryCsvBtn(this.qryCsvBtn, this); 
     this.view.QryCategoryChanged(this.qryCategoryChanged, this);
     this.view.QryCSVChanged(this.qryCSVChanged, this);
-
+    this.view.QryModeChanged(this.qryModeChanged, this);
 };
 
 QuestionController.prototype = {
@@ -26,11 +26,11 @@ QuestionController.prototype = {
         
     },
     
-    // qryEndTestEvt:function(evt){
-    //     if (this.model !== null) {
-    //         this.model.EndTestEvt(evt);
-    //     }
-    // },
+    qryModeChanged:function(evt){
+        if (this.model !== null) {
+            this.model.ModeChanged(evt);
+        }
+    },
     
      
     qryStartTestEvt:function(evt){

@@ -38,6 +38,10 @@ var BasicQuestioner = function (view) {
 
 BasicQuestioner.prototype = {
     
+     ModeChanged: function(e){
+         console.log('mode changed');
+     },
+     
      CategoryChanged: function(cat){
         console.log('cat changed: ' + cat);
         
