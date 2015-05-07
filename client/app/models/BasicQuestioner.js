@@ -68,7 +68,10 @@ BasicQuestioner.prototype = {
     
     endTest: function () {
         console.log('end test');
-        this.view.CmdSwitchHeaderContent(1);
+        
+    	this.view.CmdSwitchHeaderContent(1, function () {
+			this.view.CmdSetTab(2,function(){});
+		});
     },
 
     startTest: function () {
