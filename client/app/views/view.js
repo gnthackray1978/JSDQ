@@ -3,6 +3,7 @@ function View() {
    this.categoryChanged = null;
    this.csvChanged = null;
    this.modeChanged =null;
+   this.endTestLock =false;
 } 
 
 View.prototype.CmdDisplayScore = function (questionScore, testScore){
@@ -206,9 +207,17 @@ View.prototype.QryModeChanged= function(switchFunc){
 };
 
 View.prototype.QryStartTestEvt= function (callback, context) {
+    var that =this;
+    
     $('#taketest').bind("vclick", function () 
     { 
         console.log('Take Test clicked');
+        that.endTestLock =true;    
+        
+        setInterval(function () {
+            that.endTestLock =false;    
+        }, 3000);
+        
         callback.apply(context); 
     });
 };
@@ -216,7 +225,9 @@ View.prototype.QryStartTestEvt= function (callback, context) {
 View.prototype.QryEndTestEvt = function (callback, context) {
     $('#main').bind("vclick", function () {
         console.log('Finish Test clicked');
-        callback.apply(context);
+        
+        if(!this.endTestLock)
+            callback.apply(context);
     });
 };
 
