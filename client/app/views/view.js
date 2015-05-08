@@ -208,27 +208,30 @@ View.prototype.QryModeChanged= function(switchFunc){
 View.prototype.QryStartTestEvt= function (callback, context) {
     $('#taketest').bind("vclick", function () 
     { 
+        console.log('Take Test clicked');
         callback.apply(context); 
     });
 };
- 
+
+View.prototype.QryEndTestEvt = function (callback, context) {
+    $('#main').bind("vclick", function () {
+        console.log('Finish Test clicked');
+        callback.apply(context);
+    });
+};
+
+
 View.prototype.QryTestHistorytEvt= function (callback, context) {
     var myArray = [1];
     $('#history').bind("vclick", function () { callback.apply(context, myArray); });
 };
     
-View.prototype.QryEndTestEvt= function (callback, context) {
-    var myArray = [1];
-    $('#next').bind("vclick", function () { callback.apply(context, myArray); });
-};
+// View.prototype.QryEndTestEvt= function (callback, context) {
+//     console.log('QryEndTestEvt N/I');
+//     // var myArray = [1];
+//     // $('#next').bind("vclick", function () { callback.apply(context, myArray); });
+// };
 
-View.prototype.QryMainSelectBtn = function (callback, context) {//context.listtests();
-    $('#main').bind("vclick", function () {
-            //  context.view.switchtab(0, function () { });
-            callback.apply(context);
-        }
-    );
-};
 
 View.prototype.QryPrevQuestionEvt = function (callback, context) {
     var myArray = [-1];

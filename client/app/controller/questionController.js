@@ -5,9 +5,11 @@ var QuestionController = function (view, model) {
     
     this.init();
     
-    this.view.QryStartTestEvt(this.qryStartTestEvt, this);  
+    this.view.QryStartTestEvt(this.qryStartTestEvt, this); 
+    this.view.QryEndTestEvt(this.qryEndTestEvt, this);
+    
     this.view.QryTestHistorytEvt(this.qryTestHistorytEvt, this);
-    this.view.QryMainSelectBtn(this.qryMainSelectBtn, this);
+    
     this.view.QryPrevQuestionEvt(this.qryPrevQuestionEvt, this); 
     this.view.QryNextQuestionEvt(this.qryNextQuestionEvt, this); 
     this.view.QrySubmitEvt(this.qrySubmitEvt, this); 
@@ -33,11 +35,7 @@ QuestionController.prototype = {
     },
     
      
-    qryStartTestEvt:function(evt){
-        if (this.model !== null) {
-            this.model.startTest(evt);
-        }
-    },
+    
     qrySelectTestEvt:function(evt){
         if (this.model !== null) {
             this.model.selectTest(evt);
@@ -48,8 +46,12 @@ QuestionController.prototype = {
             this.model.testHistory(evt);
         }
     },
-   
-    qryMainSelectBtn:function(evt){
+    qryStartTestEvt:function(evt){
+        if (this.model !== null) {
+            this.model.startTest(evt);
+        }
+    },
+    qryEndTestEvt:function(evt){
         if (this.model !== null) {
             this.model.endTest(evt);
         }

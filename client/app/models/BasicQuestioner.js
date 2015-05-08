@@ -294,7 +294,7 @@ BasicQuestioner.prototype = {
     createquestionset: function () {
         //0 standard type
         //
-        this.writelog('createquestionset');
+        console.log('creating question set');
 
         $('#mainbody').html('');
         $('#perc-correct').html('');
@@ -314,7 +314,7 @@ BasicQuestioner.prototype = {
 
                 var cols = this.listofCSVData[idx];
 
-                if (cols[1] == this.selectedcategory) {
+                if (cols[0] == this.selectedcategory) {
 
                     var questionType = 0; // default option
 
