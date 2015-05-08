@@ -214,19 +214,21 @@ View.prototype.QryStartTestEvt= function (callback, context) {
         console.log('Take Test clicked');
         that.endTestLock =true;    
         
-        setInterval(function () {
-            that.endTestLock =false;    
-        }, 3000);
+        setTimeout(function () {
+            that.endTestLock =false; 
+            console.log('unlocked');
+        }, 5000);
         
         callback.apply(context); 
     });
 };
 
 View.prototype.QryEndTestEvt = function (callback, context) {
+    var that = this;
     $('#main').bind("vclick", function () {
         console.log('Finish Test clicked');
         
-        if(!this.endTestLock)
+        if(!that.endTestLock)
             callback.apply(context);
     });
 };
