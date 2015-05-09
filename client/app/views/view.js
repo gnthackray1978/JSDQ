@@ -325,8 +325,8 @@ View.prototype.QryCsvBtn = function (callback, context) {//context.listtests();
     );
 };
 //GetAnswer
-View.prototype.QryAnswer = function (action){
-    action($('#answer-box').val());
+View.prototype.QryAnswer = function (action, context){
+    action.call(context,$('#answer-box').val());
 };
  
 // View.prototype.QryTabChanged = function (action){
@@ -335,8 +335,6 @@ View.prototype.QryAnswer = function (action){
 // };
 
 View.prototype.QryCategoryChanged = function (action,context){
-  
-   
    this.categoryChanged = function(e) {
        action.call(context,e);
    };
