@@ -421,7 +421,7 @@ BasicQuestioner.prototype = {
     
             that.score = Math.floor(((100 / (that.questionset.length * 100)) * working));
     
-            that.view.DisplayScore(that.questionscore, that.score);
+            that.view.CmdDisplayScore(that.questionscore, that.score);
         
         };
 
