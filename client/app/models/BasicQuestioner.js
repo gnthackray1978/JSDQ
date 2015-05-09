@@ -221,7 +221,7 @@ BasicQuestioner.prototype = {
                 correctAnswer = this.questionset[this.currentQuestionIdx].constAnswers;
             }
 
-            this.view.DisplayCorrectAnswer(correctAnswer);
+            this.view.CmdDisplayCorrectAnswer(correctAnswer);
 
             this.isAnswerDisplayed = true;
         }
