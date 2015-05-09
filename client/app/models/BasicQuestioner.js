@@ -518,7 +518,9 @@ BasicQuestioner.prototype = {
 
         this.questionscore = Math.floor(((100 / originalAnswers.length) * this.currentQuestionState.length));
 
-        this.view.updateBoxs(this.currentQuestionState, this.questionset[this.currentQuestionIdx].answer, this.questionset[this.currentQuestionIdx].question, '');
+        this.view.CmdUpdateMiscTextBoxs(this.currentQuestionState, 
+                            this.questionset[this.currentQuestionIdx].answer,
+                            this.questionset[this.currentQuestionIdx].question, '');
     },
 
     getScoreOrderedMultiAnswer: function (answer) {
@@ -537,7 +539,7 @@ BasicQuestioner.prototype = {
 
         this.questionscore = Math.floor(((100 / originalAnswers.length) * this.currentQuestionState.length));
 
-        this.view.updateBoxs(this.currentQuestionState, this.questionset[this.currentQuestionIdx].answer, this.questionset[this.currentQuestionIdx].question, '');
+        this.view.CmdUpdateMiscTextBoxs(this.currentQuestionState, this.questionset[this.currentQuestionIdx].answer, this.questionset[this.currentQuestionIdx].question, '');
     },
 
     displayQuestion: function (pos) {
