@@ -4,6 +4,7 @@ function View() {
    this.csvChanged = null;
    this.modeChanged =null;
    this.endTestLock =false;
+   this.startTestLock =false;
 } 
 
 View.prototype.CmdDisplayScore = function (questionScore, testScore){
@@ -212,14 +213,15 @@ View.prototype.QryStartTestEvt= function (callback, context) {
     $('#taketest').bind("vclick", function () 
     { 
         console.log('Take Test clicked');
-        that.endTestLock =true;    
+        that.startTestLock =true;    
+
+        if(!that.endTestLock)
+            callback.apply(context);        
         
         setTimeout(function () {
-            that.endTestLock =false; 
+            that.startTestLock =false; 
             console.log('unlocked');
         }, 5000);
-        
-        callback.apply(context); 
     });
 };
 
@@ -227,9 +229,15 @@ View.prototype.QryEndTestEvt = function (callback, context) {
     var that = this;
     $('#main').bind("vclick", function () {
         console.log('Finish Test clicked');
+        that.endTestLock =true;
         
-        if(!that.endTestLock)
+        if(!that.startTestLock)
             callback.apply(context);
+            
+        setTimeout(function () {
+            that.endTestLock =false; 
+            console.log('unlocked');
+        }, 5000);
     });
 };
 
