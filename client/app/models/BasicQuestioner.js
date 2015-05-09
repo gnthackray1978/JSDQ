@@ -381,7 +381,7 @@ BasicQuestioner.prototype = {
 
     // scoring and answering functionality
 
-    answerQuestion: function () {
+    answerQuestion: function (answer) {
 
         //var answer = this.view.GetAnswer();
 
