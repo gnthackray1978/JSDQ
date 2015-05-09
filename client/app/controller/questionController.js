@@ -21,6 +21,7 @@ var QuestionController = function (view, model) {
     this.view.QryCategoryChanged(this.qryCategoryChanged, this);
     this.view.QryCSVChanged(this.qryCSVChanged, this);
     this.view.QryModeChanged(this.qryModeChanged, this);
+    this.view.QryAnswer(this.qryAnswer,this);
 };
 
 QuestionController.prototype = {

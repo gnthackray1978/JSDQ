@@ -375,15 +375,15 @@ BasicQuestioner.prototype = {
     },
 
     Answer: function (e) {
-
- 
+        this.answerQuestion(e);
+        
     },
 
     // scoring and answering functionality
 
     answerQuestion: function () {
 
-        var answer = this.view.GetAnswer();
+        //var answer = this.view.GetAnswer();
 
         //get question type
         var type = this.questionset[this.currentQuestionIdx].type;
