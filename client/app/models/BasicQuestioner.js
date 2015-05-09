@@ -191,7 +191,7 @@ BasicQuestioner.prototype = {
 
 
         if (this.isAnswerDisplayed == true) {
-            this.view.DisplayCorrectAnswer('');
+            this.view.CmdDisplayCorrectAnswer('');
             this.isAnswerDisplayed = false;
 
         } else {
