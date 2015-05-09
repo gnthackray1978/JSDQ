@@ -374,59 +374,60 @@ BasicQuestioner.prototype = {
  
     },
 
-    Answer: function (e) {
-        this.answerQuestion(e);
-        
-    },
-
+    
     // scoring and answering functionality
 
-    answerQuestion: function (answer) {
+    answerQuestion: function () {
+        var that = this;
+        
+        var gotAnswer = function(answer){
 
-        //var answer = this.view.GetAnswer();
+            //get question type
+            var type = that.questionset[that.currentQuestionIdx].type;
+    
+            switch (type) {
+                case 0:
+                    // standard question
+                    that.getScoreBasic(answer);
+                    break;
+                case 1:
+                    // select single answer from possible answers      
+                    that.getScoreBasic($("input[name*=radio-choice]:checked").val());
+                    break;
+                case 2:
+                    // image question
+    
+                    break;
+                case 3:
+                    // multiple answers
+                    that.getScoreMultiAnswer(answer);
+                    break;
+                case 4:
+                    // multiple answers
+                    that.getScoreOrderedMultiAnswer(answer);
+                    break;
+            }
+    
+            that.questionset[that.currentQuestionIdx].score = that.questionscore;
+    
+    
+            var idx = 0;
+            var working = 0;
+            while (idx < that.questionset.length) {
+                working += that.questionset[idx].score;
+                idx++;
+            }
+    
+    
+            that.score = Math.floor(((100 / (that.questionset.length * 100)) * working));
+    
+            that.view.DisplayScore(that.questionscore, that.score);
+        
+        };
 
-        //get question type
-        var type = this.questionset[this.currentQuestionIdx].type;
-
-        switch (type) {
-            case 0:
-                // standard question
-                this.getScoreBasic(answer);
-                break;
-            case 1:
-                // select single answer from possible answers      
-                this.getScoreBasic($("input[name*=radio-choice]:checked").val());
-                break;
-            case 2:
-                // image question
-
-                break;
-            case 3:
-                // multiple answers
-                this.getScoreMultiAnswer(answer);
-                break;
-            case 4:
-                // multiple answers
-                this.getScoreOrderedMultiAnswer(answer);
-                break;
-        }
-
-        this.questionset[this.currentQuestionIdx].score = this.questionscore;
-
-
-        var idx = 0;
-        var working = 0;
-        while (idx < this.questionset.length) {
-            working += this.questionset[idx].score;
-            idx++;
-        }
-
-
-        this.score = Math.floor(((100 / (this.questionset.length * 100)) * working));
-
-        this.view.DisplayScore(this.questionscore, this.score);
-
-
+        that.view.QryAnswer(function(a){
+            gotAnswer(a);
+        },that);
     },
 
     getScoreBasic: function (answer) {
