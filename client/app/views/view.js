@@ -253,6 +253,9 @@ View.prototype.QryTestHistorytEvt= function (callback, context) {
 //     // $('#next').bind("vclick", function () { callback.apply(context, myArray); });
 // };
 
+View.prototype.QryNA = function (callback, context) {
+    $('#login').bind("vclick", function () { callback.apply(context); });
+};
 
 View.prototype.QryPrevQuestionEvt = function (callback, context) {
     var myArray = [-1];
@@ -279,6 +282,7 @@ View.prototype.QryAnswerButtonPress = function (callback, context) {
 };
 
 View.prototype.QryCorrectAnswerButtonPress = function (callback, context) {
+    
     var debounce = function (func, wait, immediate) {
         var timeout;
         return function () {
@@ -296,6 +300,8 @@ View.prototype.QryCorrectAnswerButtonPress = function (callback, context) {
     }, 500);
     
     $('#show-answer').bind("vclick", myEfficientFn);
+    
+    
 };
 
 View.prototype.QrySelectTestBtn = function (callback, context) {//context.listtests();

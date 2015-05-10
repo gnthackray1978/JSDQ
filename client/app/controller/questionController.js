@@ -21,12 +21,19 @@ var QuestionController = function (view, model) {
     this.view.QryCategoryChanged(this.qryCategoryChanged, this);
     this.view.QryCSVChanged(this.qryCSVChanged, this);
     this.view.QryModeChanged(this.qryModeChanged, this);
-    //this.view.QryAnswer(this.qryAnswer,this);
+    
+    this.view.QryNA(this.qryNA,this);
 };
 
 QuestionController.prototype = {
     init:function(){
         
+    },
+    
+    qryNA:function(evt){
+        if (this.model !== null) {
+            this.model.GoogleSheetTestLogin(evt);
+        }
     },
     
     qryModeChanged:function(evt){

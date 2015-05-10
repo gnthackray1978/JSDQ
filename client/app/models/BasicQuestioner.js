@@ -38,6 +38,10 @@ var BasicQuestioner = function (view) {
 
 BasicQuestioner.prototype = {
     
+     GoogleSheetTestLogin: function(e){
+         console.log('Google Sheet Test Login');
+     },
+    
      ModeChanged: function(e){
          console.log('mode changed');
      },
