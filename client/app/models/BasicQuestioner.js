@@ -1,3 +1,7 @@
+function sheetLoaded(spreadsheetdata) {
+ // do something with spreadsheet data here
+ console.log(spreadsheetdata);
+}
 
 
 var BasicQuestioner = function (view) {
@@ -40,6 +44,9 @@ BasicQuestioner.prototype = {
     
      GoogleSheetTestLogin: function(e){
          console.log('Google Sheet Test Login');
+         
+         
+         
      },
     
      ModeChanged: function(e){
