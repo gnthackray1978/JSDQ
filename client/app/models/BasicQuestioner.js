@@ -313,18 +313,21 @@ BasicQuestioner.prototype = {
     	
     	while(idx < gsheet.feed.entry.length)
 	    {
-	        var row = Number(gsheet.feed.entry[idx].gs$cell.row);
-	        var col = Number(gsheet.feed.entry[idx].gs$cell.col);
+	        // make zero based
+	        var row = Number(gsheet.feed.entry[idx].gs$cell.row)-1;
+	        var col = Number(gsheet.feed.entry[idx].gs$cell.col)-1;
 	        
 	        if(narray[row] == undefined){
-	            narray.push();
 	            narray[row] =[];
 	        }
 	        
-	        if(narray[row][col] == undefined){    
-	            narray[row].push();
-	            narray[row][col] = gsheet.feed.entry[idx].gs$cell.$t;
-	        }
+	       // if(narray[row][col] == undefined){    
+	       //     narray[row].push();
+	            
+	       // }
+	        
+	        narray[row][col] = gsheet.feed.entry[idx].gs$cell.$t;
+	        
 	        idx++;
 	    }
 		
