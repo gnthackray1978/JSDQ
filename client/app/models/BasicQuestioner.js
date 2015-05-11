@@ -188,7 +188,7 @@ BasicQuestioner.prototype = {
 	        var idx=0;
 	        
 	        while(idx < this.listofCSVData.length){
-	             this.listofcategories.Add( this.listofCSVData[idx][0]);
+	             this.listofcategories.Add( this.listofCSVData[idx][1]);
 	             idx++;
 	        }
 	        
@@ -270,36 +270,60 @@ BasicQuestioner.prototype = {
     //all questions for 1 csv including different categories
     readCSV : function(){
         
+        var idx =0;
+    //	var narray = [];
+    	this.listofcategories = new UniqueList();
+    	this.listofCSVData = [];
+    	
+    	while(idx < gsheet.feed.entry.length)
+	    {
+	        // make zero based
+	        var row = Number(gsheet.feed.entry[idx].gs$cell.row)-1;
+	        var col = Number(gsheet.feed.entry[idx].gs$cell.col)-1;
+	        
+	        if(this.listofCSVData[row] == undefined){
+	            this.listofCSVData[row] =[];
+	        }
+	         
+	        this.listofCSVData[row][col] = gsheet.feed.entry[idx].gs$cell.$t;
+	        
+	        if(col ==2){
+	            this.listofcategories.Add(gsheet.feed.entry[idx].gs$cell.$t);
+	        }
+	        
+	        idx++;
+	    }
 
-        var finished = function (result) {
-            var rows = result.split('\x0A');
-            var idx = 1;
+
+//         var finished = function (result) {
+//             var rows = result.split('\x0A');
+//             var idx = 1;
             
-            this.listofCSVData = [];
-            this.listofcategories = new UniqueList();
+//             this.listofCSVData = [];
+//             this.listofcategories = new UniqueList();
             
-            try {
-                while (idx < rows.length) {
-                    var cols = this._getColumns(rows[idx]);
+//             try {
+//                 while (idx < rows.length) {
+//                     var cols = this._getColumns(rows[idx]);
 
-                    this.listofCSVData.push(cols);
+//                     this.listofCSVData.push(cols);
                     
-                    if(cols.length >= 1)
-                        this.listofcategories.Add(cols[1]);
+//                     if(cols.length >= 1)
+//                         this.listofcategories.Add(cols[1]);
                     
-                    idx++;
-                }
-            } catch (e) {
-                console.log(e);
-            }
-        };
+//                     idx++;
+//                 }
+//             } catch (e) {
+//                 console.log(e);
+//             }
+//         };
 
 
-        $.ajax({
-			//url: this.qsurl + '?cat=' + this.selectedCSV,
-			url: 'http://www.gnthackray.co.uk/q/app/data/test.csv',
-			success: $.proxy(finished, this)
-		});
+//         $.ajax({
+// 			//url: this.qsurl + '?cat=' + this.selectedCSV,
+// 			url: 'http://www.gnthackray.co.uk/q/app/data/test.csv',
+// 			success: $.proxy(finished, this)
+// 		});
 		
 		//gsheet
 		
@@ -308,28 +332,7 @@ BasicQuestioner.prototype = {
         // spreadsheetdata.feed.entry.length
         // 231
 	
-    	var idx =0;
-    	var narray = [];
-    	
-    	while(idx < gsheet.feed.entry.length)
-	    {
-	        // make zero based
-	        var row = Number(gsheet.feed.entry[idx].gs$cell.row)-1;
-	        var col = Number(gsheet.feed.entry[idx].gs$cell.col)-1;
-	        
-	        if(narray[row] == undefined){
-	            narray[row] =[];
-	        }
-	        
-	       // if(narray[row][col] == undefined){    
-	       //     narray[row].push();
-	            
-	       // }
-	        
-	        narray[row][col] = gsheet.feed.entry[idx].gs$cell.$t;
-	        
-	        idx++;
-	    }
+    
 		
     },
     
@@ -345,8 +348,8 @@ BasicQuestioner.prototype = {
         $('#question-score').html('');
         $('#answer-so-far').html('');
 
-        var questionColIdx = 2;
-        var multiAnswerStartIdx = 3;
+        var questionColIdx = 3;
+        var multiAnswerStartIdx = 4;
         var idx = 1;
         this.questionset = [];
         this.answerset = [];
@@ -358,7 +361,7 @@ BasicQuestioner.prototype = {
 
                 var cols = this.listofCSVData[idx];
 
-                if (cols[0] == this.selectedcategory) {
+                if (cols[1] == this.selectedcategory) {
 
                     var questionType = 0; // default option
 
