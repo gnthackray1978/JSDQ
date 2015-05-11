@@ -1,6 +1,8 @@
+var gsheet ;
+
 function sheetLoaded(spreadsheetdata) {
- // do something with spreadsheet data here
- console.log(spreadsheetdata);
+    gsheet = spreadsheetdata;
+ 
 }
 
 
@@ -298,6 +300,34 @@ BasicQuestioner.prototype = {
 			url: 'http://www.gnthackray.co.uk/q/app/data/test.csv',
 			success: $.proxy(finished, this)
 		});
+		
+		//gsheet
+		
+        // 		spreadsheetdata.feed.entry[0].gs$cell
+        // Object {row: "1", col: "1", $t: "IsMale"}
+        // spreadsheetdata.feed.entry.length
+        // 231
+	
+    	var idx =0;
+    	var narray = [];
+    	
+    	while(idx < gsheet.feed.entry.length)
+	    {
+	        var row = Number(gsheet.feed.entry[idx].gs$cell.row);
+	        var col = Number(gsheet.feed.entry[idx].gs$cell.col);
+	        
+	        if(narray[row] == undefined){
+	            narray.push();
+	            narray[row] =[];
+	        }
+	        
+	        if(narray[row][col] == undefined){    
+	            narray[row].push();
+	            narray[row][col] = gsheet.feed.entry[idx].gs$cell.$t;
+	        }
+	        idx++;
+	    }
+		
     },
     
     
