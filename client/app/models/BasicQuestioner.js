@@ -139,43 +139,39 @@ BasicQuestioner.prototype = {
 	// get categories from db
 	_getTestList: function ( action) {
 
-
+        console.log('fetching list of test');
+        
         var that = this;
         
-        try {
-            var finished = function (result) {
- 
-				var idx =0;
-				
-				while(idx < result.length){
-					that.listoftests.push({ key: result[idx].setId, value: result[idx].description });
-					idx++;
-				}
+        var idx =0;
 
-                action();
-            };
-
-            var dummyTestList =[];
-
-            dummyTestList.push({ setId: 1, description: 'Test 1' });
-            dummyTestList.push({ setId: 2, description: 'Test 2' });
-            dummyTestList.push({ setId: 3, description: 'Test 3' });
-            dummyTestList.push({ setId: 4, description: 'Test 4' });
-            
-            finished(dummyTestList);
-            
-            //INSERT CALL TO GOOGLE SHEETS!
-            
-            // $.ajax({
-            //     url: this.catsurl,
-            //     success: $.proxy(finished, this)
-            // });
-
-
-
-        } catch (e) {
-
+    	var tplist = new UniqueList();
+     	
+    	while(idx < gsheet.feed.entry.length)
+	    {
+	        // make zero based
+	        //var row = Number(gsheet.feed.entry[idx].gs$cell.row)-1;
+	        var col = Number(gsheet.feed.entry[idx].gs$cell.col)-1;
+	        
+	        if(col ==0){
+	            tplist.Add(gsheet.feed.entry[idx].gs$cell.$t);
+	        }
+	        
+	        idx++;
+	    }
+        
+        idx=0;
+        
+        that.listoftests =[];
+        
+        while(idx < tplist.D.length){
+            that.listoftests.push({ key: tplist.D[idx], value: tplist.D[idx] });
+            idx++;
         }
+        
+        action();
+        
+         
 
     },
 
@@ -271,7 +267,7 @@ BasicQuestioner.prototype = {
     readCSV : function(){
         
         var idx =0;
-    //	var narray = [];
+
     	this.listofcategories = new UniqueList();
     	this.listofCSVData = [];
     	
@@ -294,37 +290,6 @@ BasicQuestioner.prototype = {
 	        idx++;
 	    }
 
-
-//         var finished = function (result) {
-//             var rows = result.split('\x0A');
-//             var idx = 1;
-            
-//             this.listofCSVData = [];
-//             this.listofcategories = new UniqueList();
-            
-//             try {
-//                 while (idx < rows.length) {
-//                     var cols = this._getColumns(rows[idx]);
-
-//                     this.listofCSVData.push(cols);
-                    
-//                     if(cols.length >= 1)
-//                         this.listofcategories.Add(cols[1]);
-                    
-//                     idx++;
-//                 }
-//             } catch (e) {
-//                 console.log(e);
-//             }
-//         };
-
-
-//         $.ajax({
-// 			//url: this.qsurl + '?cat=' + this.selectedCSV,
-// 			url: 'http://www.gnthackray.co.uk/q/app/data/test.csv',
-// 			success: $.proxy(finished, this)
-// 		});
-		
 		//gsheet
 		
         // 		spreadsheetdata.feed.entry[0].gs$cell
