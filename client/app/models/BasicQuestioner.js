@@ -374,7 +374,7 @@ BasicQuestioner.prototype = {
 
                         questionType = (cols[1].indexOf(".jpg") !== -1) ? 2 : questionType;
 
-                        this.questionset.push({ question: cols[questionColIdx], answer: cols[multiAnswerStartIdx], type: questionType, constAnswers: cols[4], score: 0 });
+                        this.questionset.push({ question: cols[questionColIdx], answer: cols[multiAnswerStartIdx], type: questionType, constAnswers: cols[multiAnswerStartIdx], score: 0 });
                         this.answerset.push('');
                     }
                 }
