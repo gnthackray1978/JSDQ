@@ -583,7 +583,7 @@ BasicQuestioner.prototype = {
         if (this.questionset !== undefined && this.questionset.length > 0) {
             var type = this.questionset[this.currentQuestionIdx].type;
 
-            this.questionset[this.currentQuestionIdx].answer = this.questionset[this.currentQuestionIdx].constAnswers;
+            //this.questionset[this.currentQuestionIdx].answer = this.questionset[this.currentQuestionIdx].constAnswers;
 
             this.view.CmdDisplayScore('0');
 
