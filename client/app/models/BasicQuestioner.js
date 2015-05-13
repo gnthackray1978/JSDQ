@@ -369,12 +369,12 @@ BasicQuestioner.prototype = {
                         }
 
 
-                        this.questionset.push({ question: cols[questionColIdx], answer: answer, type: questionType, constAnswers: constAnswers, score: 0 });
+                        this.questionset.push({ question: cols[questionColIdx], answer: answer, type: questionType, constAnswers: constAnswers, score: 0, attemptedAnswer:'' });
                     } else {
 
                         questionType = (cols[1].indexOf(".jpg") !== -1) ? 2 : questionType;
 
-                        this.questionset.push({ question: cols[questionColIdx], answer: cols[multiAnswerStartIdx], type: questionType, constAnswers: cols[multiAnswerStartIdx], score: 0 });
+                        this.questionset.push({ question: cols[questionColIdx], answer: cols[multiAnswerStartIdx], type: questionType, constAnswers: cols[multiAnswerStartIdx], score: 0, attemptedAnswer:'' });
                         this.answerset.push('');
                     }
                 }
@@ -398,7 +398,9 @@ BasicQuestioner.prototype = {
 
             //get question type
             var type = that.questionset[that.currentQuestionIdx].type;
-    
+            
+            that.questionset[that.currentQuestionIdx].attemptedAnswer = answer;
+                        
             switch (type) {
                 case 0:
                     // standard question
@@ -406,7 +408,7 @@ BasicQuestioner.prototype = {
                     break;
                 case 1:
                     // select single answer from possible answers      
-                    that.getScoreBasic($("input[name*=radio-choice]:checked").val());
+                    that.getScoreBasic(answer);
                     break;
                 case 2:
                     // image question
@@ -439,71 +441,20 @@ BasicQuestioner.prototype = {
         
         };
 
-        that.view.QryAnswer(function(a){
-            gotAnswer(a);
+        that.view.QryAnswer(function(answer){
+            
+            
+            gotAnswer(answer);
         },that);
     },
 
     getScoreBasic: function (answer) {
-        // record our answer
-       // console.log('getscorebasic');
-        
-   //     console.log(this.currentQuestionIdx);
-     //   console.log(answer);
-      //  console.log(this.answerset.length);
-        
-        //this.answerset[this.currentQuestionIdx] = answer;
-
-        ////recalculate score
-        //var idx = 0;
-
-        //this.questionscore = 0;
-
-        //while (idx < this.answerset.length) {
-
-        //    var tpAnswer = '';
-        //    var tpQuestion = '';
-
-        //    console.log(this.questionset[idx].answer);
-            
-
-        //    if ($.isArray(this.questionset[idx].answer)) {
-        //        tpAnswer = this.questionset[idx].answer[0];
-        //        console.log(this.questionset[idx].answer[0]);
-        //    } else {
-        //        tpAnswer = this.questionset[idx].answer;
-        //    }
-
         var scoreFactor = 100/this.answerset.length;
 
         if (this.performMatch(answer, this.questionset[this.currentQuestionIdx].answer)) {
             this.questionscore = scoreFactor;
         } else {
             this.questionscore = 0;
-        }
-        //    idx++;
-        //}
-
-
-
-
-    //    this.questionscore = Math.floor(((100 / this.answerset.length) * this.questionscore));
-
-
-    },
-
-    performMatch: function (answer, solution) {
-
-        answer = String(answer).toLowerCase();
-
-        solution = String(solution).toLowerCase();
-
-
-
-        if ($.trim(answer) == $.trim(solution)) {
-            return true;
-        } else {
-            return false;
         }
     },
 
@@ -556,6 +507,19 @@ BasicQuestioner.prototype = {
         this.view.CmdUpdateMiscTextBoxs(this.currentQuestionState, this.questionset[this.currentQuestionIdx].answer, this.questionset[this.currentQuestionIdx].question, '');
     },
 
+    performMatch: function (answer, solution) {
+
+        answer = String(answer).toLowerCase();
+
+        solution = String(solution).toLowerCase();
+
+        if ($.trim(answer) == $.trim(solution)) {
+            return true;
+        } else {
+            return false;
+        }
+    },
+
     displayQuestion: function (pos) {
 
         this.currentQuestionState = [];
@@ -589,21 +553,25 @@ BasicQuestioner.prototype = {
 
             this.questionscore = 0;
 
+            var attemptedAnswer = this.questionset[this.currentQuestionIdx].attemptedAnswer;
+
             switch (type) {
                 case 0:
-                    this.view.CmdDisplayStandardQuestion(this.questionset[this.currentQuestionIdx].question, this.answerset[this.currentQuestionIdx]);
+                    this.view.CmdDisplayStandardQuestion(this.questionset[this.currentQuestionIdx].question,attemptedAnswer);
                     break;
                 case 1:
-                    this.view.CmdDisplayMultipleChoice(this.questionset[this.currentQuestionIdx].question, this.questionset[this.currentQuestionIdx].constAnswers, parseInt(this.answerset[this.currentQuestionIdx]) + 1);
+                    this.view.CmdDisplayMultipleChoice(this.questionset[this.currentQuestionIdx].question, 
+                                                        this.questionset[this.currentQuestionIdx].constAnswers, 
+                                                        parseInt(attemptedAnswer) + 1);
                     break;
                 case 2:
-                    this.view.CmdDisplayImageQuestion(this.questionset[this.currentQuestionIdx].question, this.answerset[this.currentQuestionIdx]);
+                    this.view.CmdDisplayImageQuestion(this.questionset[this.currentQuestionIdx].question, attemptedAnswer);
                     break;
                 case 3:// multi answer
-                    this.view.CmdDisplayMultiAnswerQuestion(this.questionset[this.currentQuestionIdx].question);
+                    this.view.CmdDisplayMultiAnswerQuestion(this.questionset[this.currentQuestionIdx].question, attemptedAnswer);
                     break;
                 case 4:// multi ordered answer
-                    this.view.CmdDisplaySortedMultiAnswerQuestion(this.questionset[this.currentQuestionIdx].question);
+                    this.view.CmdDisplaySortedMultiAnswerQuestion(this.questionset[this.currentQuestionIdx].question, attemptedAnswer);
                     break;
             }
             this.view.CmdUpdateCurrentQuestionLabel(this.currentQuestionIdx + 1, this.questionset.length);
@@ -618,41 +586,5 @@ BasicQuestioner.prototype = {
         $("#rqs").trigger('create');
 
     }
-
-
-
-//     processSelect: function (cat) {
-
-//         var ithat = this;
-
-//         ithat.selectedcategory = cat;
-
-//         ithat.view.switchtab(0, function () {
-//             ithat.createquestionset();
-//         });
-
-//         ithat.view.setTitle(cat);
-//     },
-
-//     //csvs contain questions
-//     processTestSelect: function (csv) {
-
-//         var ithat = this;
-
-// 		ithat.selectedCSV = csv;
-	
-//         var idx = 0;
- 
-//         while (idx < ithat.listoftests.length) {
-
-//             if (ithat.listoftests[idx].key == csv)
-//                 ithat.view.setCSV(ithat.listoftests[idx].value);
-//             idx++;
-//         }
- 
-//     }
-
-    
-
 
 };

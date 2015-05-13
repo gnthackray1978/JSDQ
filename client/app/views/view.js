@@ -151,17 +151,19 @@ View.prototype.CmdDisplayImageQuestion = function (question, answerSet) {
     //multi answer   
 };
 
-View.prototype.CmdDisplayMultiAnswerQuestion = function (question) {
+View.prototype.CmdDisplayMultiAnswerQuestion = function (question,answer) {
     $("#answer").removeClass("hidePanel").addClass("displayPanel");
     $("#imgPanel").removeClass("displayPanel").addClass("hidePanel");
     $('#mainbody').html(question);
+    $('#answer-box').val(answer);
     //multi answer   
 };
 
-View.prototype.CmdDisplaySortedMultiAnswerQuestion = function (question) {
+View.prototype.CmdDisplaySortedMultiAnswerQuestion = function (question,answer) {
     $("#answer").removeClass("hidePanel").addClass("displayPanel");
     $("#imgPanel").removeClass("displayPanel").addClass("hidePanel");
     $('#mainbody').html(question);
+    $('#answer-box').val(answer);
     //multi answer   
 };
 
@@ -332,7 +334,17 @@ View.prototype.QryCsvBtn = function (callback, context) {//context.listtests();
 };
 //GetAnswer
 View.prototype.QryAnswer = function (action, context){
-    action.call(context,$('#answer-box').val());
+    
+    var radioBox = $("input[name*=radio-choice]:checked").val();
+    var txtBox = $('#answer-box').val();
+    
+    
+    var answer = (txtBox == '') ? radioBox : txtBox;
+    
+    
+    action.call(context,answer);
+    
+    
 };
  
 // View.prototype.QryTabChanged = function (action){
