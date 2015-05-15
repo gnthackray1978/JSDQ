@@ -542,6 +542,7 @@ BasicQuestioner.prototype = {
         this.view.CmdDisplayCorrectAnswer('');
         this.view.CmdUpdateAnswerSoFar('');
         //test crap
+        //test crap1
         this.isAnswerDisplayed = false;
         
         if (this.questionset !== undefined && this.questionset.length > 0) {
