@@ -133,35 +133,44 @@ BasicQuestioner.prototype = {
 	// get categories from db
 	_getTestList: function ( action) {
 
-        console.log('fetching list of test');
+        //console.log('fetching list of test');
         
-        var that = this;
+        var googleLibs = new GoogleLibs();
+    	var that = this;
+    	
+        that._getTestList(function(listoftests){
+            that.listoftests = listoftests;
+            action();
+        });
         
-        var idx =0;
+        
+    //     var that = this;
+        
+    //     var idx =0;
 
-    	var tplist = new UniqueList();
+    // 	var tplist = new UniqueList();
      	
-    	while(idx < gsheet.feed.entry.length)
-	    {
-	        // make zero based
-	        //var row = Number(gsheet.feed.entry[idx].gs$cell.row)-1;
-	        var col = Number(gsheet.feed.entry[idx].gs$cell.col)-1;
+    // 	while(idx < gsheet.feed.entry.length)
+	   // {
+	   //     // make zero based
+	   //     //var row = Number(gsheet.feed.entry[idx].gs$cell.row)-1;
+	   //     var col = Number(gsheet.feed.entry[idx].gs$cell.col)-1;
 	        
-	        if(col ==0){
-	            tplist.Add(gsheet.feed.entry[idx].gs$cell.$t);
-	        }
+	   //     if(col ==0){
+	   //         tplist.Add(gsheet.feed.entry[idx].gs$cell.$t);
+	   //     }
 	        
-	        idx++;
-	    }
+	   //     idx++;
+	   // }
         
-        idx=0;
+    //     idx=0;
         
-        that.listoftests =[];
+    //     that.listoftests =[];
         
-        while(idx < tplist.D.length){
-            that.listoftests.push({ key: tplist.D[idx], value: tplist.D[idx] });
-            idx++;
-        }
+    //     while(idx < tplist.D.length){
+    //         that.listoftests.push({ key: tplist.D[idx], value: tplist.D[idx] });
+    //         idx++;
+    //     }
         
         action();
         
