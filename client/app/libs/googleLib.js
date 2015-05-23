@@ -25,7 +25,7 @@ GoogleLibs.prototype.GetData =  function (callback) {
         var row = Number(gsheet.feed.entry[idx].gs$cell.row)-1;
         var col = Number(gsheet.feed.entry[idx].gs$cell.col)-1;
         
-        if(idx ==0){
+        if(idx !==0){
             if(listofCSVData[row] == undefined){
                 listofCSVData[row] =[];
             }
