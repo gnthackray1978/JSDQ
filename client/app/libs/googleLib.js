@@ -8,7 +8,7 @@ function sheetLoaded(spreadsheetdata) {
 
 
 var GoogleLibs = function () {    
-
+    this.startRow =1;
 };
 
 GoogleLibs.prototype.GetTestList =  function (callback) {
@@ -26,7 +26,7 @@ GoogleLibs.prototype.GetTestList =  function (callback) {
         //var row = Number(gsheet.feed.entry[idx].gs$cell.row)-1;
         var col = Number(gsheet.feed.entry[idx].gs$cell.col)-1;
         
-        if(col ==0){
+        if(col ==0 && idx >= that.startRow){
             tplist.Add(gsheet.feed.entry[idx].gs$cell.$t);
         }
         
@@ -58,7 +58,7 @@ GoogleLibs.prototype.GetData =  function (callback) {
         var row = Number(gsheet.feed.entry[idx].gs$cell.row)-1;
         var col = Number(gsheet.feed.entry[idx].gs$cell.col)-1;
         
-        if(idx !==0){
+        if(idx >= this.startRow){
             if(listofCSVData[row] == undefined){
                 listofCSVData[row] =[];
             }

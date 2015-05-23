@@ -142,40 +142,8 @@ BasicQuestioner.prototype = {
             that.listoftests = listoftests;
             action();
         });
-        
-        
-    //     var that = this;
-        
-    //     var idx =0;
 
-    // 	var tplist = new UniqueList();
-     	
-    // 	while(idx < gsheet.feed.entry.length)
-	   // {
-	   //     // make zero based
-	   //     //var row = Number(gsheet.feed.entry[idx].gs$cell.row)-1;
-	   //     var col = Number(gsheet.feed.entry[idx].gs$cell.col)-1;
-	        
-	   //     if(col ==0){
-	   //         tplist.Add(gsheet.feed.entry[idx].gs$cell.$t);
-	   //     }
-	        
-	   //     idx++;
-	   // }
-        
-    //     idx=0;
-        
-    //     that.listoftests =[];
-        
-    //     while(idx < tplist.D.length){
-    //         that.listoftests.push({ key: tplist.D[idx], value: tplist.D[idx] });
-    //         idx++;
-    //     }
-        
         action();
-        
-         
-
     },
 
 	_getCategoriesFromTest : function (action){
