@@ -449,7 +449,7 @@ BasicQuestioner.prototype = {
     },
 
     performMatch: function (answer, solution) {
-
+        console.log('matching: ' + answer + ' == ' + solution);
         answer = String(answer).toLowerCase();
 
         solution = String(solution).toLowerCase();
