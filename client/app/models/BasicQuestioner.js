@@ -1,9 +1,3 @@
-var gsheet ;
-
-function sheetLoaded(spreadsheetdata) {
-    gsheet = spreadsheetdata;
- 
-}
 
 
 var BasicQuestioner = function (view) {
@@ -267,40 +261,12 @@ BasicQuestioner.prototype = {
 
     //all questions for 1 csv including different categories
     readCSV : function(){
-        
-        var idx =0;
-
-    	this.listofcategories = new UniqueList();
-    	this.listofCSVData = [];
-    	
-    	while(idx < gsheet.feed.entry.length)
-	    {
-	        // make zero based
-	        var row = Number(gsheet.feed.entry[idx].gs$cell.row)-1;
-	        var col = Number(gsheet.feed.entry[idx].gs$cell.col)-1;
-	        
-	        if(this.listofCSVData[row] == undefined){
-	            this.listofCSVData[row] =[];
-	        }
-	         
-	        this.listofCSVData[row][col] = gsheet.feed.entry[idx].gs$cell.$t;
-	        
-	        if(col ==2){
-	            this.listofcategories.Add(gsheet.feed.entry[idx].gs$cell.$t);
-	        }
-	        
-	        idx++;
-	    }
-
-		//gsheet
-		
-        // 		spreadsheetdata.feed.entry[0].gs$cell
-        // Object {row: "1", col: "1", $t: "IsMale"}
-        // spreadsheetdata.feed.entry.length
-        // 231
-	
-    
-		
+    	var googleLibs = new GoogleLibs();
+    	var that = this;
+    	googleLibs.GetData(function(cats, csv){
+    	    that.listofcategories = cats;
+    	    that.listofCSVData = csv;
+    	})
     },
     
     
@@ -442,8 +408,6 @@ BasicQuestioner.prototype = {
         };
 
         that.view.QryAnswer(function(answer){
-            
-            
             gotAnswer(answer);
         },that);
     },
@@ -544,6 +508,7 @@ BasicQuestioner.prototype = {
         //test crap
         //test crap1
         //monkey
+        //apple
         this.isAnswerDisplayed = false;
         
         if (this.questionset !== undefined && this.questionset.length > 0) {
