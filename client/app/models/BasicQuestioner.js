@@ -138,7 +138,7 @@ BasicQuestioner.prototype = {
         var googleLibs = new GoogleLibs();
     	var that = this;
     	
-        that._getTestList(function(listoftests){
+        googleLibs.GetTestList(function(listoftests){
             that.listoftests = listoftests;
             action();
         });
