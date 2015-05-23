@@ -25,14 +25,16 @@ GoogleLibs.prototype.GetData =  function (callback) {
         var row = Number(gsheet.feed.entry[idx].gs$cell.row)-1;
         var col = Number(gsheet.feed.entry[idx].gs$cell.col)-1;
         
-        if(listofCSVData[row] == undefined){
-            listofCSVData[row] =[];
-        }
-         
-        listofCSVData[row][col] = gsheet.feed.entry[idx].gs$cell.$t;
-        
-        if(col ==2){
-            listofcategories.Add(gsheet.feed.entry[idx].gs$cell.$t);
+        if(idx ==0){
+            if(listofCSVData[row] == undefined){
+                listofCSVData[row] =[];
+            }
+             
+            listofCSVData[row][col] = gsheet.feed.entry[idx].gs$cell.$t;
+            
+            if(col ==2){
+                listofcategories.Add(gsheet.feed.entry[idx].gs$cell.$t);
+            }
         }
         
         idx++;
