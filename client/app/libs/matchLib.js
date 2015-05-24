@@ -74,7 +74,7 @@ MatchLib.prototype._arrayEquals =  function (answer,solution) {
     var aIdx =0;
     var foundCount =0;
     
-    while(aIdx < answerParts.length){
+    while(aIdx < solutionParts.length){
         if(inSolution(answerParts[aIdx]))
             foundCount++;
         
