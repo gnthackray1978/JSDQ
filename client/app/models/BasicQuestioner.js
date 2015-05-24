@@ -387,13 +387,7 @@ BasicQuestioner.prototype = {
     getScoreBasic: function (answer,callback) {
         
         var scoreFactor = 100/this.answerset.length;
-
-        // if (this.performMatch(answer, this.questionset[this.currentQuestionIdx].answer)) {
-        //     this.questionscore = scoreFactor;
-        // } else {
-        //     this.questionscore = 0;
-        // }
-        
+ 
         var mlib = new MatchLib(answer, this.questionset[this.currentQuestionIdx].answer,1);
         var that = this;
         
@@ -411,21 +405,17 @@ BasicQuestioner.prototype = {
     },
 
     getScoreMultiAnswer: function (solution,callback) {
-
-        // get all answers
-        // make list of remaining questions that havent been answered correctly
-        // make list of answers that are right
-        //  var content = this.questionset[this.currentQuestionIdx].question;
-        //var remainingAnswers = [];
+        
         var answers = this.questionset[this.currentQuestionIdx].answer;
         var originalAnswers = this.questionset[this.currentQuestionIdx].constAnswers;
-        //var idx = 0;
-
+      
         var that = this;
         var mlib = new MatchLib(answers, solution,2);
         
         mlib.Match(function(correctAnswers, remainingAnswers){
-            that.currentQuestionState.push(correctAnswers);
+            
+            if(correctAnswers.length >0)
+                that.currentQuestionState.push(correctAnswers);
             
             that.questionset[that.currentQuestionIdx].answer = remainingAnswers;
 
@@ -438,18 +428,7 @@ BasicQuestioner.prototype = {
                             
             callback();
         });
-
-        // while (idx < answers.length) {
-
-        //     if (this.performMatch(answers[idx], answer)) {
-        //         this.currentQuestionState.push(answer);
-        //     } else {
-        //         remainingAnswers.push(answers[idx]);
-        //     }
-        //     idx++;
-        // }
-
-        
+ 
     },
 
     getScoreOrderedMultiAnswer: function (answer,callback) {
@@ -487,26 +466,7 @@ BasicQuestioner.prototype = {
         });
 
     },
-
-    // performMatch: function (answer, solution) {
-    //     console.log('matching: ' + answer + ' == ' + solution);
-    //     answer = String(answer).toLowerCase();
-
-    //     solution = String(solution).toLowerCase();
-
-    //     if ($.trim(answer) == $.trim(solution)) {
-    //         return true;
-    //     } else {
-    //         return false;
-    //     }
-        
-    //     var mlib = new MatchLib(answer, solution,0);
-        
-    //     mlib.Match(function(result){
-            
-    //     })
-    // },
-
+ 
     displayQuestion: function (pos) {
 
         this.currentQuestionState = [];
