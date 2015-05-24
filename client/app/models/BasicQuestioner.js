@@ -337,6 +337,18 @@ BasicQuestioner.prototype = {
     answerQuestion: function () {
         var that = this;
         
+        var processScore = function(){
+            that.questionset[that.currentQuestionIdx].score = that.questionscore;
+            var idx = 0;
+            var working = 0;
+            while (idx < that.questionset.length) {
+                working += that.questionset[idx].score;
+                idx++;
+            }
+            that.score = Math.floor(((100 / (that.questionset.length * 100)) * working));
+            that.view.CmdDisplayScore(that.questionscore, that.score);
+        };
+        
         var gotAnswer = function(answer){
 
             //get question type
@@ -347,41 +359,24 @@ BasicQuestioner.prototype = {
             switch (type) {
                 case 0:
                     // standard question
-                    that.getScoreBasic(answer);
+                    that.getScoreBasic(answer,processScore);
                     break;
                 case 1:
                     // select single answer from possible answers      
-                    that.getScoreBasic(answer);
+                    that.getScoreBasic(answer,processScore);
                     break;
                 case 2:
                     // image question
-    
                     break;
                 case 3:
                     // multiple answers
-                    that.getScoreMultiAnswer(answer);
+                    that.getScoreMultiAnswer(answer,processScore);
                     break;
                 case 4:
                     // multiple answers
-                    that.getScoreOrderedMultiAnswer(answer);
+                    that.getScoreOrderedMultiAnswer(answer,processScore);
                     break;
             }
-    
-            that.questionset[that.currentQuestionIdx].score = that.questionscore;
-    
-    
-            var idx = 0;
-            var working = 0;
-            while (idx < that.questionset.length) {
-                working += that.questionset[idx].score;
-                idx++;
-            }
-    
-    
-            that.score = Math.floor(((100 / (that.questionset.length * 100)) * working));
-    
-            that.view.CmdDisplayScore(that.questionscore, that.score);
-        
         };
 
         that.view.QryAnswer(function(answer){
@@ -389,77 +384,127 @@ BasicQuestioner.prototype = {
         },that);
     },
 
-    getScoreBasic: function (answer) {
+    getScoreBasic: function (answer,callback) {
+        
         var scoreFactor = 100/this.answerset.length;
 
-        if (this.performMatch(answer, this.questionset[this.currentQuestionIdx].answer)) {
-            this.questionscore = scoreFactor;
-        } else {
-            this.questionscore = 0;
-        }
+        // if (this.performMatch(answer, this.questionset[this.currentQuestionIdx].answer)) {
+        //     this.questionscore = scoreFactor;
+        // } else {
+        //     this.questionscore = 0;
+        // }
+        
+        var mlib = new MatchLib(answer, this.questionset[this.currentQuestionIdx].answer,1);
+        
+        mlib.Match(function(correct){
+            if(correct){
+                this.questionscore = scoreFactor;
+            } 
+            else {
+                this.questionscore = 0;
+            }
+            
+            callback();
+        });
+        
     },
 
-    getScoreMultiAnswer: function (answer) {
+    getScoreMultiAnswer: function (solution,callback) {
 
         // get all answers
         // make list of remaining questions that havent been answered correctly
         // make list of answers that are right
         //  var content = this.questionset[this.currentQuestionIdx].question;
-        var remainingAnswers = [];
+        //var remainingAnswers = [];
         var answers = this.questionset[this.currentQuestionIdx].answer;
         var originalAnswers = this.questionset[this.currentQuestionIdx].constAnswers;
-        var idx = 0;
+        //var idx = 0;
 
-        while (idx < answers.length) {
+        var that = this;
+        var mlib = new MatchLib(answers, solution,2);
+        
+        mlib.Match(function(correctAnswers, remainingAnswers){
+            that.currentQuestionState.push(correctAnswers);
+            
+            that.questionset[that.currentQuestionIdx].answer = remainingAnswers;
 
-            if (this.performMatch(answers[idx], answer)) {
-                this.currentQuestionState.push(answer);
-            } else {
-                remainingAnswers.push(answers[idx]);
-            }
-            idx++;
-        }
+            that.questionscore = Math.floor(((100 / originalAnswers.length) * 
+                            that.currentQuestionState.length));
 
-        this.questionset[this.currentQuestionIdx].answer = remainingAnswers;
+            that.view.CmdUpdateMiscTextBoxs(that.currentQuestionState, 
+                            that.questionset[that.currentQuestionIdx].answer,
+                            that.questionset[that.currentQuestionIdx].question, '');
+                            
+            callback();
+        });
 
-        this.questionscore = Math.floor(((100 / originalAnswers.length) * this.currentQuestionState.length));
+        // while (idx < answers.length) {
 
-        this.view.CmdUpdateMiscTextBoxs(this.currentQuestionState, 
-                            this.questionset[this.currentQuestionIdx].answer,
-                            this.questionset[this.currentQuestionIdx].question, '');
+        //     if (this.performMatch(answers[idx], answer)) {
+        //         this.currentQuestionState.push(answer);
+        //     } else {
+        //         remainingAnswers.push(answers[idx]);
+        //     }
+        //     idx++;
+        // }
+
+        
     },
 
-    getScoreOrderedMultiAnswer: function (answer) {
+    getScoreOrderedMultiAnswer: function (answer,callback) {
 
         var answers = this.questionset[this.currentQuestionIdx].answer;
         var originalAnswers = this.questionset[this.currentQuestionIdx].constAnswers;
 
         var remainingAnswers = answers;
 
-        if (this.performMatch(answers[0], answer)) {
-            this.currentQuestionState.push(answer);
-            remainingAnswers.splice(0, 1);
-        }
+        // if (this.performMatch(answers[0], answer)) {
+        //     this.currentQuestionState.push(answer);
+        //     remainingAnswers.splice(0, 1);
+        // }
 
-        this.questionset[this.currentQuestionIdx].answer = remainingAnswers;
+        var that = this;
+        
+        var mlib = new MatchLib(answers[0], answer,1);
+        
+        mlib.Match(function(result){
+            if(result){
+                that.currentQuestionState.push(answer);
+                remainingAnswers.splice(0, 1);
+            }
+            
+            that.questionset[that.currentQuestionIdx].answer = remainingAnswers;
 
-        this.questionscore = Math.floor(((100 / originalAnswers.length) * this.currentQuestionState.length));
+            that.questionscore = Math.floor(((100 / originalAnswers.length) * 
+                that.currentQuestionState.length));
+    
+            that.view.CmdUpdateMiscTextBoxs(that.currentQuestionState, 
+                that.questionset[that.currentQuestionIdx].answer, 
+                that.questionset[that.currentQuestionIdx].question, '');
+                
+            callback();
+        });
 
-        this.view.CmdUpdateMiscTextBoxs(this.currentQuestionState, this.questionset[this.currentQuestionIdx].answer, this.questionset[this.currentQuestionIdx].question, '');
     },
 
-    performMatch: function (answer, solution) {
-        console.log('matching: ' + answer + ' == ' + solution);
-        answer = String(answer).toLowerCase();
+    // performMatch: function (answer, solution) {
+    //     console.log('matching: ' + answer + ' == ' + solution);
+    //     answer = String(answer).toLowerCase();
 
-        solution = String(solution).toLowerCase();
+    //     solution = String(solution).toLowerCase();
 
-        if ($.trim(answer) == $.trim(solution)) {
-            return true;
-        } else {
-            return false;
-        }
-    },
+    //     if ($.trim(answer) == $.trim(solution)) {
+    //         return true;
+    //     } else {
+    //         return false;
+    //     }
+        
+    //     var mlib = new MatchLib(answer, solution,0);
+        
+    //     mlib.Match(function(result){
+            
+    //     })
+    // },
 
     displayQuestion: function (pos) {
 
