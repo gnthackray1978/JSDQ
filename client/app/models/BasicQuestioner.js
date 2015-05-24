@@ -395,13 +395,14 @@ BasicQuestioner.prototype = {
         // }
         
         var mlib = new MatchLib(answer, this.questionset[this.currentQuestionIdx].answer,1);
+        var that = this;
         
         mlib.Match(function(correct){
             if(correct){
-                this.questionscore = scoreFactor;
+                that.questionscore = scoreFactor;
             } 
             else {
-                this.questionscore = 0;
+                that.questionscore = 0;
             }
             
             callback();
