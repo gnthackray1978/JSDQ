@@ -1,5 +1,9 @@
 
 var MatchLib = function (answer, solution, type) {    
+   
+    this.isToLower =true;
+    
+    
     this.type = type;
     
     this.answer = answer;
@@ -28,9 +32,9 @@ MatchLib.prototype.Match =  function (callback) {
 MatchLib.prototype._basicMatch =  function () {
     console.log('basic matching: ' + this.answer + ' == ' + this.solution);
     
-    this.answer = String(this.answer).toLowerCase();
     
-    this.solution = String(this.solution).toLowerCase();
+    
+    
     
     if (this._equals(this.answer,this.solution)) {
             this.matchCallback(true);
@@ -42,6 +46,12 @@ MatchLib.prototype._basicMatch =  function () {
 };
 
 MatchLib.prototype._equals =  function (answer,solution) {
+     
+     if(this.isToLower){
+        answer = String(answer).toLowerCase();
+        solution = String(solution).toLowerCase();
+     }
+     
      if ($.trim(answer) == $.trim(solution)) {
             return true;
         } else {
