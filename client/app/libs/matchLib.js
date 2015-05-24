@@ -2,9 +2,9 @@
 var MatchLib = function (answer, solution, type) {    
     this.type = type;
     
-    this.answer = String(answer).toLowerCase();
+    this.answer = answer;
     
-    this.solution = String(solution).toLowerCase();
+    this.solution = solution;
     
     
 };
@@ -27,6 +27,10 @@ MatchLib.prototype.Match =  function (callback) {
 
 MatchLib.prototype._basicMatch =  function () {
     console.log('basic matching: ' + this.answer + ' == ' + this.solution);
+    
+    this.answer = String(this.answer).toLowerCase();
+    
+    this.solution = String(this.solution).toLowerCase();
     
     if (this._equals(this.answer,this.solution)) {
             this.matchCallback(true);
