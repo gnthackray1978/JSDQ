@@ -391,6 +391,8 @@ BasicQuestioner.prototype = {
         var mlib = new MatchLib(answer, this.questionset[this.currentQuestionIdx].answer,1);
         var that = this;
         
+        mlib._arrayEquals('hello there monkey', 'hello there monkey');
+        
         mlib.Match(function(correct){
             if(correct){
                 that.questionscore = scoreFactor;
