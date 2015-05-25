@@ -32,7 +32,7 @@ MatchLib.prototype.Match =  function (callback) {
 MatchLib.prototype._basicMatch =  function () {
     console.log('basic matching: ' + this.answer + ' == ' + this.solution);
     
-    if (this._equals(this.answer,this.solution)) {
+    if (this._arrayEqual(this.answer,this.solution)) {
             this.matchCallback(true);
         } else {
             this.matchCallback(false);
@@ -53,7 +53,50 @@ MatchLib.prototype._equals =  function (answer,solution) {
     }
 },
 
-MatchLib.prototype._arrayEquals =  function (answer,solution) {
+MatchLib.prototype._arrayEqual =  function (answer,solution) {
+     
+    var that =this;
+    var answerParts  =answer.split(' ');
+
+    var solutionParts  =solution.split(' ');
+    
+    if(answerParts.length != solutionParts.length){
+        return false;
+    }
+    
+    var aIdx =0;
+    var matchCount =0;
+    
+    var part = function(part, charCount){
+        
+        if(part.length > charCount){
+            return part.substring(0,charCount);
+        }
+        
+        return part;
+    };
+    
+    while(aIdx < solutionParts.length){
+        if(that._equals(part(answerParts[aIdx],2),part(solutionParts[aIdx],2)))
+        {
+            matchCount++;
+        }
+        
+        aIdx++;
+    }
+      
+    if(matchCount == solution.length)  {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+    
+      
+},
+
+MatchLib.prototype._arrayUnsortedEqual =  function (answer,solution) {
      
     var that =this;
     var answerParts  =answer.split(' ');
@@ -101,7 +144,7 @@ MatchLib.prototype._multiAnswer =  function () {
 
     while (idx < this.answer.length) {
 
-        if (this._equals(this.answer[idx], this.solution)) {
+        if (this._arrayEqual(this.answer[idx], this.solution)) {
             correctAnswers.push(this.solution);
         } else {
             remainingAnswers.push(this.answer[idx]);
