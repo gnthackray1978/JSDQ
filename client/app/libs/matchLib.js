@@ -85,7 +85,7 @@ MatchLib.prototype._arrayEqual =  function (answer,solution) {
         aIdx++;
     }
       
-    if(matchCount == solution.length)  {
+    if(matchCount == solutionParts.length)  {
         return true;
     }
     else
