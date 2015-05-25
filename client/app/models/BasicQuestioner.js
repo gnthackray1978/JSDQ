@@ -394,7 +394,7 @@ BasicQuestioner.prototype = {
         
         mlib.Match(function(correct){
             if(correct){
-                that.questionscore = scoreFactor;
+                that.questionscore = 100;//scoreFactor;
             } 
             else {
                 that.questionscore = 0;
