@@ -315,8 +315,7 @@ BasicQuestioner.prototype = {
                         this.questionset.push({ question: cols[questionColIdx], answer: answer, type: questionType, constAnswers: constAnswers, score: 0, attemptedAnswer:'' });
                     } else {
 
-                        questionType = (cols[1].indexOf(".jpg") !== -1) ? 2 : questionType;
-
+                     
                         this.questionset.push({ question: cols[questionColIdx], answer: cols[multiAnswerStartIdx], type: questionType, constAnswers: cols[multiAnswerStartIdx], score: 0, attemptedAnswer:'' });
                         this.answerset.push('');
                     }
