@@ -156,7 +156,7 @@ BasicQuestioner.prototype = {
 	        
 	        while(idx < this.listofCSVData.length){
 	             if(this.listofCSVData[idx][0] == this.selectedCSV)
-	                this.listofcategories.Add( this.listofCSVData[idx][1]);
+	                this.listofcategories.Add( this.listofCSVData[idx][2]);
 	             
 	             idx++;
 	        }
@@ -271,7 +271,7 @@ BasicQuestioner.prototype = {
 
                 var cols = this.listofCSVData[idx];
 
-                if (cols[1] == this.selectedcategory) {
+                if (cols[2] == this.selectedcategory) {
 
                     var questionType = 0; // default option
 
