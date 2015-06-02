@@ -1,38 +1,20 @@
 
 
 var BasicQuestioner = function (view) {
-
-
-	this.catsurl ='http://local.gnthackray.net:8080/cats';
-	this.qsurl ='http://local.gnthackray.net:8080/ques';
-	
-	
     this.view = view;
-
-   
     this.selectedcategory = '';
     this.selectedCSV = 3;
     this.listoftests = [];
     this.listofcategories = new UniqueList();
     this.listofCSVData =[];
-    
-    
     this.questionset = [];
     this.answerset = [];
-
     // used for multi answer questions
     this.currentQuestionState = [];
-
-
     this.isAnswerDisplayed = false;
-
-
     this.currentQuestionIdx = 0;
     this.score = 0;
     this.questionscore = 0;
-
-    this.tests = [];
-
 };
 
 
