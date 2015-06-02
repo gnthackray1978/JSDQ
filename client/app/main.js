@@ -1,18 +1,11 @@
 "use strict";
-
-//var Panels, QryStrUtils, AncUtils;
+//var View, BasicQuestioner, QuestionController;
 
 
 $(document).bind("pageinit", function () {
     loadAll(true);
-    
-  
-
 });
 
-
- 
- 
 function loadAll (drive){
     
     var appView = new View();
