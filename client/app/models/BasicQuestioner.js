@@ -150,42 +150,37 @@ BasicQuestioner.prototype = {
 	
      
     toggleAnswer: function () {
-
-
-
-
+        
         if (this.isAnswerDisplayed == true) {
             this.view.CmdDisplayCorrectAnswer('');
             this.isAnswerDisplayed = false;
 
         } else {
-            var answers = this.questionset[this.currentQuestionIdx].answer;
-            var correctAnswer = '';
+            // var answers = this.questionset[this.currentQuestionIdx].answer;
+            // var correctAnswer = '';
 
-            var idx = 0;
-            if (this.questionset[this.currentQuestionIdx].type != 0) {
-                while (idx < answers.length) {
+            // var idx = 0;
+            // if (this.questionset[this.currentQuestionIdx].type != 0) {
+            //     while (idx < answers.length) {
 
-                    var formatClass = '';
+            //         var formatClass = '';
+            //         if (idx % 2 == 0) {
+            //             formatClass = 'alt-cAnswer1';
+            //         } else {
+            //             formatClass = 'alt-cAnswer2';
+            //         }
 
+            //         correctAnswer += '<span class ="' + formatClass + '">' + answers[idx] + '</span>';
 
-                    if (idx % 2 == 0) {
-                        formatClass = 'alt-cAnswer1';
-                    } else {
-                        formatClass = 'alt-cAnswer2';
-                    }
+            //         if (idx < answers.length - 1)
+            //             correctAnswer += ',';
+            //         idx++;
+            //     }
+            // } else {
+            //     correctAnswer = this.questionset[this.currentQuestionIdx].constAnswers;
+            // }
 
-                    correctAnswer += '<span class ="' + formatClass + '">' + answers[idx] + '</span>';
-
-                    if (idx < answers.length - 1)
-                        correctAnswer += ',';
-                    idx++;
-                }
-            } else {
-                correctAnswer = this.questionset[this.currentQuestionIdx].constAnswers;
-            }
-
-            this.view.CmdDisplayCorrectAnswer(correctAnswer);
+            this.view.CmdDisplayCorrectAnswer(this.questionset[this.currentQuestionIdx].answer);
 
             this.isAnswerDisplayed = true;
         }
