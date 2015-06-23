@@ -156,36 +156,9 @@ BasicQuestioner.prototype = {
             this.isAnswerDisplayed = false;
 
         } else {
-            // var answers = this.questionset[this.currentQuestionIdx].answer;
-            // var correctAnswer = '';
-
-            // var idx = 0;
-            // if (this.questionset[this.currentQuestionIdx].type != 0) {
-            //     while (idx < answers.length) {
-
-            //         var formatClass = '';
-            //         if (idx % 2 == 0) {
-            //             formatClass = 'alt-cAnswer1';
-            //         } else {
-            //             formatClass = 'alt-cAnswer2';
-            //         }
-
-            //         correctAnswer += '<span class ="' + formatClass + '">' + answers[idx] + '</span>';
-
-            //         if (idx < answers.length - 1)
-            //             correctAnswer += ',';
-            //         idx++;
-            //     }
-            // } else {
-            //     correctAnswer = this.questionset[this.currentQuestionIdx].constAnswers;
-            // }
-
             this.view.CmdDisplayCorrectAnswer(this.questionset[this.currentQuestionIdx].answer);
-
             this.isAnswerDisplayed = true;
         }
-
-
     },
 
     questionSelectionsEnabled: function () {
@@ -289,11 +262,25 @@ BasicQuestioner.prototype = {
                         }
 
 
-                        this.questionset.push({ question: cols[questionColIdx], answer: answer, type: questionType, constAnswers: constAnswers, score: 0, attemptedAnswer:'' });
+                        this.questionset.push({ question: cols[questionColIdx], 
+                                                answer: answer, 
+                                                type: questionType, 
+                                                constAnswers: constAnswers, 
+                                                score: 0, 
+                                                attemptedAnswer:'',
+                                                correctAnswers:[]
+                                              });
                     } else {
 
                      
-                        this.questionset.push({ question: cols[questionColIdx], answer: cols[multiAnswerStartIdx], type: questionType, constAnswers: cols[multiAnswerStartIdx], score: 0, attemptedAnswer:'' });
+                        this.questionset.push({ question: cols[questionColIdx], 
+                                                answer: cols[multiAnswerStartIdx], 
+                                                type: questionType, 
+                                                constAnswers: cols[multiAnswerStartIdx], 
+                                                score: 0, 
+                                                attemptedAnswer:'',
+                                                correctAnswers:[]
+                                              });
                         this.answerset.push('');
                     }
                 }
@@ -391,8 +378,10 @@ BasicQuestioner.prototype = {
         
         mlib.Match(function(correctAnswers, remainingAnswers){
             
-            if(correctAnswers.length >0)
+            if(correctAnswers.length >0){
                 that.currentQuestionState.push(correctAnswers);
+                that.questionset[that.currentQuestionIdx].correctAnswers.push(correctAnswers); 
+            }
             
             that.questionset[that.currentQuestionIdx].answer = remainingAnswers;
 
