@@ -469,7 +469,7 @@ BasicQuestioner.prototype = {
 
             //this.questionset[this.currentQuestionIdx].answer = this.questionset[this.currentQuestionIdx].constAnswers;
 
-            this.view.CmdDisplayScore('0');
+            this.view.CmdDisplayScore(this.questionset[this.currentQuestionIdx].score);
 
             //this.questionscore = 0;
 
