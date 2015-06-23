@@ -312,6 +312,10 @@ View.prototype.QrySubmitEvt = function (callback, context) {
     $('#submit').bind("vclick", function () { callback.apply(context); });
 };
 
+View.prototype.QryResetQuestionEvt = function (callback, context) {
+    $('#select').bind("vclick", function () { callback.apply(context); });
+};
+
 View.prototype.QryAnswerButtonPress = function (callback, context) {
     $("#answer-box").keypress(function (event) {
         if (event.which == 13) {

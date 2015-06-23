@@ -21,7 +21,7 @@ var QuestionController = function (view, model) {
     this.view.QryCategoryChanged(this.qryCategoryChanged, this);
     this.view.QryCSVChanged(this.qryCSVChanged, this);
     this.view.QryModeChanged(this.qryModeChanged, this);
-    
+    this.view.QryResetQuestionEvt(this.qryResetQuestionEvt, this);
     this.view.QryNA(this.qryNA,this);
 };
 
@@ -119,6 +119,12 @@ QuestionController.prototype = {
     qryCSVChanged:function(evt){
         if (this.model !== null) {
             this.model.CSVChanged(evt);
+        }
+    },
+    
+    qryResetQuestionEvt:function(evt){
+        if (this.model !== null) {
+            this.model.ResetQuestion(evt);
         }
     }
     

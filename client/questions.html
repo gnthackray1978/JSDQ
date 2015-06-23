@@ -29,32 +29,28 @@
 </head> 
 <body> 
 
-
-
-<div data-role="header">
-
-	<div class="ui-grid-b">
-		<h2 id = 'test_name' class="ui-block-a">Unknown Test</h2>
-        <h2 id = 'cat_name' class="ui-block-b">Unknown Category</h2>   
-    </div> 
-	
-    <div id='header-answer-block' class="ui-grid-c hidePanel">
-        <div class="ui-block-a"><button type="button" id='main' data-theme="c">Finish Test</button> </div>
-        <div class="ui-block-b"><button type="button" id='select' data-theme="c">Questions</button></div>
-        <div class="ui-block-c"><button type="button" id='submit' data-theme="c">Answer</button></div>
-        <div class="ui-block-d"><button type="button" id='show-answer' data-theme="c">Give up</button></div>
-    </div>
-	
-    <div id='header-home-block' class="ui-grid-c displayPanel">
-        <div class="ui-block-a"><button type="button" id='taketest' data-theme="c">Take Test</button></div>
-        <div class="ui-block-b"><button type="button" id='login' data-theme="c">N/A</button></div>
-        <div class="ui-block-c"><button type="button" id='choosetest' data-theme="c">Select Test</button></div>
-        <div class="ui-block-d">
-            <button type="button" id='history' data-theme="c">Test History</button>
+    <div data-role="header">
+    
+    	<div class="ui-grid-b">
+    		<h2 id = 'test_name' class="ui-block-a">Unknown Test</h2>
+            <h2 id = 'cat_name' class="ui-block-b">Unknown Category</h2>   
+        </div> 
+    	
+        <div id='header-answer-block' class="ui-grid-c hidePanel">
+            <div class="ui-block-a"><button type="button" id='main' data-theme="c">Finish Test</button> </div>
+            <div class="ui-block-b"><button type="button" id='select' data-theme="c">Reset Question</button></div>
+            <div class="ui-block-c"><button type="button" id='submit' data-theme="c">Answer</button></div>
+            <div class="ui-block-d"><button type="button" id='show-answer' data-theme="c">Give up</button></div>
         </div>
-    </div>
-		
-</div><!-- /header -->
+    	
+        <div id='header-home-block' class="ui-grid-c displayPanel">
+            <div class="ui-block-a"><button type="button" id='taketest' data-theme="c">Take Test</button></div>
+            <div class="ui-block-b"><button type="button" id='login' data-theme="c">N/A</button></div>
+            <div class="ui-block-c"><button type="button" id='choosetest' data-theme="c">Select Test</button></div>
+            <div class="ui-block-d"><button type="button" id='history' data-theme="c">Test History</button></div>
+        </div>
+    		
+    </div><!-- /header -->
     
     
     <div id="pnlQuestions" class="hidePanel">
@@ -92,36 +88,24 @@
     </div>    
      
     <div data-role="footer" data-position="fixed">
-
-
         <div id = 'answer-block' class = "displayPanel">
-                      
             <div id = "score-nav"class="ui-grid-b" class = "displayPanel">         
                 <div class="ui-block-a"><div id = 'question-score' class = "info-bar">100%</div></div>
                 <div class="ui-block-b"><div id = 'perc-correct' class = "info-bar">100%</div></div>
                 <div class="ui-block-c"><div id = 'current-question' class = "info-bar">1 of 10</div></div>
             </div>
-                   
             <div data-role="navbar">
-                
                 <div id = "question-nav" class="ui-grid-a displayPanel" >
                     <div id = 'prev' class="ui-block-a"><button type="button" data-theme="c">Previous</button></div>
                     <div id = 'next' class="ui-block-b"><button type="button" data-theme="c">Next</button></div>	   
                 </div>
-                
                 <div id = "test-sel" class="ui-grid-a hidePanel" >
                     <div id = 'cats' class="ui-block-a"><button type="button" data-theme="c">Sub Categories</button></div>
                     <div id = 'csvs' class="ui-block-b"><button type="button" data-theme="c">Categories</button></div>	   
                 </div>
-
             </div><!-- /navbar -->
-
         </div>
-
-        
-
-	
-</div><!-- /footer -->
+    </div><!-- /footer -->
 
 </body>
 </html>

@@ -79,8 +79,15 @@ BasicQuestioner.prototype = {
 	    this.createquestionset();
 	},
 	
-    resetQuestion:function(){
+    ResetQuestion:function(e){
+	    this.questionset[this.currentQuestionIdx].score =0;
+	    this.questionset[this.currentQuestionIdx].correctAnswers = [];
+	    this.questionset[this.currentQuestionIdx].attemptedAnswer =[];
+	    this.questionset[this.currentQuestionIdx].answer = '';
 	    
+	    this._calculateScore();
+	    
+	    this.displayQuestion();
 	},
 
     selectTest: function () {
@@ -298,19 +305,24 @@ BasicQuestioner.prototype = {
 
     
     // scoring and answering functionality
+    
+    _calculateScore: function(){
+        var that = this;
+        var idx = 0;
+        var working = 0;
+        while (idx < that.questionset.length) {
+            working += that.questionset[idx].score;
+            idx++;
+        }
+        that.score = Math.floor(((100 / (that.questionset.length * 100)) * working));
+    },
 
     answerQuestion: function () {
         var that = this;
         
         var processScore = function(){
-            // = that.questionscore;
-            var idx = 0;
-            var working = 0;
-            while (idx < that.questionset.length) {
-                working += that.questionset[idx].score;
-                idx++;
-            }
-            that.score = Math.floor(((100 / (that.questionset.length * 100)) * working));
+            that._calculateScore();
+            
             that.view.CmdDisplayScore(that.questionset[that.currentQuestionIdx].score, that.score);
         };
         
@@ -452,8 +464,7 @@ BasicQuestioner.prototype = {
                 if (this.currentQuestionIdx > 0)
                     this.currentQuestionIdx--;
                 break;
-            default:
-                this.currentQuestionIdx = 0;
+           
         }
         
         this.view.CmdDisplayCorrectAnswer('');
