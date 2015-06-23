@@ -79,7 +79,9 @@ BasicQuestioner.prototype = {
 	    this.createquestionset();
 	},
 	
-   
+    resetQuestion:function(){
+	    
+	},
 
     selectTest: function () {
         var that = this;
@@ -301,7 +303,7 @@ BasicQuestioner.prototype = {
         var that = this;
         
         var processScore = function(){
-            that.questionset[that.currentQuestionIdx].score = that.questionscore;
+            // = that.questionscore;
             var idx = 0;
             var working = 0;
             while (idx < that.questionset.length) {
@@ -309,7 +311,7 @@ BasicQuestioner.prototype = {
                 idx++;
             }
             that.score = Math.floor(((100 / (that.questionset.length * 100)) * working));
-            that.view.CmdDisplayScore(that.questionscore, that.score);
+            that.view.CmdDisplayScore(that.questionset[that.currentQuestionIdx].score, that.score);
         };
         
         var gotAnswer = function(answer){
@@ -357,10 +359,11 @@ BasicQuestioner.prototype = {
         
         mlib.Match(function(correct){
             if(correct){
-                that.questionscore = 100;//scoreFactor;
+                //that.questionscore = 100;//scoreFactor;
+                that.questionset[that.currentQuestionIdx].score = 100;
             } 
             else {
-                that.questionscore = 0;
+                that.questionset[that.currentQuestionIdx].score = 0;
             }
             
             callback();
@@ -385,8 +388,9 @@ BasicQuestioner.prototype = {
             
             that.questionset[that.currentQuestionIdx].answer = remainingAnswers;
 
-            that.questionscore = Math.floor(((100 / originalAnswers.length) * 
+            that.questionset[that.currentQuestionIdx].score = Math.floor(((100 / originalAnswers.length) * 
                             that.questionset[that.currentQuestionIdx].correctAnswers.length));
+
 
             that.view.CmdUpdateMiscTextBoxs(that.questionset[that.currentQuestionIdx].correctAnswers, 
                                             that.questionset[that.currentQuestionIdx].answer,
@@ -421,7 +425,7 @@ BasicQuestioner.prototype = {
             
             that.questionset[that.currentQuestionIdx].answer = remainingAnswers;
 
-            that.questionscore = Math.floor(((100 / originalAnswers.length) * 
+            that.questionset[that.currentQuestionIdx].score = Math.floor(((100 / originalAnswers.length) * 
                 that.questionset[that.currentQuestionIdx].correctAnswers.length));
     
             that.view.CmdUpdateMiscTextBoxs(that.questionset[that.currentQuestionIdx].correctAnswers, 
@@ -467,7 +471,7 @@ BasicQuestioner.prototype = {
 
             this.view.CmdDisplayScore('0');
 
-            this.questionscore = 0;
+            //this.questionscore = 0;
 
             var attemptedAnswer = this.questionset[this.currentQuestionIdx].attemptedAnswer;
 
