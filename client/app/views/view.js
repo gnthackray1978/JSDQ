@@ -124,15 +124,28 @@ View.prototype.CmdDisplayCSVList = function (catList, context) {
 };
 //updateBoxs
 View.prototype.CmdUpdateMiscTextBoxs = function(currentQuestionState, answer, content, answerBox){
-    var answersofar = '<\BR>' + 'Progress so far: ' + '<\BR>' + answer.length + '<\BR>';
+    // var answersofar = '<\BR>' + 'Progress so far: ' + '<\BR>' + answer.length + '<\BR>';
+    // var idx = 0;
+    // while (idx < currentQuestionState.length) {
+    //     answersofar += currentQuestionState[idx] + ' ';
+    //     idx++;
+    // }
+
+    $('#answer-box').val(answerBox);
+    $('#mainbody').html(content); //question box
+    //$('#answer-so-far').html(answersofar);
+    
+    this.CmdDisplayAnswerSoFar(currentQuestionState, answer);
+};
+
+View.prototype.CmdDisplayAnswerSoFar = function(currentQuestionState){
+    var answersofar = '<\BR>' + 'Progress so far: ' + '<\BR>' + currentQuestionState.length + '<\BR>';
     var idx = 0;
     while (idx < currentQuestionState.length) {
         answersofar += currentQuestionState[idx] + ' ';
         idx++;
     }
-
-    $('#answer-box').val(answerBox);
-    $('#mainbody').html(content); //question box
+    
     $('#answer-so-far').html(answersofar);
 };
 

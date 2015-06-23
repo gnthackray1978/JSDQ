@@ -485,6 +485,7 @@ BasicQuestioner.prototype = {
                     break;
                 case 3:// multi answer
                     this.view.CmdDisplayMultiAnswerQuestion(this.questionset[this.currentQuestionIdx].question, attemptedAnswer);
+                    this.view.CmdDisplayAnswerSoFar(this.questionset[this.currentQuestionIdx].correctAnswers);
                     break;
                 case 4:// multi ordered answer
                     this.view.CmdDisplaySortedMultiAnswerQuestion(this.questionset[this.currentQuestionIdx].question, attemptedAnswer);
