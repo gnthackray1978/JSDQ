@@ -379,18 +379,18 @@ BasicQuestioner.prototype = {
         mlib.Match(function(correctAnswers, remainingAnswers){
             
             if(correctAnswers.length >0){
-                that.currentQuestionState.push(correctAnswers);
+            //    that.currentQuestionState.push(correctAnswers);
                 that.questionset[that.currentQuestionIdx].correctAnswers.push(correctAnswers); 
             }
             
             that.questionset[that.currentQuestionIdx].answer = remainingAnswers;
 
             that.questionscore = Math.floor(((100 / originalAnswers.length) * 
-                            that.currentQuestionState.length));
+                            that.questionset[that.currentQuestionIdx].correctAnswers.length));
 
-            that.view.CmdUpdateMiscTextBoxs(that.currentQuestionState, 
-                            that.questionset[that.currentQuestionIdx].answer,
-                            that.questionset[that.currentQuestionIdx].question, '');
+            that.view.CmdUpdateMiscTextBoxs(that.questionset[that.currentQuestionIdx].correctAnswers, 
+                                            that.questionset[that.currentQuestionIdx].answer,
+                                            that.questionset[that.currentQuestionIdx].question, '');
                             
             callback();
         });
@@ -415,16 +415,16 @@ BasicQuestioner.prototype = {
         
         mlib.Match(function(result){
             if(result){
-                that.currentQuestionState.push(answer);
+                that.questionset[that.currentQuestionIdx].correctAnswers.push(answer);
                 remainingAnswers.splice(0, 1);
             }
             
             that.questionset[that.currentQuestionIdx].answer = remainingAnswers;
 
             that.questionscore = Math.floor(((100 / originalAnswers.length) * 
-                that.currentQuestionState.length));
+                that.questionset[that.currentQuestionIdx].correctAnswers.length));
     
-            that.view.CmdUpdateMiscTextBoxs(that.currentQuestionState, 
+            that.view.CmdUpdateMiscTextBoxs(that.questionset[that.currentQuestionIdx].correctAnswers, 
                 that.questionset[that.currentQuestionIdx].answer, 
                 that.questionset[that.currentQuestionIdx].question, '');
                 
