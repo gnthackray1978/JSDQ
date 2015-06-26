@@ -85,6 +85,12 @@ BasicQuestioner.prototype = {
 	    this.questionset[this.currentQuestionIdx].attemptedAnswer =[];
 	 //   this.questionset[this.currentQuestionIdx].answer = '';
 	    
+	    var idx =0;
+	    while(idx < this.questionset[this.currentQuestionIdx].correctAnswers.length){
+	        
+	        idx++;
+	    }
+	    
 	    this._calculateScore();
 	    
 	    this.displayQuestion();
