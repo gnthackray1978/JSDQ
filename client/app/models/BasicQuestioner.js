@@ -319,44 +319,47 @@ BasicQuestioner.prototype = {
 
     answerQuestion: function () {
         var that = this;
-        
-        var processScore = function(){
-            that._calculateScore();
-            
-            that.view.CmdDisplayScore(that.questionset[that.currentQuestionIdx].score, that.score);
-            
-            switch (that.questionset[that.currentQuestionIdx].type) {
-                case 3:
-                case 4:
-                    that.view.CmdUpdateMiscTextBoxs(that.questionset[that.currentQuestionIdx].correctAnswers, 
-                                            that.questionset[that.currentQuestionIdx].answer,
-                                            that.questionset[that.currentQuestionIdx].question, '');
-                    break;
-            }
-        };
-        
+
         var gotAnswer = function(answer){
 
-            //get question type
-            var type = that.questionset[that.currentQuestionIdx].type;
+            var question =  that.questionset[that.currentQuestionIdx];
+
+            var processScore = function(){
+                that._calculateScore();
+                
+                that.view.CmdDisplayScore(question.score, that.score);
+                
+                switch (question.type) {
+                    case 3:
+                    case 4:
+                        that.view.CmdUpdateMiscTextBoxs(question.correctAnswers, 
+                                                question.answer,
+                                                question.question, '');
+                        break;
+                }
+            };
+
             
-            that.questionset[that.currentQuestionIdx].attemptedAnswer = answer;
+            
+            question.attemptedAnswer = answer;
+            
+            var scoreLib = new ScoreLib();
                         
-            switch (type) {
+            switch (question.type) {
                 case 0:
                 case 1:  
-                    that.getScoreBasic(answer,processScore);
+                    scoreLib.getScoreBasic(answer,processScore);
                     break;
                 case 2:
                     // image question
                     break;
                 case 3:
                     // multiple answers
-                    that.getScoreMultiAnswer(that.questionset[that.currentQuestionIdx],answer,processScore);
+                    scoreLib.getScoreMultiAnswer(question,answer,processScore);
                     break;
                 case 4:
                     // multiple answers
-                    that.getScoreOrderedMultiAnswer(that.questionset[that.currentQuestionIdx], answer,processScore);
+                    scoreLib.getScoreOrderedMultiAnswer(question, answer,processScore);
                     break;
             }
         };
@@ -366,86 +369,6 @@ BasicQuestioner.prototype = {
         },that);
     },
 
-    getScoreBasic: function (answer,callback) {
-        
-        var scoreFactor = 100/this.answerset.length;
- 
-        var mlib = new MatchLib(answer, this.questionset[this.currentQuestionIdx].answer,1);
-        var that = this;
-        
-        
-        mlib.Match(function(correct){
-            if(correct){
-                //that.questionscore = 100;//scoreFactor;
-                that.questionset[that.currentQuestionIdx].score = 100;
-            } 
-            else {
-                that.questionset[that.currentQuestionIdx].score = 0;
-            }
-            
-            callback();
-        });
-        
-    },
-
-    getScoreMultiAnswer: function (question,attemptedAnswer, callback) {
-        
-        var questionObj = question;//that.questionset[that.currentQuestionIdx];
-        
-        var answers = questionObj.answer;
-        var originalAnswers = questionObj.constAnswers;
-      
-        var that = this;
-        var mlib = new MatchLib(answers, attemptedAnswer,2);
-        
-        mlib.Match(function(correctAnswers, remainingAnswers){
-            
-            if(correctAnswers.length >0){
-                questionObj.correctAnswers.push(correctAnswers); 
-            }
-            
-            questionObj.answer = remainingAnswers;
-
-            questionObj.score = Math.floor(((100 / originalAnswers.length) * 
-                            questionObj.correctAnswers.length));
-
-            callback();
-        });
- 
-    },
-
-    getScoreOrderedMultiAnswer: function (answer,callback) {
-
-        var answers = this.questionset[this.currentQuestionIdx].answer;
-        var originalAnswers = this.questionset[this.currentQuestionIdx].constAnswers;
-
-        var remainingAnswers = answers;
-
-        // if (this.performMatch(answers[0], answer)) {
-        //     this.currentQuestionState.push(answer);
-        //     remainingAnswers.splice(0, 1);
-        // }
-
-        var that = this;
-        
-        var mlib = new MatchLib(answers[0], answer,1);
-        
-        mlib.Match(function(result){
-            if(result){
-                that.questionset[that.currentQuestionIdx].correctAnswers.push(answer);
-                remainingAnswers.splice(0, 1);
-            }
-            
-            that.questionset[that.currentQuestionIdx].answer = remainingAnswers;
-
-            that.questionset[that.currentQuestionIdx].score = Math.floor(((100 / originalAnswers.length) * 
-                that.questionset[that.currentQuestionIdx].correctAnswers.length));
-    
-            callback();
-        });
-
-    },
- 
     displayQuestion: function (pos) {
 
         this.currentQuestionState = [];
