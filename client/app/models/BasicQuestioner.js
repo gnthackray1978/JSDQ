@@ -348,18 +348,18 @@ BasicQuestioner.prototype = {
             switch (question.type) {
                 case 0:
                 case 1:  
-                    scoreLib.getScoreBasic(answer,processScore);
+                    scoreLib.GetScoreBasic(answer,processScore);
                     break;
                 case 2:
                     // image question
                     break;
                 case 3:
                     // multiple answers
-                    scoreLib.getScoreMultiAnswer(question,answer,processScore);
+                    scoreLib.GetScoreMultiAnswer(question,answer,processScore);
                     break;
                 case 4:
                     // multiple answers
-                    scoreLib.getScoreOrderedMultiAnswer(question, answer,processScore);
+                    scoreLib.GetScoreOrderedMultiAnswer(question, answer,processScore);
                     break;
             }
         };
