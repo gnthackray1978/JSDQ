@@ -352,11 +352,11 @@ BasicQuestioner.prototype = {
                     break;
                 case 3:
                     // multiple answers
-                    that.getScoreMultiAnswer(answer,processScore);
+                    that.getScoreMultiAnswer(that.questionset[that.currentQuestionIdx],answer,processScore);
                     break;
                 case 4:
                     // multiple answers
-                    that.getScoreOrderedMultiAnswer(answer,processScore);
+                    that.getScoreOrderedMultiAnswer(that.questionset[that.currentQuestionIdx], answer,processScore);
                     break;
             }
         };
@@ -388,24 +388,26 @@ BasicQuestioner.prototype = {
         
     },
 
-    getScoreMultiAnswer: function (solution,callback) {
+    getScoreMultiAnswer: function (question,attemptedAnswer, callback) {
         
-        var answers = this.questionset[this.currentQuestionIdx].answer;
-        var originalAnswers = this.questionset[this.currentQuestionIdx].constAnswers;
+        var questionObj = question;//that.questionset[that.currentQuestionIdx];
+        
+        var answers = questionObj.answer;
+        var originalAnswers = questionObj.constAnswers;
       
         var that = this;
-        var mlib = new MatchLib(answers, solution,2);
+        var mlib = new MatchLib(answers, attemptedAnswer,2);
         
         mlib.Match(function(correctAnswers, remainingAnswers){
             
             if(correctAnswers.length >0){
-                that.questionset[that.currentQuestionIdx].correctAnswers.push(correctAnswers); 
+                questionObj.correctAnswers.push(correctAnswers); 
             }
             
-            that.questionset[that.currentQuestionIdx].answer = remainingAnswers;
+            questionObj.answer = remainingAnswers;
 
-            that.questionset[that.currentQuestionIdx].score = Math.floor(((100 / originalAnswers.length) * 
-                            that.questionset[that.currentQuestionIdx].correctAnswers.length));
+            questionObj.score = Math.floor(((100 / originalAnswers.length) * 
+                            questionObj.correctAnswers.length));
 
             callback();
         });
