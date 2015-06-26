@@ -83,7 +83,7 @@ BasicQuestioner.prototype = {
 	    this.questionset[this.currentQuestionIdx].score =0;
 	    this.questionset[this.currentQuestionIdx].correctAnswers = [];
 	    this.questionset[this.currentQuestionIdx].attemptedAnswer =[];
-	 //   this.questionset[this.currentQuestionIdx].answer = '';
+	    this.questionset[this.currentQuestionIdx].answer = JSON.parse(JSON.stringify(this.questionset[this.currentQuestionIdx].correctAnswers));
 	    
 	    var idx =0;
 	    while(idx < this.questionset[this.currentQuestionIdx].correctAnswers.length){
