@@ -83,7 +83,7 @@ BasicQuestioner.prototype = {
 	    this.questionset[this.currentQuestionIdx].score =0;
 	    this.questionset[this.currentQuestionIdx].correctAnswers = [];
 	    this.questionset[this.currentQuestionIdx].attemptedAnswer =[];
-	    this.questionset[this.currentQuestionIdx].answer = '';
+	 //   this.questionset[this.currentQuestionIdx].answer = '';
 	    
 	    this._calculateScore();
 	    
@@ -339,8 +339,6 @@ BasicQuestioner.prototype = {
                 }
             };
 
-            
-            
             question.attemptedAnswer = answer;
             
             var scoreLib = new ScoreLib();
@@ -348,7 +346,7 @@ BasicQuestioner.prototype = {
             switch (question.type) {
                 case 0:
                 case 1:  
-                    scoreLib.GetScoreBasic(answer,processScore);
+                    scoreLib.GetScoreBasic(question,answer,processScore);
                     break;
                 case 2:
                     // image question

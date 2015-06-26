@@ -1,6 +1,22 @@
 var ScoreLib = function () {    
 };
 
+ScoreLib.prototype.GetScoreForSet= function (questionSet,callback) {
+
+   
+    var idx = 0;
+    var working = 0;
+    while (idx < questionSet.length) {
+        working += questionSet[idx].score;
+        idx++;
+    }
+    var score = Math.floor(((100 / (questionSet.length * 100)) * working));
+    
+    callback(score);
+    
+};
+
+
 ScoreLib.prototype.GetScoreBasic= function (question,answer,callback) {
         
     var mlib = new MatchLib(answer, question.answer,1);
