@@ -84,14 +84,10 @@ BasicQuestioner.prototype = {
 	    this.questionset[this.currentQuestionIdx].correctAnswers = [];
 	    this.questionset[this.currentQuestionIdx].attemptedAnswer =[];
 	    this.questionset[this.currentQuestionIdx].answer = JSON.parse(JSON.stringify(this.questionset[this.currentQuestionIdx].constAnswers));
-	    
-	    var idx =0;
-	    while(idx < this.questionset[this.currentQuestionIdx].correctAnswers.length){
-	        
-	        idx++;
-	    }
+	   
 	    
 	    this._calculateScore();
+	    this.view.CmdDisplayScore(question.score, that.score);
 	    
 	    this.displayQuestion();
 	},
