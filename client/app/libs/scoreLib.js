@@ -1,0 +1,70 @@
+var ScoreLib = function () {    
+};
+
+ScoreLib.prototype.GetScoreBasic= function (question,answer,callback) {
+        
+    var mlib = new MatchLib(answer, question.answer,1);
+   
+    mlib.Match(function(correct){
+        if(correct){
+            question.score = 100;
+        } 
+        else {
+            question.score = 0;
+        }
+        
+        callback();
+    });
+}
+
+
+ScoreLib.prototype.GetScoreMultiAnswer = function (question,attemptedAnswer, callback) {
+        
+    var questionObj = question;
+    var answers = questionObj.answer;
+    var originalAnswers = questionObj.constAnswers;
+    var mlib = new MatchLib(answers, attemptedAnswer,2);
+    mlib.Match(function(correctAnswers, remainingAnswers){
+        
+        if(correctAnswers.length >0){
+            questionObj.correctAnswers.push(correctAnswers); 
+        }
+        
+        questionObj.answer = remainingAnswers;
+
+        questionObj.score = Math.floor(((100 / originalAnswers.length) * 
+                        questionObj.correctAnswers.length));
+
+        callback();
+    });
+}
+
+ScoreLib.prototype.GetScoreOrderedMultiAnswer = function (question, answer,callback) {
+    var questionObj = question;
+    var answers = questionObj.answer;
+    var originalAnswers = questionObj.constAnswers;
+
+    var remainingAnswers = answers;
+
+    // if (this.performMatch(answers[0], answer)) {
+    //     this.currentQuestionState.push(answer);
+    //     remainingAnswers.splice(0, 1);
+    // }
+
+    var mlib = new MatchLib(answers[0], answer,1);
+    
+    mlib.Match(function(result){
+        if(result){
+            questionObj.correctAnswers.push(answer);
+            remainingAnswers.splice(0, 1);
+        }
+        
+        questionObj.answer = remainingAnswers;
+
+        questionObj.score = Math.floor(((100 / originalAnswers.length) * 
+            questionObj.correctAnswers.length));
+
+        callback();
+    });
+
+}
