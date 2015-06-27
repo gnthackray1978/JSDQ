@@ -80,14 +80,16 @@ BasicQuestioner.prototype = {
 	},
 	
     ResetQuestion:function(e){
-	    this.questionset[this.currentQuestionIdx].score =0;
-	    this.questionset[this.currentQuestionIdx].correctAnswers = [];
-	    this.questionset[this.currentQuestionIdx].attemptedAnswer =[];
-	    this.questionset[this.currentQuestionIdx].answer = JSON.parse(JSON.stringify(this.questionset[this.currentQuestionIdx].constAnswers));
+        var question = this.questionset[this.currentQuestionIdx];
+        
+	    question.score =0;
+	    question.correctAnswers = [];
+	    question.attemptedAnswer =[];
+	    question.answer = JSON.parse(JSON.stringify(question.constAnswers));
 	   
 	    
 	    this._calculateScore();
-	    this.view.CmdDisplayScore(question.score, that.score);
+	    this.view.CmdDisplayScore(question.score, this.score);
 	    
 	    this.displayQuestion();
 	},
