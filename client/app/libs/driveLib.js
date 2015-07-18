@@ -38,6 +38,43 @@ MyDrive.prototype.init = function(loaded){
  
     var that = this;
 
+    var checkAuth = function() {
+        //1. autheniticated
+        //2. load drive api
+        //
+    
+        gapi.auth.authorize({'client_id': this.CLIENT_ID, 'scope': this.SCOPES, 'immediate': true},
+            function(authResult){
+                if (authResult && !authResult.error) {
+                    writeStatement('Authenticated');
+                    //SET AUTH RESULT
+                    that.authResult = authResult;
+                    //load the drive api api
+                     gapi.client.load('drive', 'v2', function(r){
+                         that.SearchForQuiz('quiz',function(){
+                            writeStatement('finished searching');
+                         });
+                     });
+                }
+                else {
+                    writeStatement('Couldnt authenticate!');
+                }
+            }
+        );
+    };
+
+    window.setTimeout($.proxy(checkAuth, this), 1);
+     
+     
+     
+};
+
+
+
+MyDrive.prototype.annotaterInit = function(loaded){
+ 
+    var that = this;
+
     var loadFileInfo = function(fileId, callback) {
          
           that.FILEID = fileId;
@@ -114,11 +151,15 @@ MyDrive.prototype.init = function(loaded){
             });
         };
         
-        var pstr= '\'' + folderId+ '\'' + ' in parents';
+        //var pstr= '\'' + folderId+ '\'' + ' in parents';
+        //title contains 'Hello'
+        
+        var pstr= 'title contains \'quiz\'';
         
         writeStatement('searching for: '+ pstr);   
         
         var initialRequest = gapi.client.drive.files.list({ 'q': pstr});
+        
         retrievePageOfFiles(initialRequest, []);
     };
 
@@ -277,12 +318,9 @@ MyDrive.prototype.init = function(loaded){
                     //load the drive api api
                      gapi.client.load('drive', 'v2', function(r){
                          
-                         var ids;
-                         
-                         if(that.data && that.ids)
-                            ids = that.data.ids[0] 
-                         
-                         loadFileInfo(ids, fileLoadResponse);
+                         getConfigFileId('','quiz',function(){
+                            writeStatement('finished searching');
+                         });
                      });
                     
                     
@@ -302,6 +340,62 @@ MyDrive.prototype.init = function(loaded){
      
      
      
+};
+
+
+MyDrive.prototype.SearchForQuiz = function(name, ocallback){
+    var searchForId = function(fileList){
+        writeStatement('retrieved list of files');
+        var idx =0;
+        
+        // if(fileList[idx].title == that.CONFIGFILEFOLDER){
+        //     writeStatement('folder id: '+ fileList[idx].id);
+        // }
+            
+        while(idx < fileList.length){
+            writeStatement(fileList[idx].title);
+            
+            if(fileList[idx].title == name){
+                //FILEID=resp[idx].id;
+                ocallback(fileList[idx].id);
+                writeStatement('found id: '+ fileList[idx].id);
+                return;
+            }
+            
+            idx++;
+        }    
+        
+        ocallback(-1);
+    };
+    
+    var retrievePageOfFiles = function(request, result) {
+        request.execute(function(resp) {
+            result = result.concat(resp.items);
+            var nextPageToken = resp.nextPageToken;
+           
+            if (nextPageToken) {
+                request = gapi.client.drive.files.list({
+                'pageToken': nextPageToken
+                });
+                retrievePageOfFiles(request, result);
+            } 
+            else {
+                searchForId(result);
+            }
+        });
+    };
+    
+    //var pstr= '\'' + folderId+ '\'' + ' in parents';
+    //title contains 'Hello'
+    
+    var pstr= 'title contains \'quiz\'';
+    
+    writeStatement('searching for: '+ pstr);   
+    
+    var initialRequest = gapi.client.drive.files.list({ 'q': pstr});
+    
+    retrievePageOfFiles(initialRequest, []);
+  
 };
 
 MyDrive.prototype.ReadConfigFile = function(configId, callback){
