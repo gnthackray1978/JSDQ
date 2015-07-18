@@ -290,7 +290,7 @@ MyDrive.prototype.init = function(loaded){
                     
                     //load the drive api api
                      gapi.client.load('drive', 'v2', function(r){
-                         that.loadFileInfo(data.ids[0], fileLoadResponse);
+                         that.loadFileInfo(that.data.ids[0], fileLoadResponse);
                      });
                     
                     
