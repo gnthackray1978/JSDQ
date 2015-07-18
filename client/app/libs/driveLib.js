@@ -1,8 +1,8 @@
 function handleClientLoad() {
 
- //  var data = new MyDrive();
+   var data = new MyDrive();
    
-  // data.init();
+   data.init();
 }
 
 var MyDrive = function () {
