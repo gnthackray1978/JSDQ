@@ -356,34 +356,36 @@ MyDrive.prototype.SearchForQuizFiles = function(parentId, ocallback){
         while(idx < fileList.length){
             writeStatement(fileList[idx].title);
             writeStatement('found id: '+ fileList[idx].id);
+            idx++;
         }
         
         ocallback(-1);
     };
     //
-    var retrievePageOfChildren = function(request, result) {
+    var retrievePageOfFiles = function(request, result) {
         request.execute(function(resp) {
-          result = result.concat(resp.items);
-          var nextPageToken = resp.nextPageToken;
-          if (nextPageToken) {
-            request = gapi.client.drive.children.list({
-              'folderId' : parentId,
-              'pageToken': nextPageToken
-            });
-            retrievePageOfChildren(request, result);
-          } else {
-            searchForId(result);
-          }
+            result = result.concat(resp.items);
+            var nextPageToken = resp.nextPageToken;
+           
+            if (nextPageToken) {
+                request = gapi.client.drive.files.list({
+                'pageToken': nextPageToken
+                });
+                retrievePageOfFiles(request, result);
+            } 
+            else {
+                searchForId(result);
+            }
         });
     };
 
-    writeStatement('searching for: '+ parentId);   
+    writeStatement('searching for: '+ parentId); 
     
-    var initialRequest = gapi.client.drive.children.list({
-      'folderId' : parentId
-    });
+    var pstr= '\'' + parentId+ '\'' + ' in parents';
     
-    retrievePageOfChildren(initialRequest, []);
+    var initialRequest = gapi.client.drive.files.list({ 'q': pstr});
+    
+    retrievePageOfFiles(initialRequest, []);
   
 };
 
