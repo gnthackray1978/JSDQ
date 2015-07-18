@@ -52,7 +52,7 @@ MyDrive.prototype.init = function(loaded){
                     //load the drive api api
                      gapi.client.load('drive', 'v2', function(r){
                          that.SearchForQuizFolder('quiz',function(quizFolderId){
-                            writeStatement('finished searching: ' + data);
+                            writeStatement('finished searching: ' + quizFolderId);
                             
                             that.SearchForQuizFiles(quizFolderId,function(data){
                                 
