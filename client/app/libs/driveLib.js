@@ -388,7 +388,7 @@ MyDrive.prototype.SearchForQuiz = function(name, ocallback){
     //var pstr= '\'' + folderId+ '\'' + ' in parents';
     //title contains 'Hello'
     
-    var pstr= 'title contains \'quiz\'';
+    var pstr= 'mimeType = \'application/vnd.google-apps.folder\' and title contains \'quiz\'';
     
     writeStatement('searching for: '+ pstr);   
     
