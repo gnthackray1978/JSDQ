@@ -349,6 +349,9 @@ MyDrive.prototype.annotaterInit = function(loaded){
 MyDrive.prototype.SearchForQuizFiles = function(parentId, ocallback){
     var searchForId = function(fileList){
         writeStatement('retrieved list of quiz files');
+        
+        if(fileList.length ==0) ocallback(-1);
+        
         var idx =0;
         while(idx < fileList.length){
             writeStatement(fileList[idx].title);
@@ -358,33 +361,29 @@ MyDrive.prototype.SearchForQuizFiles = function(parentId, ocallback){
         ocallback(-1);
     };
     
-    var retrievePageOfFiles = function(request, result) {
+    var retrievePageOfChildren = function(request, result) {
         request.execute(function(resp) {
-            result = result.concat(resp.items);
-            var nextPageToken = resp.nextPageToken;
-           
-            if (nextPageToken) {
-                request = gapi.client.drive.files.list({
-                'pageToken': nextPageToken
-                });
-                retrievePageOfFiles(request, result);
-            } 
-            else {
-                searchForId(result);
-            }
+          result = result.concat(resp.items);
+          var nextPageToken = resp.nextPageToken;
+          if (nextPageToken) {
+            request = gapi.client.drive.children.list({
+              'folderId' : parentId,
+              'pageToken': nextPageToken
+            });
+            retrievePageOfChildren(request, result);
+          } else {
+            searchForId(result);
+          }
         });
     };
+
+    writeStatement('searching for: '+ parentId);   
     
-    var pstr= '\'' + parentId+ '\'' + ' in parents';
-    //title contains 'Hello'
+    var initialRequest = gapi.client.drive.children.list({
+      'folderId' : parentId
+    });
     
-   // var pstr= 'mimeType = \'application/vnd.google-apps.folder\' and title contains \'quiz\'';
-    
-    writeStatement('searching for: '+ pstr);   
-    
-    var initialRequest = gapi.client.drive.files.list({ 'q': pstr});
-    
-    retrievePageOfFiles(initialRequest, []);
+    retrievePageOfChildren(initialRequest, []);
   
 };
 
