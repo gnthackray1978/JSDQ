@@ -51,8 +51,12 @@ MyDrive.prototype.init = function(loaded){
                     that.authResult = authResult;
                     //load the drive api api
                      gapi.client.load('drive', 'v2', function(r){
-                         that.SearchForQuiz('quiz',function(){
-                            writeStatement('finished searching');
+                         that.SearchForQuizFolder('quiz',function(quizFolderId){
+                            writeStatement('finished searching: ' + data);
+                            
+                            that.SearchForQuizFiles(quizFolderId,function(data){
+                                
+                            });
                          });
                      });
                 }
@@ -342,28 +346,58 @@ MyDrive.prototype.annotaterInit = function(loaded){
      
 };
 
-
-MyDrive.prototype.SearchForQuiz = function(name, ocallback){
+MyDrive.prototype.SearchForQuizFiles = function(parentId, ocallback){
     var searchForId = function(fileList){
-        writeStatement('retrieved list of files');
+        writeStatement('retrieved list of quiz files');
         var idx =0;
-        
-        // if(fileList[idx].title == that.CONFIGFILEFOLDER){
-        //     writeStatement('folder id: '+ fileList[idx].id);
-        // }
-            
         while(idx < fileList.length){
             writeStatement(fileList[idx].title);
-            
-            if(fileList[idx].title == name){
-                //FILEID=resp[idx].id;
-                ocallback(fileList[idx].id);
-                writeStatement('found id: '+ fileList[idx].id);
-                return;
+            writeStatement('found id: '+ fileList[idx].id);
+        }
+        
+        ocallback(-1);
+    };
+    
+    var retrievePageOfFiles = function(request, result) {
+        request.execute(function(resp) {
+            result = result.concat(resp.items);
+            var nextPageToken = resp.nextPageToken;
+           
+            if (nextPageToken) {
+                request = gapi.client.drive.files.list({
+                'pageToken': nextPageToken
+                });
+                retrievePageOfFiles(request, result);
+            } 
+            else {
+                searchForId(result);
             }
-            
-            idx++;
-        }    
+        });
+    };
+    
+    var pstr= '\'' + parentId+ '\'' + ' in parents';
+    //title contains 'Hello'
+    
+   // var pstr= 'mimeType = \'application/vnd.google-apps.folder\' and title contains \'quiz\'';
+    
+    writeStatement('searching for: '+ pstr);   
+    
+    var initialRequest = gapi.client.drive.files.list({ 'q': pstr});
+    
+    retrievePageOfFiles(initialRequest, []);
+  
+};
+
+
+MyDrive.prototype.SearchForQuizFolder = function(name, ocallback){
+    var searchForId = function(fileList){
+        writeStatement('retrieved quiz folder');
+        
+        if(fileList.length > 0){
+            writeStatement(fileList[0].title);
+            ocallback(fileList[0].id);
+            writeStatement('found id: '+ fileList[0].id);
+        }
         
         ocallback(-1);
     };
