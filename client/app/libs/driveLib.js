@@ -276,7 +276,13 @@ MyDrive.prototype.init = function(loaded){
                     
                     //load the drive api api
                      gapi.client.load('drive', 'v2', function(r){
-                         loadFileInfo(that.data.ids[0], fileLoadResponse);
+                         
+                         var ids;
+                         
+                         if(that.data && that.ids)
+                            ids = that.data.ids[0] 
+                         
+                         loadFileInfo(ids, fileLoadResponse);
                      });
                     
                     
