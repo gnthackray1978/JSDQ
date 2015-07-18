@@ -34,19 +34,11 @@ var MyDrive = function () {
     this.searchCache = [];
 };
 
-
-
-
-
-
-
 MyDrive.prototype.init = function(loaded){
  
-    
-     var that = this;
-     
-    
-     var loadFileInfo = function(fileId, callback) {
+    var that = this;
+
+    var loadFileInfo = function(fileId, callback) {
          
           that.FILEID = fileId;
           
@@ -266,13 +258,7 @@ MyDrive.prototype.init = function(loaded){
             }
             
          });
-               
-               
-                     
     };
-                         
-
-
 
     var checkAuth = function() {
         //1. autheniticated
