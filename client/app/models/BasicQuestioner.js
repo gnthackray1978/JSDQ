@@ -211,7 +211,7 @@ BasicQuestioner.prototype = {
         var idx =0;
         var selectedUrl ='';
         
-        while(idx < this.listoftests){
+        while(idx < this.listoftests.length){
             
             if(this.listoftests[idx].key == this.selectedCSV){
                 selectedUrl = this.listoftests[idx].url;
