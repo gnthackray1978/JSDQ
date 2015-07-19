@@ -354,18 +354,25 @@ MyDrive.prototype.SearchForQuizFiles = function(parentId, ocallback){
     var checkFilesLoads = function(){
         
         if(timeOutReached)
+        {
             ocallback();
-            
-        if(!filesToLoad) 
-            window.setTimeout($.proxy(checkFilesLoads, this), 1);
-        
-        if(fileArray.length == filesToLoad.length){
-            writeStatement('all files looked up calling callback');
-            ocallback(fileArray);
         }
         else
         {
-            window.setTimeout($.proxy(checkFilesLoads, this), 1);
+            if(!filesToLoad){ 
+                window.setTimeout($.proxy(checkFilesLoads, this), 1);
+            }
+            else
+            {
+                if(fileArray.length == filesToLoad.length){
+                    writeStatement('all files looked up calling callback');
+                    ocallback(fileArray);
+                }
+                else
+                {
+                    window.setTimeout($.proxy(checkFilesLoads, this), 1);
+                }
+            }
         }
     };
     
