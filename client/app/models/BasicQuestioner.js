@@ -128,6 +128,10 @@ BasicQuestioner.prototype = {
 
         //console.log('fetching list of test');
         
+        this._drive.SearchForQuizFiles('quiz', function(){
+            console.log('fetched list of quizs');
+        });
+        
         var googleLibs = new GoogleLibs();
     	var that = this;
     	
