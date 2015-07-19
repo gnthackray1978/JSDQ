@@ -348,16 +348,19 @@ MyDrive.prototype.SearchForQuizFiles = function(parentId, ocallback){
     
     var fileArray = [];
     var filesToLoad;
-    
+    var timeOutReached;
     
     
     var checkFilesLoads = function(){
-        ocallback(-1);
         
+        if(timeOutReached)
+            ocallback();
+            
         if(!filesToLoad) 
             window.setTimeout($.proxy(checkFilesLoads, this), 1);
         
         if(fileArray.length == filesToLoad.length){
+            writeStatement('all files looked up calling callback');
             ocallback(fileArray);
         }
         else
@@ -365,6 +368,10 @@ MyDrive.prototype.SearchForQuizFiles = function(parentId, ocallback){
             window.setTimeout($.proxy(checkFilesLoads, this), 1);
         }
     };
+    
+    window.setTimeout($.proxy(function(){
+        timeOutReached =true;
+    }, this), 10000);
     
     window.setTimeout($.proxy(checkFilesLoads, this), 1);
     
@@ -433,17 +440,14 @@ MyDrive.prototype.SearchForQuizFolder = function(name, ocallback){
         writeStatement('retrieved quiz folder');
         
         if(fileList.length > 0){
-            writeStatement(fileList[0].title);
-            //ocallback(fileList[0].id);
+            writeStatement('quiz folder found: '+ fileList[0].title + ' ' + fileList[0].id);
             that.SearchForQuizFiles(fileList[0].id,ocallback);
-            writeStatement('found id: '+ fileList[0].id);
         }
         
+        writeStatement('retrieved quiz folder no quizs found');
         ocallback(-1);
     };
-    
-    
-    
+
     var retrievePageOfFiles = function(request, result) {
         request.execute(function(resp) {
             result = result.concat(resp.items);
