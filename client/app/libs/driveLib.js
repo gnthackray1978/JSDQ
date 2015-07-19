@@ -354,8 +354,11 @@ MyDrive.prototype.SearchForQuizFiles = function(parentId, ocallback){
         
         var idx =0;
         while(idx < fileList.length){
-            writeStatement(fileList[idx].title);
-            writeStatement('found id: '+ fileList[idx].id);
+            if(fileList[idx])
+            {
+                writeStatement(fileList[idx].title);
+                writeStatement('found id: '+ fileList[idx].id);
+            }
             idx++;
         }
         
