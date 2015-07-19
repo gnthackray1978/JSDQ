@@ -452,9 +452,11 @@ MyDrive.prototype.SearchForQuizFolder = function(name, ocallback){
             writeStatement('quiz folder found: '+ fileList[0].title + ' ' + fileList[0].id);
             that.SearchForQuizFiles(fileList[0].id,ocallback);
         }
-        
-        writeStatement('retrieved quiz folder no quizs found');
-        ocallback(-1);
+        else
+        {
+            writeStatement('retrieved quiz folder no quizs found');
+            ocallback(-1);
+        }
     };
 
     var retrievePageOfFiles = function(request, result) {
