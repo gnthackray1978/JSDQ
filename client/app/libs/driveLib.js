@@ -397,14 +397,16 @@ MyDrive.prototype.SearchForQuizFiles = function(parentId, ocallback){
                 writeStatement(fileList[idx].title);
                 writeStatement('found id: '+ fileList[idx].id);
                 
-                var request = gapi.client.drive.files.get({
-                    'fileId': fileList[idx].id
-                });
+                fileArray.push({ key: idx, value: fileList[idx].title, url : 'https://docs.google.com/spreadsheet/pub?hl=en_US&hl=en_US&key=' + fileList[idx].id +'&output=html' });
+                
+                // var request = gapi.client.drive.files.get({
+                //     'fileId': fileList[idx].id
+                // });
                   
-                request.execute(function(resp) {
-                    console.log('Title: ' + resp.title);
-                    fileArray.push({ key: idx, value: resp.title });
-                });
+                // request.execute(function(resp) {
+                //     console.log('Title: ' + resp.title);
+                //     fileArray.push({ key: idx, value: resp.title });
+                // });
                 
             }
             idx++;

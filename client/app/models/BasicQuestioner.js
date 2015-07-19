@@ -125,22 +125,25 @@ BasicQuestioner.prototype = {
 
 	// get categories from db
 	_getTestList: function ( action) {
-
+	    var that = this;
+	    
         //console.log('fetching list of test');
         
-        this._drive.SearchForQuizFolder('quiz', function(){
-            console.log('fetched list of quizs');
-        });
-        
-        var googleLibs = new GoogleLibs();
-    	var that = this;
-    	
-        googleLibs.GetTestList(function(listoftests){
-            that.listoftests = listoftests;
+        that._drive.SearchForQuizFolder('quiz', function(quizlist){
+            console.log('fetched list of quizs: '+quizlist);
+            that.listoftests = quizlist;
             action();
         });
+        
+    //     var googleLibs = new GoogleLibs();
+    // 	var that = this;
+    	
+    //     googleLibs.GetTestList(function(listoftests){
+    //         that.listoftests = listoftests;
+    //         action();
+    //     });
 
-        action();
+       // action();
     },
 
 	_getCategoriesFromTest : function (action){
