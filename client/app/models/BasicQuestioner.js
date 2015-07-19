@@ -206,12 +206,32 @@ BasicQuestioner.prototype = {
 
     //all questions for 1 csv including different categories
     readCSV : function(){
-    	var googleLibs = new GoogleLibs();
-    	var that = this;
-    	googleLibs.GetData(function(cats, csv){
-    	    that.listofcategories = cats;
-    	    that.listofCSVData = csv;
-    	})
+        var that = this;
+        
+        var idx =0;
+        var selectedUrl ='';
+        
+        while(idx < this.listoftests){
+            
+            if(this.listoftests[idx].key == this.selectedCSV){
+                selectedUrl = this.listoftests[idx].url;
+            }
+            idx++;
+        }
+        
+        that._drive.ReadSheet(selectedUrl, function(){
+            
+        });
+        
+        
+    // 	var googleLibs = new GoogleLibs();
+    // 	var that = this;
+    // 	googleLibs.GetData(function(cats, csv){
+    // 	    that.listofcategories = cats;
+    // 	    that.listofCSVData = csv;
+    // 	})
+    	
+    	
     },
     
     

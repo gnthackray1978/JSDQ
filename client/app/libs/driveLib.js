@@ -489,7 +489,19 @@ MyDrive.prototype.SearchForQuizFolder = function(name, ocallback){
   
 };
 
-
+MyDrive.prototype.ReadSheet = function(sheetUrl, ocallback){
+    
+    
+    Tabletop.init( { key: sheetUrl,
+                         callback: showInfo,
+                         simpleSheet: true } );
+    
+    
+    function showInfo(data, tabletop) {
+        
+    };
+    
+};
 
 
 
