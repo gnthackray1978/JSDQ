@@ -943,12 +943,12 @@ MyDrive.prototype.CleanGenerations = function () {
 
 function writeStatement(statement){
    console.log(statement);
-    // var d = new Date();
-    // var n = d.toLocaleTimeString();
+     var d = new Date();
+     var n = d.toLocaleTimeString();
     
-    // var output = $('#output').html();
+     var output = $('#output').html();
 
-    // output += '<br/>'+n+ ' ' + statement;
+     output += '<br/>'+n+ ' ' + statement;
     
-    // $('#output').html(output);
+     $('#output').html(output);
 }
