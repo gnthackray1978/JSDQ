@@ -128,7 +128,7 @@ BasicQuestioner.prototype = {
 
         //console.log('fetching list of test');
         
-        this._drive.SearchForQuizFiles('quiz', function(){
+        this._drive.SearchForQuizFolder('quiz', function(){
             console.log('fetched list of quizs');
         });
         
