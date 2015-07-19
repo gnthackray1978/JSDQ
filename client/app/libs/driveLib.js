@@ -1,9 +1,4 @@
-function handleClientLoad() {
 
-   var data = new MyDrive();
-   
-   data.init();
-}
 
 var MyDrive = function () {
 
@@ -32,9 +27,10 @@ var MyDrive = function () {
     this.options =null;
     this.layers =null;
     this.searchCache = [];
+    this.fileList;
 };
 
-MyDrive.prototype.init = function(loaded){
+MyDrive.prototype.init = function(driveLoaded){
  
     var that = this;
 
@@ -51,13 +47,15 @@ MyDrive.prototype.init = function(loaded){
                     that.authResult = authResult;
                     //load the drive api api
                      gapi.client.load('drive', 'v2', function(r){
-                         that.SearchForQuizFolder('quiz',function(quizFolderId){
-                            writeStatement('finished searching: ' + quizFolderId);
+                        //  that.SearchForQuizFolder('quiz',function(quizFolderId){
+                        //     writeStatement('finished searching: ' + quizFolderId);
                             
-                            that.SearchForQuizFiles(quizFolderId,function(data){
-                                
-                            });
-                         });
+                        //     that.SearchForQuizFiles(quizFolderId,function(data){
+                        //         driveLoaded(data);
+                        //     });
+                        //  });
+                        
+                        driveLoaded();
                      });
                 }
                 else {
@@ -392,14 +390,16 @@ MyDrive.prototype.SearchForQuizFiles = function(parentId, ocallback){
   
 };
 
-
 MyDrive.prototype.SearchForQuizFolder = function(name, ocallback){
+    var that = this;
+    
     var searchForId = function(fileList){
         writeStatement('retrieved quiz folder');
         
         if(fileList.length > 0){
             writeStatement(fileList[0].title);
-            ocallback(fileList[0].id);
+            //ocallback(fileList[0].id);
+            that.SearchForQuizFiles(fileList[0].id,ocallback);
             writeStatement('found id: '+ fileList[0].id);
         }
         
@@ -435,6 +435,12 @@ MyDrive.prototype.SearchForQuizFolder = function(name, ocallback){
     retrievePageOfFiles(initialRequest, []);
   
 };
+
+
+
+
+
+
 
 MyDrive.prototype.ReadConfigFile = function(configId, callback){
     var that = this;        

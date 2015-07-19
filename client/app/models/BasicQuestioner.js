@@ -1,6 +1,6 @@
 
 
-var BasicQuestioner = function (view) {
+var BasicQuestioner = function (view,drive) {
     this.view = view;
     this.selectedcategory = '';
     this.selectedCSV = 3;
@@ -15,6 +15,7 @@ var BasicQuestioner = function (view) {
     this.currentQuestionIdx = 0;
     this.score = 0;
     this.questionscore = 0;
+    this._drive = drive;
 };
 
 
@@ -43,7 +44,6 @@ BasicQuestioner.prototype = {
     CSVChanged: function(csv){
         console.log('csv changed: ' + csv);
         
-        
         var that = this;
 
         that.selectedCSV = csv;
@@ -51,8 +51,6 @@ BasicQuestioner.prototype = {
         that.readCSV();
         
         that.view.CmdSetTestName(csv);
-        
-        
     },
     
     endTest: function () {
