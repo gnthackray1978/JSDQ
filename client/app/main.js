@@ -6,16 +6,21 @@ var driveLoaded;
 function handleClientLoad() { driveLoaded = true;}
 
 $(document).bind("pageinit", function () {
-    var driveLoaded = function(){
+    var driveLoadedF = function(){
         if(driveLoaded){
             var data = new MyDrive();
                 data.init(function(){
                     loadAll(data);
                 });
         }
+        else
+        {
+        //    window.setTimeout($.proxy(driveLoadedF, this), 1000);  
+        }
+        
     };
     
-    window.setTimeout($.proxy(driveLoaded, this), 1);
+    window.setTimeout($.proxy(driveLoadedF, this), 1000);
     
     
 });
