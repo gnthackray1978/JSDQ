@@ -155,7 +155,7 @@ BasicQuestioner.prototype = {
 	        var idx=0;
 	        
 	        while(idx < this.listofCSVData.length){
-	             if(this.listofCSVData[idx][0] == this.selectedCSV)
+	          //   if(this.listofCSVData[idx][0] == this.selectedCSV)
 	                this.listofcategories.Add( this.listofCSVData[idx][2]);
 	             
 	             idx++;
