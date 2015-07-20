@@ -506,20 +506,28 @@ MyDrive.prototype.ReadSheet = function(sheetUrl, ocallback){
         while(idx < data["Questions"].raw.feed.entry.length){
             listofCSVData[idx] =[];
             
+            listofCSVData[idx][0] = data["Questions"].elements[idx]["Test Name"];
+            listofCSVData[idx][1] = data["Questions"].elements[idx]["Parent"];
+            listofCSVData[idx][2] = data["Questions"].elements[idx]["Category"];
+            listofCSVData[idx][3] = data["Questions"].elements[idx]["Question"];
+            listofCSVData[idx][4] = data["Questions"].elements[idx]["Answer"];
+            
+            listofcategories.Add(data["Questions"].elements[idx]["Category"]);
+                
             var rawColumns = data["Questions"].raw.feed.entry[19].content.$t.split(',');
             
             var cidx =0;
+            var cbase =5;
             
             while(cidx < rawColumns.length){
-                listofCSVData[idx][cidx] = rawColumns[cidx].split(':')[1];
-                
-                if(cidx ==2){
-                    listofcategories.Add(listofCSVData[idx][cidx]);
+                if(rawColumns[cidx].indexOf("_") != -1)
+                {
+                    listofCSVData[idx][cbase] = rawColumns[cidx].split(':')[1];
                 }
+                
                 cidx++;
+                cbase++;
             }
-            
-            
             
             idx++;
         }
