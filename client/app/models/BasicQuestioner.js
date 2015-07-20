@@ -219,8 +219,9 @@ BasicQuestioner.prototype = {
             idx++;
         }
         
-        that._drive.ReadSheet(selectedUrl, function(csv){
+        that._drive.ReadSheet(selectedUrl, function(csv,cats){
             that.listofCSVData = csv;
+            that.listofcategories = cats;
         });
         
         

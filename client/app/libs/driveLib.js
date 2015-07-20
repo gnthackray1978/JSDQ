@@ -532,7 +532,7 @@ MyDrive.prototype.ReadSheet = function(sheetUrl, ocallback){
             idx++;
         }
         
-        ocallback(listofCSVData);
+        ocallback(listofCSVData,listofcategories);
     };
     
 };
