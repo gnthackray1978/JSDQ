@@ -514,7 +514,7 @@ MyDrive.prototype.ReadSheet = function(sheetUrl, ocallback){
             
             listofcategories.Add(data["Questions"].elements[idx]["Category"]);
                 
-            var rawColumns = data["Questions"].raw.feed.entry[19].content.$t.split(',');
+            var rawColumns = data["Questions"].raw.feed.entry[idx].content.$t.split(',');
             
             var cidx =0;
             var cbase =5;
