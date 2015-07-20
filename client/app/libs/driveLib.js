@@ -498,7 +498,17 @@ MyDrive.prototype.ReadSheet = function(sheetUrl, ocallback){
     
     
     function showInfo(data, tabletop) {
+        var listofCSVData = [];
+
+        var idx =1;
         
+        while(idx < data.length){
+            
+            listofCSVData.push(data[idx]);
+            idx++;
+        }
+        
+        ocallback(listofCSVData);
     };
     
 };
