@@ -523,10 +523,11 @@ MyDrive.prototype.ReadSheet = function(sheetUrl, ocallback){
                 if(rawColumns[cidx].indexOf("_") != -1)
                 {
                     listofCSVData[idx][cbase] = rawColumns[cidx].split(':')[1];
+                    cbase++;
                 }
                 
                 cidx++;
-                cbase++;
+                
             }
             
             idx++;
