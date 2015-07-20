@@ -499,12 +499,28 @@ MyDrive.prototype.ReadSheet = function(sheetUrl, ocallback){
     function showInfo(data, tabletop) {
         console.log('table loaded: ' + data.length);
         var listofCSVData = [];
+        var listofcategories = new UniqueList();
 
         var idx =1;
         
         while(idx < data.length){
+            listofCSVData[idx] =[];
             
-            listofCSVData.push(data[idx]);
+            var rawColumns = data["Questions"].raw.feed.entry[19].content.$t.split(',');
+            
+            var cidx =0;
+            
+            while(cidx < rawColumns.length){
+                listofCSVData[idx][cidx] = rawColumns[cidx].split(':')[1];
+                
+                if(cidx ==2){
+                    listofcategories.Add(listofCSVData[idx][cidx]);
+                }
+                cidx++;
+            }
+            
+            
+            
             idx++;
         }
         
