@@ -21,18 +21,18 @@ var BasicQuestioner = function (view,drive) {
 
 BasicQuestioner.prototype = {
     
-     GoogleSheetTestLogin: function(e){
+    GoogleSheetTestLogin: function(e){
          console.log('Google Sheet Test Login');
          
          
          
      },
     
-     ModeChanged: function(e){
+    ModeChanged: function(e){
          console.log('mode changed');
      },
      
-     CategoryChanged: function(cat){
+    CategoryChanged: function(cat){
         console.log('cat changed: ' + cat);
         
         var that = this;
@@ -50,7 +50,13 @@ BasicQuestioner.prototype = {
 
         that.readCSV();
         
-        that.view.CmdSetTestName(csv);
+        var idx =0;
+        while(idx < this.listoftests.length){
+            if(this.listoftests[idx].key == this.selectedCSV){
+                that.view.CmdSetTestName(this.listoftests[idx].value);
+            }
+            idx++;
+        }
     },
     
     endTest: function () {
@@ -127,23 +133,12 @@ BasicQuestioner.prototype = {
 	_getTestList: function ( action) {
 	    var that = this;
 	    
-        //console.log('fetching list of test');
-        
         that._drive.SearchForQuizFolder('quiz', function(quizlist){
             console.log('fetched list of quizs: '+quizlist);
             that.listoftests = quizlist;
             action();
         });
         
-    //     var googleLibs = new GoogleLibs();
-    // 	var that = this;
-    	
-    //     googleLibs.GetTestList(function(listoftests){
-    //         that.listoftests = listoftests;
-    //         action();
-    //     });
-
-       // action();
     },
 
 	_getCategoriesFromTest : function (action){
@@ -212,7 +207,6 @@ BasicQuestioner.prototype = {
         var selectedUrl ='';
         
         while(idx < this.listoftests.length){
-            
             if(this.listoftests[idx].key == this.selectedCSV){
                 selectedUrl = this.listoftests[idx].url;
             }
@@ -224,15 +218,6 @@ BasicQuestioner.prototype = {
             that.listofcategories = cats;
         });
         
-        
-    // 	var googleLibs = new GoogleLibs();
-    // 	var that = this;
-    // 	googleLibs.GetData(function(cats, csv){
-    // 	    that.listofcategories = cats;
-    // 	    that.listofCSVData = csv;
-    // 	})
-    	
-    	
     },
     
     
