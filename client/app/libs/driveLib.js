@@ -522,14 +522,11 @@ MyDrive.prototype.ReadSheet = function(sheetUrl, ocallback){
             while(cidx < rawColumns.length){
                 if(rawColumns[cidx].indexOf("_") != -1)
                 {
-                    listofCSVData[idx][cbase] = rawColumns[cidx].split(':')[1];
+                    listofCSVData[idx][cbase] = rawColumns[cidx].split(':')[1].trim();
                     cbase++;
                 }
-                
                 cidx++;
-                
             }
-            
             idx++;
         }
         
