@@ -498,7 +498,7 @@ MyDrive.prototype.ReadSheet = function(sheetUrl, ocallback){
     
     
     function showInfo(data, tabletop) {
-        console.log('table loaded');
+        console.log('table loaded: ' + data.length);
         var listofCSVData = [];
 
         var idx =1;
