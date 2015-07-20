@@ -503,7 +503,7 @@ MyDrive.prototype.ReadSheet = function(sheetUrl, ocallback){
 
         var idx =1;
         
-        while(idx < data.length){
+        while(idx < data["Questions"].raw.feed.entry.length){
             listofCSVData[idx] =[];
             
             var rawColumns = data["Questions"].raw.feed.entry[19].content.$t.split(',');
