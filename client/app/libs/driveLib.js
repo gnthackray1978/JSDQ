@@ -501,7 +501,7 @@ MyDrive.prototype.ReadSheet = function(sheetUrl, ocallback){
         var listofCSVData = [];
         var listofcategories = new UniqueList();
 
-        var idx =1;
+        var idx =0;
         
         while(idx < data["Questions"].raw.feed.entry.length){
             listofCSVData[idx] =[];
