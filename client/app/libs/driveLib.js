@@ -493,8 +493,7 @@ MyDrive.prototype.ReadSheet = function(sheetUrl, ocallback){
     
     
     Tabletop.init( { key: sheetUrl,
-                         callback: showInfo,
-                         simpleSheet: true } );
+                         callback: showInfo } );
     
     
     function showInfo(data, tabletop) {
