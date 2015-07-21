@@ -5,7 +5,7 @@ function View() {
    this.modeChanged =null;
    this.endTestLock =false;
    this.startTestLock =false;
-   this.loginLock =true;
+   this.loginAllowed =false;
 } 
 
 View.prototype.CmdDisplayScore = function (questionScore, testScore){
@@ -309,14 +309,14 @@ View.prototype.QryNA = function (callback, context) {
     var that = this;
     $('#login').bind("vclick", function () { 
         
-        if(!that.loginLock)
+        if(that.loginAllowed)
             callback.apply(context); 
     });
 };
 
 View.prototype.CmdUpdateLogin = function(enabled, text){
     
-    this.loginLock = enabled;
+    this.loginAllowed = enabled;
     
     $('#login').html(text);
 };

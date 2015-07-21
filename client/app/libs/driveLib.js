@@ -44,7 +44,9 @@ MyDrive.prototype.autherizeResult = function(authResult, driveLoaded) {
         //SET AUTH RESULT
         that.authResult = authResult;
         that._view.CmdUpdateLogin(false,'LOGGED IN');
-        gapi.client.load('drive', 'v2', function(r){ driveLoaded(); });
+        gapi.client.load('drive', 'v2', function(r){
+            $.proxy(driveLoaded, that)
+        });
     }
     else {
         writeStatement('Couldnt authenticate displaying button!');
