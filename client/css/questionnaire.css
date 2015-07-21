@@ -37,12 +37,12 @@ body {
     margin: 5px;
 }
 
-.cat-span{
+#cat_name{
    float : right;   
    margin-right: 20px;
 }
 
-.test-span{
+#test_name{
     margin-left: 20px;
 }
 
