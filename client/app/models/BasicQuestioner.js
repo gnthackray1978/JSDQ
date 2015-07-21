@@ -195,7 +195,7 @@ BasicQuestioner.prototype = {
         
         this._getCategoriesFromTest(function(){
             that.view.CmdDisplayCategoryList(that.listofcategories.D, that);
-            that.view.CmdSetTab(-1, function () { });
+            that.view.CmdSetTab(5, function () { });
         });
     },
 

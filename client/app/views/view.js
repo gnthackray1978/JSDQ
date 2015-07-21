@@ -72,7 +72,7 @@ View.prototype.CmdSetTab = function (tabidx,tabChanged){
     $("#question-nav").removeClass("displayPanel").addClass("hidePanel");       //hide question navs
     
     //display nothing
-    if (tabidx == 0) { 
+    if (tabidx == -1) { 
         tabChanged();
     }
     
@@ -104,7 +104,10 @@ View.prototype.CmdSetTab = function (tabidx,tabChanged){
         $("#answer-block").removeClass("hidePanel").addClass("displayPanel");
         tabChanged();
     }
-    
+    if (tabidx == 5) {                                                           
+        $("#pnlCategories").removeClass("hidePanel").addClass("displayPanel");  //show categories
+        tabChanged();
+    }
 };
 
 View.prototype.CmdDisplayCategoryList = function (catList, context){
