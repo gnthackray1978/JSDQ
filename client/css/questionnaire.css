@@ -38,9 +38,13 @@ body {
 }
 
 .cat-span{
-   float : right;    
+   float : right;   
+   margin-right: 20px;
 }
 
+.test-span{
+    margin-left: 20px;
+}
 
 .displayPanel {
     display: block;
