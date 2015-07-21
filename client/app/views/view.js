@@ -44,6 +44,23 @@ View.prototype.CmdDisplayCorrectAnswer = function (answers){
     }
 };
 
+View.prototype.CmdSwitchHeaderContent= function (type, modeChanged) {
+        
+    // main header
+    if (type == 0) {            
+        $("#header-answer-block").removeClass("hidePanel").addClass("displayPanel");
+        $("#header-home-block").removeClass("displayPanel").addClass("hidePanel");
+        modeChanged();
+    }
+    
+    // answer mode header
+    if (type == 1) {
+        $("#header-answer-block").removeClass("displayPanel").addClass("hidePanel");
+        $("#header-home-block").removeClass("hidePanel").addClass("displayPanel");           
+        modeChanged();
+    }            
+};
+
 View.prototype.CmdSetTab = function (tabidx,tabChanged){
     $("#pnlCategories").removeClass("displayPanel").addClass("hidePanel");      //hide categories
     $("#test-sel").removeClass("displayPanel").addClass("hidePanel");           //hide test selectors
@@ -53,7 +70,12 @@ View.prototype.CmdSetTab = function (tabidx,tabChanged){
     $("#pnlWebCategories").removeClass("displayPanel").addClass("hidePanel");   //hide web categories
     $("#score-nav").removeClass("displayPanel").addClass("hidePanel");          //hide score 
     $("#question-nav").removeClass("displayPanel").addClass("hidePanel");       //hide question navs
-
+    
+    //display nothing
+    if (tabidx == 0) { 
+        tabChanged();
+    }
+    
     if (tabidx == 0) {                                                          //show questions
         $("#pnlQuestions").removeClass("hidePanel").addClass("displayPanel");   //show questions panel
         $("#answer-block").removeClass("hidePanel").addClass("displayPanel");
@@ -206,22 +228,7 @@ View.prototype.CmdDisplaySortedMultiAnswerQuestion = function (question,answer) 
     //multi answer   
 };
 
-View.prototype.CmdSwitchHeaderContent= function (type, modeChanged) {
-        
-    // main header
-    if (type == 0) {            
-        $("#header-answer-block").removeClass("hidePanel").addClass("displayPanel");
-        $("#header-home-block").removeClass("displayPanel").addClass("hidePanel");
-        modeChanged();
-    }
-    
-    // answer mode header
-    if (type == 1) {
-        $("#header-answer-block").removeClass("displayPanel").addClass("hidePanel");
-        $("#header-home-block").removeClass("hidePanel").addClass("displayPanel");           
-        modeChanged();
-    }            
-};
+
 
 View.prototype.CmdUpdateCurrentQuestionLabel= function (currentQuestion, totalQuestions) {
     $('#current-question').html(currentQuestion + ' of ' + totalQuestions);

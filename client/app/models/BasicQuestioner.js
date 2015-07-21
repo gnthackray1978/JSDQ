@@ -64,7 +64,7 @@ BasicQuestioner.prototype = {
         var that = this;
         
     	that.view.CmdSwitchHeaderContent(1, function () {
-			that.view.CmdSetTab(2,function(){});
+			that.view.CmdSetTab(-1,function(){});
 		});
     },
 
