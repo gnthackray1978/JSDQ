@@ -38,12 +38,14 @@ body {
 }
 
 .cat-span{
-   float : right;   
-   margin-right: 20px;
+    float : right;   
+    margin-right: 20px;
+    font-size: x-large;
 }
 
 .test-span{
     margin-left: 20px;
+    font-size: x-large;
 }
 
 .displayPanel {
