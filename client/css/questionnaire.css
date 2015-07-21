@@ -37,6 +37,10 @@ body {
     margin: 5px;
 }
 
+.cat-span{
+   float : right;    
+}
+
 
 .displayPanel {
     display: block;
