@@ -5,6 +5,7 @@ function View() {
    this.modeChanged =null;
    this.endTestLock =false;
    this.startTestLock =false;
+   this.loginLock =true;
 } 
 
 View.prototype.CmdDisplayScore = function (questionScore, testScore){
@@ -305,12 +306,18 @@ View.prototype.QryTestHistorytEvt= function (callback, context) {
 // };
 
 View.prototype.QryNA = function (callback, context) {
-    $('#login').bind("vclick", function () { callback.apply(context); });
+    var that = this;
+    $('#login').bind("vclick", function () { 
+        
+        if(!that.loginLock)
+            callback.apply(context); 
+    });
 };
 
 View.prototype.CmdUpdateLogin = function(enabled, text){
     
-    document.getElementById("login").disabled = enabled;
+    this.loginLock = enabled;
+    
     $('#login').html(text);
 };
 
