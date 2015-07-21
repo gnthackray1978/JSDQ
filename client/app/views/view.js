@@ -308,6 +308,13 @@ View.prototype.QryNA = function (callback, context) {
     $('#login').bind("vclick", function () { callback.apply(context); });
 };
 
+View.prototype.CmdUpdateLogin = function(enabled, text){
+    
+    document.getElementById("login").disabled = enabled;
+    $('#login').html(text);
+};
+
+
 View.prototype.QryPrevQuestionEvt = function (callback, context) {
     var myArray = [-1];
     $('#prev').bind("vclick", function () { callback.apply(context, myArray); });

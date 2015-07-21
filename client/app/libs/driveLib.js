@@ -1,6 +1,6 @@
 
 
-var MyDrive = function () {
+var MyDrive = function (view) {
 
     this.CLIENT_ID = '67881158341-i31rcec2rf6bi26elnf8njnrb7v9ij8q.apps.googleusercontent.com';
     this.SCOPES = 'https://www.googleapis.com/auth/drive';
@@ -28,47 +28,39 @@ var MyDrive = function () {
     this.layers =null;
     this.searchCache = [];
     this.fileList;
+    this._view = view;
 };
 
+MyDrive.prototype.GoogleSheetTestLogin= function(e){
+    console.log('Google Sheet Test Login');
+    var that = this;
+    gapi.auth.authorize({'client_id': that.CLIENT_ID, 'scope': that.SCOPES, 'immediate': false},that.autherizeResult);
+};
+     
+MyDrive.prototype.autherizeResult = function(authResult, driveLoaded) {
+    var that = this;
+    if (authResult && !authResult.error) {
+        writeStatement('Authenticated');
+        //SET AUTH RESULT
+        that.authResult = authResult;
+        that._view.CmdUpdateLogin(false,'LOGGED IN');
+        gapi.client.load('drive', 'v2', function(r){ driveLoaded(); });
+    }
+    else {
+        writeStatement('Couldnt authenticate displaying button!');
+        that._view.CmdUpdateLogin(true,'Login');
+    }
+};     
+    
 MyDrive.prototype.init = function(driveLoaded){
  
     var that = this;
 
     var checkAuth = function() {
-        //1. autheniticated
-        //2. load drive api
-        //
-    
-        gapi.auth.authorize({'client_id': this.CLIENT_ID, 'scope': this.SCOPES, 'immediate': true},
-            function(authResult){
-                if (authResult && !authResult.error) {
-                    writeStatement('Authenticated');
-                    //SET AUTH RESULT
-                    that.authResult = authResult;
-                    //load the drive api api
-                     gapi.client.load('drive', 'v2', function(r){
-                        //  that.SearchForQuizFolder('quiz',function(quizFolderId){
-                        //     writeStatement('finished searching: ' + quizFolderId);
-                            
-                        //     that.SearchForQuizFiles(quizFolderId,function(data){
-                        //         driveLoaded(data);
-                        //     });
-                        //  });
-                        
-                        driveLoaded();
-                     });
-                }
-                else {
-                    writeStatement('Couldnt authenticate!');
-                }
-            }
-        );
+        gapi.auth.authorize({'client_id': that.CLIENT_ID, 'scope': that.SCOPES, 'immediate': true},that.autherizeResult);
     };
 
     window.setTimeout($.proxy(checkAuth, this), 1);
-     
-     
-     
 };
 
 
