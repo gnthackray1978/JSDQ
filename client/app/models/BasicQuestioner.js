@@ -71,7 +71,7 @@ BasicQuestioner.prototype = {
     startTest: function () {
         console.log('start test');
         var that = this;
-		if(that.selectedCSV !==''){
+		if(that.selectedCSV !=='' && that.selectedcategory !== ''){
 			that.resetTest();
 			that.view.CmdSwitchHeaderContent(0, function () {
 				that.view.CmdSetTab(0,function(){});
