@@ -11,20 +11,14 @@ $(document).bind("pageinit", function () {
     
     var appView = new View();
     
-    var loadAll = function(drive){
-        var basicQuestioner = new BasicQuestioner(appView,drive);
-        var c = new QuestionController(appView,basicQuestioner);
-    };
-    
     var driveLoadedF = function(){
         if(driveLoaded){
-            var data = new MyDrive(appView);
+            var drive = new MyDrive(appView);
             
-            var drivecontroller = new QuestionController(appView,data);
+            var appController = new QuestionController(appView,data);
             
-            drivecontroller =null;
-            data.init(function(){
-                loadAll(data);
+            drive.init(function(){
+                appController.model = new BasicQuestioner(appView,drive);
             });
         }
         else
