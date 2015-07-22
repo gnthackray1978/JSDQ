@@ -29,6 +29,7 @@ var MyDrive = function (view) {
     this.searchCache = [];
     this.fileList;
     this._view = view;
+    this.driveLoaded;
 };
 
 MyDrive.prototype.GoogleSheetTestLogin= function(e){
@@ -37,7 +38,7 @@ MyDrive.prototype.GoogleSheetTestLogin= function(e){
     gapi.auth.authorize({'client_id': that.CLIENT_ID, 'scope': that.SCOPES, 'immediate': false},$.proxy(that.autherizeResult, that));
 };
      
-MyDrive.prototype.autherizeResult = function(authResult, driveLoaded) {
+MyDrive.prototype.autherizeResult = function(authResult) {
     var that = this;
     if (authResult && !authResult.error) {
         writeStatement('Authenticated');
@@ -45,7 +46,7 @@ MyDrive.prototype.autherizeResult = function(authResult, driveLoaded) {
         that.authResult = authResult;
         that._view.CmdUpdateLogin(false,'LOGGED IN');
         gapi.client.load('drive', 'v2', function(r){
-            $.proxy(driveLoaded, that)
+            $.proxy(that.driveLoaded, that)
         });
     }
     else {
@@ -57,7 +58,8 @@ MyDrive.prototype.autherizeResult = function(authResult, driveLoaded) {
 MyDrive.prototype.init = function(driveLoaded){
  
     var that = this;
-
+    that.driveLoaded = driveLoaded;
+    
     var checkAuth = function() {
         gapi.auth.authorize({'client_id': that.CLIENT_ID, 'scope': that.SCOPES, 'immediate': true},$.proxy(that.autherizeResult, that));
     };
