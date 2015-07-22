@@ -22,6 +22,7 @@ $(document).bind("pageinit", function () {
             
             var drivecontroller = new QuestionController(appView,data);
             
+            drivecontroller =null;
             data.init(function(){
                 loadAll(data);
             });
