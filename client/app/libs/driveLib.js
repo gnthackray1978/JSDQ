@@ -46,7 +46,8 @@ MyDrive.prototype.autherizeResult = function(authResult) {
         that.authResult = authResult;
         that._view.CmdUpdateLogin(false,'LOGGED IN');
         gapi.client.load('drive', 'v2', function(r){
-            $.proxy(that.driveLoaded, that)
+            //$.proxy(that.driveLoaded, that)
+            that.driveLoaded();
         });
     }
     else {
