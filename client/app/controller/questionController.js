@@ -46,22 +46,33 @@ QuestionController.prototype = {
     
     qrySelectTestEvt:function(evt){
         if (this.model !== null) {
-            this.model.selectTest(evt);
+            this.view.CmdSetTab(4, function () {});
         }
     },
     qryTestHistorytEvt:function(evt){
         if (this.model !== null) {
-            this.model.testHistory(evt);
+            this.view.switchtab(5, function () {});
         }
     },
     qryStartTestEvt:function(evt){
         if (this.model !== null) {
-            this.model.startTest(evt);
+            console.log('start test');
+            
+    		if(this.model.validTestSelected()){
+    			this.model.resetTest();
+    			
+    			this.view.CmdSwitchHeaderContent(0, function () {
+    				this.view.CmdSetTab(0,function(){});
+    			});
+            }
         }
     },
     qryEndTestEvt:function(evt){
         if (this.model !== null) {
-            this.model.endTest(evt);
+            var that = this;
+        	that.view.CmdSwitchHeaderContent(1, function () {
+    			that.view.CmdSetTab(-1,function(){});
+    		});
         }
     },
     qryPrevQuestionEvt:function(evt){
@@ -86,24 +97,46 @@ QuestionController.prototype = {
     },
     qryCorrectAnswerButtonPress:function(evt){
         if (this.model !== null) {
-            this.model.toggleAnswer(evt);
+            if (this.model.isAnswerDisplayed == true) {
+                this.view.CmdDisplayCorrectAnswer('');
+                this.model.isAnswerDisplayed = false;
+            } else {
+                this.view.CmdDisplayCorrectAnswer(this.model.currentQuestionAnswer());
+                this.model.isAnswerDisplayed = true;
+            }
         }
     },
     qrySelectTestBtn:function(evt){
         if (this.model !== null) {
-            this.model.questionSelectionsEnabled(evt);
+            this.view.CmdSetTab(2, function () { });
         }
     },
     qryCatBtn:function(evt){
         //button in ui commented out
         if (this.model !== null) {
-            this.model.listcats(evt);
+            //this.model.listcats(evt);
+            console.log('listing categories');
+            var that = this;
+            
+            this.model._getCategoriesFromTest(function(){
+                that.view.CmdDisplayCategoryList(that.model.listofcategories.D, that.model);
+                that.view.CmdSetTab(5, function () { });
+            });
         }
     },
     qryCsvBtn:function(evt){
         // button in ui commented out
         if (this.model !== null) {
-            this.model.listtests(evt);
+            //this.model.listtests(evt);
+            
+            console.log('listing csvs(tests)');
+            var that = this;
+            
+            this.model._getTestList(function(){
+                that.view.CmdDisplayCSVList(that.model.listoftests, that.model);
+                that.view.CmdSetTab(4, function () { });
+            });
+        
         }
     },
     // qryAnswer:function(evt){
@@ -113,12 +146,15 @@ QuestionController.prototype = {
     // },
     qryCategoryChanged:function(evt){
         if (this.model !== null) {
-            this.model.CategoryChanged(evt);
+            this.model.selectedcategory = evt;
+            this.view.CmdSetCatName(this.model.selectedcategory);
         }
     },
     qryCSVChanged:function(evt){
         if (this.model !== null) {
-            this.model.CSVChanged(evt);
+            this.model.selectedCSV = evt;
+            this.model.readCSV();
+            this.view.CmdSetTestName(this.model.SelectedTestName());
         }
     },
     

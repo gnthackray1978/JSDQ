@@ -21,64 +21,24 @@ var BasicQuestioner = function (view,drive) {
 
 BasicQuestioner.prototype = {
     
-    GoogleSheetTestLogin: function(e){
-         console.log('Google Sheet Test Login');
-         
-         
-         
-     },
-    
-    ModeChanged: function(e){
-         console.log('mode changed');
-     },
-     
-    CategoryChanged: function(cat){
-        console.log('cat changed: ' + cat);
-        
+   
+    SelectedTestName: function(){
         var that = this;
-
-        that.selectedcategory = cat;
-        that.view.CmdSetCatName(cat);
-    },
-    
-    CSVChanged: function(csv){
-        console.log('csv changed: ' + csv);
-        
-        var that = this;
-
-        that.selectedCSV = csv;
-
-        that.readCSV();
         
         var idx =0;
-        while(idx < this.listoftests.length){
-            if(this.listoftests[idx].key == this.selectedCSV){
-                that.view.CmdSetTestName(this.listoftests[idx].value);
+        while(idx < that.listoftests.length){
+            if(that.listoftests[idx].key == that.selectedCSV){
+                return that.listoftests[idx].value;
             }
             idx++;
         }
+        return "";
     },
     
-    endTest: function () {
-        console.log('end test');
-        var that = this;
-        
-    	that.view.CmdSwitchHeaderContent(1, function () {
-			that.view.CmdSetTab(-1,function(){});
-		});
+    validTestSelected:function(){
+        return (this.selectedCSV !=='' && this.selectedcategory !== '');
     },
-
-    startTest: function () {
-        console.log('start test');
-        var that = this;
-		if(that.selectedCSV !=='' && that.selectedcategory !== ''){
-			that.resetTest();
-			that.view.CmdSwitchHeaderContent(0, function () {
-				that.view.CmdSetTab(0,function(){});
-			});
-        }
-    },
-  
+    
 	resetTest:function(){
 	    this.createquestionset();
 	},
@@ -98,22 +58,8 @@ BasicQuestioner.prototype = {
 	    this.displayQuestion();
 	},
 
-    selectTest: function () {
-        var that = this;
-        that.view.CmdSetTab(4, function () {});
-    },
-	
-    testHistory: function () {
-        var that = this;
-        that.view.switchtab(5, function () {});
-    },
-    
 	init: function () {
         this._getTestList(true, function () {});
-    },
-	
-    writelog: function (message) {
-        //  $('#debug').append(message+'.');
     },
 
     _getColumns: function (row) {
@@ -161,43 +107,29 @@ BasicQuestioner.prototype = {
 	    
 	},
 	
-     
-    toggleAnswer: function () {
+    currentQuestionAnswer: function (){
+        return this.questionset[this.currentQuestionIdx].answer;
+    },
+    
+    // listtests: function () {
+    //     console.log('listing csvs(tests)');
+    //     var that = this;
         
-        if (this.isAnswerDisplayed == true) {
-            this.view.CmdDisplayCorrectAnswer('');
-            this.isAnswerDisplayed = false;
-
-        } else {
-            this.view.CmdDisplayCorrectAnswer(this.questionset[this.currentQuestionIdx].answer);
-            this.isAnswerDisplayed = true;
-        }
-    },
-
-    questionSelectionsEnabled: function () {
-        console.log('Question Selections Enabled');
-        this.view.CmdSetTab(2, function () { });
-    },
-
-    listtests: function () {
-        console.log('listing csvs(tests)');
-        var that = this;
-        
-        this._getTestList(function(){
-            that.view.CmdDisplayCSVList(that.listoftests, that);
-            that.view.CmdSetTab(4, function () { });
-        });
-    },
+    //     this._getTestList(function(){
+    //         that.view.CmdDisplayCSVList(that.listoftests, that);
+    //         that.view.CmdSetTab(4, function () { });
+    //     });
+    // },
  
-    listcats: function () {
-        console.log('listing categories');
-        var that = this;
+    // listcats: function () {
+    //     console.log('listing categories');
+    //     var that = this;
         
-        this._getCategoriesFromTest(function(){
-            that.view.CmdDisplayCategoryList(that.listofcategories.D, that);
-            that.view.CmdSetTab(5, function () { });
-        });
-    },
+    //     this._getCategoriesFromTest(function(){
+    //         that.view.CmdDisplayCategoryList(that.listofcategories.D, that);
+    //         that.view.CmdSetTab(5, function () { });
+    //     });
+    // },
 
     //all questions for 1 csv including different categories
     readCSV : function(){
@@ -385,8 +317,6 @@ BasicQuestioner.prototype = {
     displayQuestion: function (pos) {
 
         this.currentQuestionState = [];
-
-        this.writelog('dq' + pos);
 
         switch (pos) {
             case 1:
