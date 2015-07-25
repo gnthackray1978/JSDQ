@@ -120,7 +120,7 @@ QuestionController.prototype = {
             var that = this;
             
             this.model._getCategoriesFromTest(function(){
-                that.view.CmdDisplayCategoryList(that.model.listofcategories.D, that.model);
+                that.view.CmdDisplayCategoryList(that.model.listofcategories.D,that.qryCategoryChanged, that);
                 that.view.CmdSetTab(5, function () { });
             });
         }
@@ -134,7 +134,7 @@ QuestionController.prototype = {
             var that = this;
             
             this.model._getTestList(function(){
-                that.view.CmdDisplayCSVList(that.model.listoftests, that.model);
+                that.view.CmdDisplayCSVList(that.model.listoftests,that.qryCSVChanged, that);
                 that.view.CmdSetTab(4, function () { });
             });
         

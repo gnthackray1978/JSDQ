@@ -111,7 +111,7 @@ View.prototype.CmdSetTab = function (tabidx,tabChanged){
     }
 };
 
-View.prototype.CmdDisplayCategoryList = function (catList, context){
+View.prototype.CmdDisplayCategoryList = function (catList,evt, context){
     var listHelper = new ListHelper();
     var cats = '';
     var selectEvents = [];
@@ -128,10 +128,10 @@ View.prototype.CmdDisplayCategoryList = function (catList, context){
 
     $('#categories').html(cats);       
 
-    listHelper.Addlinks(selectEvents, this.categoryChanged, context);
+    listHelper.Addlinks(selectEvents, evt, context);
 };
 
-View.prototype.CmdDisplayCSVList = function (catList, context) {
+View.prototype.CmdDisplayCSVList = function (catList,evt, context) {
     var listHelper = new ListHelper();
     var cats = '';
     var selectEvents = [];
@@ -146,7 +146,7 @@ View.prototype.CmdDisplayCSVList = function (catList, context) {
     }
     $('#webcategories').html(cats);
     
-    listHelper.Addlinks(selectEvents, this.csvChanged, context);
+    listHelper.Addlinks(selectEvents, evt, context);
 };
 //updateBoxs
 View.prototype.CmdUpdateMiscTextBoxs = function(currentQuestionState, answer, content, answerBox){
