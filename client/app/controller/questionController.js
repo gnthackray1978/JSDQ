@@ -56,13 +56,14 @@ QuestionController.prototype = {
     },
     qryStartTestEvt:function(evt){
         if (this.model !== null) {
+            var that = this;
             console.log('start test');
             
-    		if(this.model.validTestSelected()){
-    			this.model.resetTest();
+    		if(that.model.validTestSelected()){
+    			that.model.resetTest();
     			
-    			this.view.CmdSwitchHeaderContent(0, function () {
-    				this.view.CmdSetTab(0,function(){});
+    			that.view.CmdSwitchHeaderContent(0, function () {
+    				that.view.CmdSetTab(0,function(){});
     			});
             }
         }
