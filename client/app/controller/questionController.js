@@ -1,6 +1,6 @@
-var QuestionController = function (view, model) {
+var QuestionController = function (view, model,drive) {
     this.view = view;
-
+    this.drive = drive;
     this.model = model;
     
     this.init();
@@ -140,6 +140,19 @@ QuestionController.prototype = {
         
         }
     },
+    
+    // 	_getTestList: function ( action) {
+	   // var that = this;
+	    
+    //     that._drive.SearchForQuizFolder('quiz', function(quizlist){
+    //         console.log('fetched list of quizs: '+quizlist);
+    //         that.listoftests = quizlist;
+    //         action();
+    //     });
+        
+    // },
+    
+    
     // qryAnswer:function(evt){
     //     if (this.model !== null) {
     //         this.model.Answer(evt);
@@ -155,6 +168,14 @@ QuestionController.prototype = {
         if (this.model !== null) {
             this.model.selectedCSV = evt;
             this.model.readCSV();
+            
+             var that = this;
+             
+            that._drive.ReadSheet(that.SelectedTestName(), function(csv,cats){
+                that.listofCSVData = csv;
+                that.listofcategories = cats;
+            });
+            
             this.view.CmdSetTestName(this.model.SelectedTestName());
         }
     },

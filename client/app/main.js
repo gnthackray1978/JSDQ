@@ -15,10 +15,18 @@ $(document).bind("pageinit", function () {
         if(driveLoaded){
             var drive = new MyDrive(appView);
             
-            var appController = new QuestionController(appView,drive);
+            
             
             drive.init(function(){
-                appController.model = new BasicQuestioner(appView,drive);
+                
+                
+               // appController.model = new BasicQuestioner(appView,drive);
+               
+                var appController = new QuestionController(appView,new BasicQuestioner(appView,drive), drive);
+                
+                
+                extend( new Subject(), appController.model );
+                
             });
         }
         else

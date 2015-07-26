@@ -58,9 +58,9 @@ BasicQuestioner.prototype = {
 	    this.displayQuestion();
 	},
 
-	init: function () {
-        this._getTestList(true, function () {});
-    },
+// 	init: function () {
+//         this._getTestList(true, function () {});
+//     },
 
     _getColumns: function (row) {
 
@@ -76,16 +76,16 @@ BasicQuestioner.prototype = {
     },
 
 	// get categories from db
-	_getTestList: function ( action) {
-	    var that = this;
+// 	_getTestList: function ( action) {
+// 	    var that = this;
 	    
-        that._drive.SearchForQuizFolder('quiz', function(quizlist){
-            console.log('fetched list of quizs: '+quizlist);
-            that.listoftests = quizlist;
-            action();
-        });
+//         that._drive.SearchForQuizFolder('quiz', function(quizlist){
+//             console.log('fetched list of quizs: '+quizlist);
+//             that.listoftests = quizlist;
+//             action();
+//         });
         
-    },
+//     },
 
 	_getCategoriesFromTest : function (action){
 	    // do we have selected test
@@ -132,25 +132,14 @@ BasicQuestioner.prototype = {
     // },
 
     //all questions for 1 csv including different categories
-    readCSV : function(){
-        var that = this;
+    // readCSV : function(){
+    //     var that = this;
+    //     that._drive.ReadSheet(that.SelectedTestName(), function(csv,cats){
+    //         that.listofCSVData = csv;
+    //         that.listofcategories = cats;
+    //     });
         
-        var idx =0;
-        var selectedUrl ='';
-        
-        while(idx < this.listoftests.length){
-            if(this.listoftests[idx].key == this.selectedCSV){
-                selectedUrl = this.listoftests[idx].url;
-            }
-            idx++;
-        }
-        
-        that._drive.ReadSheet(selectedUrl, function(csv,cats){
-            that.listofCSVData = csv;
-            that.listofcategories = cats;
-        });
-        
-    },
+    // },
     
     
     // get questions from db
