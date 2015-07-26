@@ -60,7 +60,15 @@ QuestionController.prototype = {
             console.log('start test');
             
     		if(that.model.validTestSelected()){
-    			that.model.resetTest();
+    		    
+                $('#mainbody').html('');
+                $('#perc-correct').html('');
+                $('#question-score').html('');
+                $('#answer-so-far').html('');
+    		    
+    			that.model.createquestionset();
+    			
+    			that.model.displayQuestion(0);
     			
     			that.view.CmdSwitchHeaderContent(0, function () {
     				that.view.CmdSetTab(0,function(){});
@@ -133,11 +141,13 @@ QuestionController.prototype = {
             console.log('listing csvs(tests)');
             var that = this;
             
-            this.model._getTestList(function(){
+            that.drive.SearchForQuizFolder('quiz', function(quizlist){
+                console.log('fetched list of quizs: '+quizlist);
+                that.model.listoftests = quizlist;
                 that.view.CmdDisplayCSVList(that.model.listoftests,that.qryCSVChanged, that);
                 that.view.CmdSetTab(4, function () { });
             });
-        
+            
         }
     },
     
@@ -169,7 +179,7 @@ QuestionController.prototype = {
             this.model.selectedCSV = evt;
             this.model.readCSV();
             
-             var that = this;
+            var that = this;
              
             that._drive.ReadSheet(that.SelectedTestName(), function(csv,cats){
                 that.listofCSVData = csv;
@@ -182,7 +192,14 @@ QuestionController.prototype = {
     
     qryResetQuestionEvt:function(evt){
         if (this.model !== null) {
+            
             this.model.ResetQuestion(evt);
+            
+    	    this.model._calculateScore();
+    	    
+    	    this.view.CmdDisplayScore(this.model.currentQuestion().score, this.model.score);
+    	    
+    	    this.model.displayQuestion();
         }
     }
     

@@ -39,10 +39,6 @@ BasicQuestioner.prototype = {
         return (this.selectedCSV !=='' && this.selectedcategory !== '');
     },
     
-	resetTest:function(){
-	    this.createquestionset();
-	},
-	
     ResetQuestion:function(e){
         var question = this.questionset[this.currentQuestionIdx];
         
@@ -50,12 +46,7 @@ BasicQuestioner.prototype = {
 	    question.correctAnswers = [];
 	    question.attemptedAnswer =[];
 	    question.answer = JSON.parse(JSON.stringify(question.constAnswers));
-	   
-	    
-	    this._calculateScore();
-	    this.view.CmdDisplayScore(question.score, this.score);
-	    
-	    this.displayQuestion();
+
 	},
 
 // 	init: function () {
@@ -94,14 +85,10 @@ BasicQuestioner.prototype = {
 	    
 	    if(this.listofCSVData){
 	        var idx=0;
-	        
 	        while(idx < this.listofCSVData.length){
-	          //   if(this.listofCSVData[idx][0] == this.selectedCSV)
-	                this.listofcategories.Add( this.listofCSVData[idx][2]);
-	             
-	             idx++;
+                this.listofcategories.Add( this.listofCSVData[idx][2]);
+                idx++;
 	        }
-	        
 	        action();
 	    }
 	    
@@ -111,55 +98,19 @@ BasicQuestioner.prototype = {
         return this.questionset[this.currentQuestionIdx].answer;
     },
     
-    // listtests: function () {
-    //     console.log('listing csvs(tests)');
-    //     var that = this;
-        
-    //     this._getTestList(function(){
-    //         that.view.CmdDisplayCSVList(that.listoftests, that);
-    //         that.view.CmdSetTab(4, function () { });
-    //     });
-    // },
- 
-    // listcats: function () {
-    //     console.log('listing categories');
-    //     var that = this;
-        
-    //     this._getCategoriesFromTest(function(){
-    //         that.view.CmdDisplayCategoryList(that.listofcategories.D, that);
-    //         that.view.CmdSetTab(5, function () { });
-    //     });
-    // },
+    currentQuestion: function (){
+        return this.questionset[this.currentQuestionIdx];
+    },
 
-    //all questions for 1 csv including different categories
-    // readCSV : function(){
-    //     var that = this;
-    //     that._drive.ReadSheet(that.SelectedTestName(), function(csv,cats){
-    //         that.listofCSVData = csv;
-    //         that.listofcategories = cats;
-    //     });
-        
-    // },
-    
-    
     // get questions from db
     createquestionset: function () {
-        //0 standard type
-        //
         console.log('creating question set');
-
-        $('#mainbody').html('');
-        $('#perc-correct').html('');
-        $('#question-score').html('');
-        $('#answer-so-far').html('');
 
         var questionColIdx = 3;
         var multiAnswerStartIdx = 4;
         var idx = 1;
         this.questionset = [];
         this.answerset = [];
-
-      
         while (idx < this.listofCSVData.length) {
 
                 //  this.writelog(idx);
@@ -234,9 +185,6 @@ BasicQuestioner.prototype = {
                 idx++;
             }
 
-        this.displayQuestion(0);
-
- 
     },
 
     
@@ -251,6 +199,19 @@ BasicQuestioner.prototype = {
             idx++;
         }
         that.score = Math.floor(((100 / (that.questionset.length * 100)) * working));
+    },
+
+    _changeCurrentQuestion: function(pos){
+        switch (pos) {
+            case 1:
+                if (this.questionset.length - 1 > this.currentQuestionIdx)
+                    this.currentQuestionIdx++;
+                break;
+            case -1:
+                if (this.currentQuestionIdx > 0)
+                    this.currentQuestionIdx--;
+                break;
+        }
     },
 
     answerQuestion: function () {
@@ -306,25 +267,11 @@ BasicQuestioner.prototype = {
     displayQuestion: function (pos) {
 
         this.currentQuestionState = [];
-
-        switch (pos) {
-            case 1:
-                if (this.questionset.length - 1 > this.currentQuestionIdx)
-                    this.currentQuestionIdx++;
-                break;
-            case -1:
-                if (this.currentQuestionIdx > 0)
-                    this.currentQuestionIdx--;
-                break;
-           
-        }
+        this._changeCurrentQuestion(pos);
         
         this.view.CmdDisplayCorrectAnswer('');
         this.view.CmdUpdateAnswerSoFar('');
-        //test crap
-        //test crap1
-        //monkey
-        //apple
+    
         this.isAnswerDisplayed = false;
         
         if (this.questionset !== undefined && this.questionset.length > 0) {
