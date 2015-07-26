@@ -151,23 +151,6 @@ QuestionController.prototype = {
         }
     },
     
-    // 	_getTestList: function ( action) {
-	   // var that = this;
-	    
-    //     that._drive.SearchForQuizFolder('quiz', function(quizlist){
-    //         console.log('fetched list of quizs: '+quizlist);
-    //         that.listoftests = quizlist;
-    //         action();
-    //     });
-        
-    // },
-    
-    
-    // qryAnswer:function(evt){
-    //     if (this.model !== null) {
-    //         this.model.Answer(evt);
-    //     }
-    // },
     qryCategoryChanged:function(evt){
         if (this.model !== null) {
             this.model.selectedcategory = evt;
@@ -175,18 +158,17 @@ QuestionController.prototype = {
         }
     },
     qryCSVChanged:function(evt){
-        if (this.model !== null) {
-            this.model.selectedCSV = evt;
-          //  this.model.readCSV();
-            
-            var that = this;
-             
-            that._drive.ReadSheet(that.model.SelectedTestName(), function(csv,cats){
+        var that = this;
+        
+        if (that.model !== null) {
+            that.model.selectedCSV = evt;
+          
+            that.drive.ReadSheet(that.model.SelectedTestName(), function(csv,cats){
                 that.model.listofCSVData = csv;
                 that.model.listofcategories = cats;
             });
             
-            this.view.CmdSetTestName(this.model.SelectedTestName());
+            that.view.CmdSetTestName(that.model.SelectedTestName());
         }
     },
     
