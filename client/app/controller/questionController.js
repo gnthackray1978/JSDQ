@@ -163,12 +163,12 @@ QuestionController.prototype = {
         if (that.model !== null) {
             that.model.selectedCSV = evt;
           
-            that.drive.ReadSheet(that.model.SelectedTestName(), function(csv,cats){
+            that.drive.ReadSheet(that.model.SelectedTestName().url, function(csv,cats){
                 that.model.listofCSVData = csv;
                 that.model.listofcategories = cats;
             });
             
-            that.view.CmdSetTestName(that.model.SelectedTestName());
+            that.view.CmdSetTestName(that.model.SelectedTestName().value);
         }
     },
     

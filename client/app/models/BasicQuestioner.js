@@ -28,7 +28,7 @@ BasicQuestioner.prototype = {
         var idx =0;
         while(idx < that.listoftests.length){
             if(that.listoftests[idx].key == that.selectedCSV){
-                return that.listoftests[idx].value;
+                return that.listoftests[idx];
             }
             idx++;
         }
