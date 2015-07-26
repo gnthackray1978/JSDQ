@@ -32,7 +32,7 @@ BasicQuestioner.prototype = {
             }
             idx++;
         }
-        return "";
+        return {key: -1 , url : '', value:'test not found'};
     },
     
     validTestSelected:function(){
@@ -102,6 +102,13 @@ BasicQuestioner.prototype = {
         return this.questionset[this.currentQuestionIdx];
     },
 
+    currentQuestionSetLength: function(){
+        if (this.questionset !== undefined && this.questionset.length > 0) 
+            return this.questionset.length;
+        else
+            return 0;
+    },
+    
     // get questions from db
     createquestionset: function () {
         console.log('creating question set');
@@ -274,38 +281,34 @@ BasicQuestioner.prototype = {
     
         this.isAnswerDisplayed = false;
         
-        if (this.questionset !== undefined && this.questionset.length > 0) {
-            var type = this.questionset[this.currentQuestionIdx].type;
+        if (this.currentQuestionSetLength() > 0) {
+            var question = this.currentQuestion();
+                         
+            this.view.CmdDisplayScore(question.score);
 
-            //this.questionset[this.currentQuestionIdx].answer = this.questionset[this.currentQuestionIdx].constAnswers;
+            var attemptedAnswer = question.attemptedAnswer;
 
-            this.view.CmdDisplayScore(this.questionset[this.currentQuestionIdx].score);
-
-            //this.questionscore = 0;
-
-            var attemptedAnswer = this.questionset[this.currentQuestionIdx].attemptedAnswer;
-
-            switch (type) {
+            switch (question.type) {
                 case 0:
-                    this.view.CmdDisplayStandardQuestion(this.questionset[this.currentQuestionIdx].question,attemptedAnswer);
+                    this.view.CmdDisplayStandardQuestion(question.question,attemptedAnswer);
                     break;
                 case 1:
-                    this.view.CmdDisplayMultipleChoice(this.questionset[this.currentQuestionIdx].question, 
-                                                        this.questionset[this.currentQuestionIdx].constAnswers, 
+                    this.view.CmdDisplayMultipleChoice(question.question, 
+                                                        question.constAnswers, 
                                                         parseInt(attemptedAnswer) + 1);
                     break;
                 case 2:
-                    this.view.CmdDisplayImageQuestion(this.questionset[this.currentQuestionIdx].question, attemptedAnswer);
+                    this.view.CmdDisplayImageQuestion(question.question, attemptedAnswer);
                     break;
                 case 3:// multi answer
-                    this.view.CmdDisplayMultiAnswerQuestion(this.questionset[this.currentQuestionIdx].question, attemptedAnswer);
-                    this.view.CmdDisplayAnswerSoFar(this.questionset[this.currentQuestionIdx].correctAnswers);
+                    this.view.CmdDisplayMultiAnswerQuestion(question.question, attemptedAnswer);
+                    this.view.CmdDisplayAnswerSoFar(question.correctAnswers);
                     break;
                 case 4:// multi ordered answer
-                    this.view.CmdDisplaySortedMultiAnswerQuestion(this.questionset[this.currentQuestionIdx].question, attemptedAnswer);
+                    this.view.CmdDisplaySortedMultiAnswerQuestion(question.question, attemptedAnswer);
                     break;
             }
-            this.view.CmdUpdateCurrentQuestionLabel(this.currentQuestionIdx + 1, this.questionset.length);
+            this.view.CmdUpdateCurrentQuestionLabel(this.currentQuestionIdx + 1, this.currentQuestionSetLength());
 
         } else {
             this.view.CmdDisplayNoQuestion();
