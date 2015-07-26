@@ -177,13 +177,13 @@ QuestionController.prototype = {
     qryCSVChanged:function(evt){
         if (this.model !== null) {
             this.model.selectedCSV = evt;
-            this.model.readCSV();
+          //  this.model.readCSV();
             
             var that = this;
              
-            that._drive.ReadSheet(that.SelectedTestName(), function(csv,cats){
-                that.listofCSVData = csv;
-                that.listofcategories = cats;
+            that._drive.ReadSheet(that.model.SelectedTestName(), function(csv,cats){
+                that.model.listofCSVData = csv;
+                that.model.listofcategories = cats;
             });
             
             this.view.CmdSetTestName(this.model.SelectedTestName());
