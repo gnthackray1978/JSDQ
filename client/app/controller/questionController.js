@@ -167,7 +167,9 @@ QuestionController.prototype = {
             that.drive.ReadSheet(that.model.SelectedTestName().url, function(csv,cats){
                 //that.model.listofCSVData = csv;
                 //that.model.listofcategories = cats;
-                that.questionLib.LoadInitialData(csv,cats);
+                that.questionLib.LoadInitialData(csv,cats, function(){
+                    
+                });
                 
             });
             
