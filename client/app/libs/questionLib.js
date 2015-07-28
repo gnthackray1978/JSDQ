@@ -29,11 +29,10 @@ QuestionLib.prototype.UpdateCategories = function (action){
 	
 	
 // get questions from db
-QuestionLib.prototype.CreateQuestionSet = function () {
+QuestionLib.prototype.CreateQuestionSet = function (selectedcategory) {
     console.log('creating question set');
     var csvData = this.listofCSVData;
-    var selectedcategory = this.selectedcategory;
-    
+   
     var questionColIdx = 3;
     var multiAnswerStartIdx = 4;
     var idx = 1;

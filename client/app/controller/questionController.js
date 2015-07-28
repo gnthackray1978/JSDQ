@@ -68,7 +68,7 @@ QuestionController.prototype = {
     		    
                 that.view.CmdResetAnswers();
     		   	
-    			that.model.setQuestionData(that.questionLib.CreateQuestionSet());
+    			that.model.setQuestionData(that.questionLib.CreateQuestionSet(that.model.selectedcategory));
     			
     			that.displayQuestion(0);
     			
