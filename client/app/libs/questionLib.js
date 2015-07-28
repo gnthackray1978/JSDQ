@@ -1,37 +1,30 @@
 var QuestionLib = function () {
-    this.listofcategories;
-    this.listofCSVData =[];
+
 };
 
-QuestionLib.prototype.LoadInitialData = function (csv, cats, callback){
-    this.listofcategories=cats;
-    this.listofCSVData =csv;
-    this.UpdateCategories(callback);
+QuestionLib.prototype.ParseCats = function (csv, callback){
+
+    var listofcategories = new UniqueList();
+    
+    if(csv){
+        var idx=0;
+        while(idx < csv.length){
+            listofcategories.Add( csv[idx][2]);
+            idx++;
+        }
+        callback(csv, listofcategories);
+    }
 };
 
 QuestionLib.prototype.GetCategoriesFromTest = function (action){
     action(this.listofcategories);
 };
 
-QuestionLib.prototype.UpdateCategories = function (action){
-	// do we have selected test
-	this.listofcategories = new UniqueList();
-    
-    if(this.listofCSVData){
-        var idx=0;
-        while(idx < this.listofCSVData.length){
-            this.listofcategories.Add( this.listofCSVData[idx][2]);
-            idx++;
-        }
-        action(this.listofcategories);
-    }
-};
-	
 	
 // get questions from db
-QuestionLib.prototype.CreateQuestionSet = function (selectedcategory) {
+QuestionLib.prototype.CreateQuestionSet = function (rawCSVData, selectedcategory) {
     console.log('creating question set');
-    var csvData = this.listofCSVData;
+    var csvData = rawCSVData;
    
     var questionColIdx = 3;
     var multiAnswerStartIdx = 4;

@@ -68,7 +68,10 @@ QuestionController.prototype = {
     		    
                 that.view.CmdResetAnswers();
     		   	
-    		   	var qdata = that.questionLib.CreateQuestionSet(that.model.selectedcategory);
+    		   	var selectedCat = that.model.selectedcategory;
+    		   	var rawCSVData = that.model.rawCSVData;
+    		   	
+    		   	var qdata = that.questionLib.CreateQuestionSet(rawCSVData,selectedCat);
     		   	
     			that.model.setQuestionData(qdata);
     			
@@ -128,12 +131,14 @@ QuestionController.prototype = {
         //button in ui commented out
         if (this.model !== null) {
             console.log('listing categories');
-            var that = this;
+            //var that = this;
             
-            that.questionLib.GetCategoriesFromTest(function(cats){
-                that.view.CmdDisplayCategoryList(cats.D,that.qryCategoryChanged, that);
-                that.view.CmdSetTab(5, function () { });
-            });
+            // that.questionLib.GetCategoriesFromTest(function(cats){
+            //     that.view.CmdDisplayCategoryList(cats.D,that.qryCategoryChanged, that);
+            //     that.view.CmdSetTab(5, function () { });
+            // });
+            
+            this.view.CmdSetTab(5, function () { });
         }
     },
     qryCsvBtn:function(evt){
@@ -165,12 +170,12 @@ QuestionController.prototype = {
         
         if (that.model !== null) {
             that.model.selectedCSV = evt;
-          
             that.drive.ReadSheet(that.model.SelectedTestName().url, function(csv,cats){
-                //that.model.listofCSVData = csv;
-                //that.model.listofcategories = cats;
-                that.questionLib.LoadInitialData(csv,cats, function(){
+                that.questionLib.ParseCats(csv, function(csv,cats){
+                    that.model.rawCSVData = csv;
+                    that.model.categories = cats;
                     
+                    that.view.CmdDisplayCategoryList(cats.D,that.qryCategoryChanged, that);
                 });
                 
             });

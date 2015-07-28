@@ -4,8 +4,8 @@ var BasicQuestioner = function () {
     this.selectedcategory = '';
     this.selectedCSV = 3;
     this.listoftests = [];
-    //this.listofcategories = new UniqueList();
-    //this.listofCSVData =[];
+    this.rawCSVData =[];
+    this.categories =[];
     this.questionset = [];
     this.answerset = [];
     // used for multi answer questions
@@ -47,24 +47,6 @@ BasicQuestioner.prototype = {
 
 	},
 
-
-
-// 	_getCategoriesFromTest : function (action){
-// 	    // do we have selected test
-	    
-// 	    this.listofcategories = new UniqueList();
-	    
-// 	    if(this.listofCSVData){
-// 	        var idx=0;
-// 	        while(idx < this.listofCSVData.length){
-//                 this.listofcategories.Add( this.listofCSVData[idx][2]);
-//                 idx++;
-// 	        }
-// 	        action();
-// 	    }
-	    
-// 	},
-	
     currentQuestionAnswer: function (){
         return this.questionset[this.currentQuestionIdx].answer;
     },
