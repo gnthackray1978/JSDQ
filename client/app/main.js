@@ -15,15 +15,10 @@ $(document).bind("pageinit", function () {
         if(driveLoaded){
             var drive = new MyDrive(appView);
             drive.init(function(){
-               var appController = new QuestionController(appView,new BasicQuestioner(appView,drive), drive);
+               var appController = new QuestionController(appView,new BasicQuestioner(), drive);
                extend( new Subject(), appController.model );
             });
         }
-        else
-        {
-        //    window.setTimeout($.proxy(driveLoadedF, this), 1000);  
-        }
-        
     };
     
     window.setTimeout($.proxy(driveLoadedF, this), 1000);

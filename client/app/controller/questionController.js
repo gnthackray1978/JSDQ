@@ -131,21 +131,13 @@ QuestionController.prototype = {
         //button in ui commented out
         if (this.model !== null) {
             console.log('listing categories');
-            //var that = this;
-            
-            // that.questionLib.GetCategoriesFromTest(function(cats){
-            //     that.view.CmdDisplayCategoryList(cats.D,that.qryCategoryChanged, that);
-            //     that.view.CmdSetTab(5, function () { });
-            // });
-            
             this.view.CmdSetTab(5, function () { });
         }
     },
+    
     qryCsvBtn:function(evt){
         // button in ui commented out
         if (this.model !== null) {
-            //this.model.listtests(evt);
-            
             console.log('listing csvs(tests)');
             var that = this;
             
@@ -174,7 +166,6 @@ QuestionController.prototype = {
                 that.questionLib.ParseCats(csv, function(csv,cats){
                     that.model.rawCSVData = csv;
                     that.model.categories = cats;
-                    
                     that.view.CmdDisplayCategoryList(cats.D,that.qryCategoryChanged, that);
                 });
                 
@@ -294,4 +285,4 @@ QuestionController.prototype = {
             gotAnswer(answer);
         },that);
     }
-}
+};
