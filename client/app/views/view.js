@@ -232,6 +232,12 @@ View.prototype.CmdDisplaySortedMultiAnswerQuestion = function (question,answer) 
     //multi answer   
 };
 
+View.prototype.CmdResetAnswers =function () {
+    $('#mainbody').html('');
+    $('#perc-correct').html('');
+    $('#question-score').html('');
+    $('#answer-so-far').html(''); 
+};
 
 
 View.prototype.CmdUpdateCurrentQuestionLabel= function (currentQuestion, totalQuestions) {

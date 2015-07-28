@@ -16,6 +16,19 @@ ScoreLib.prototype.GetScoreForSet= function (questionSet,callback) {
     
 };
 
+ScoreLib.prototype.GetQuestionSetScore = function(questionset){
+   
+   
+    var idx = 0;
+    var working = 0;
+    while (idx < questionset.length) {
+        working += questionset[idx].score;
+        idx++;
+    }
+    var score = Math.floor(((100 / (questionset.length * 100)) * working));
+    
+    return score;
+};
 
 ScoreLib.prototype.GetScoreBasic= function (question,answer,callback) {
         

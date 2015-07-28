@@ -66,3 +66,16 @@ ListHelper.prototype.Addlinks =  function (dupeEvents, func, context) {
         }
 
     };
+    
+ListHelper.prototype._getColumns =  function (row) {
+
+    var cols = [];
+
+    var tpSplit = row.split(',');
+
+    $.each(tpSplit, function () {
+        if ($.trim(this) != '') cols.push(String(this));
+    });
+
+    return cols;
+};

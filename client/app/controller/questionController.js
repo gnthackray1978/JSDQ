@@ -2,6 +2,8 @@ var QuestionController = function (view, model,drive) {
     this.view = view;
     this.drive = drive;
     this.model = model;
+    this.scoreLib = new ScoreLib();
+    this.questionLib = new QuestionLib();
     
     this.init();
     
@@ -54,6 +56,9 @@ QuestionController.prototype = {
             this.view.switchtab(5, function () {});
         }
     },
+    
+   
+    
     qryStartTestEvt:function(evt){
         if (this.model !== null) {
             var that = this;
@@ -61,14 +66,11 @@ QuestionController.prototype = {
             
     		if(that.model.validTestSelected()){
     		    
-                $('#mainbody').html('');
-                $('#perc-correct').html('');
-                $('#question-score').html('');
-                $('#answer-so-far').html('');
-    		    
-    			that.model.createquestionset();
+                that.view.CmdResetAnswers();
+    		   	
+    			that.model.setQuestionData(that.questionLib.CreateQuestionSet());
     			
-    			that.model.displayQuestion(0);
+    			that.displayQuestion(0);
     			
     			that.view.CmdSwitchHeaderContent(0, function () {
     				that.view.CmdSetTab(0,function(){});
@@ -86,22 +88,22 @@ QuestionController.prototype = {
     },
     qryPrevQuestionEvt:function(evt){
         if (this.model !== null) {
-            this.model.displayQuestion(evt);
+            this.displayQuestion(evt);
         }
     },
     qryNextQuestionEvt:function(evt){
         if (this.model !== null) {
-            this.model.displayQuestion(evt);
+            this.displayQuestion(evt);
         }
     },
     qrySubmitEvt:function(evt){
         if (this.model !== null) {
-            this.model.answerQuestion(evt);
+            this.answerQuestion(evt);
         }
     },
     qryAnswerButtonPress:function(evt){
         if (this.model !== null) {
-            this.model.answerQuestion(evt);
+            this.answerQuestion(evt);
         }
     },
     qryCorrectAnswerButtonPress:function(evt){
@@ -123,12 +125,11 @@ QuestionController.prototype = {
     qryCatBtn:function(evt){
         //button in ui commented out
         if (this.model !== null) {
-            //this.model.listcats(evt);
             console.log('listing categories');
             var that = this;
             
-            this.model._getCategoriesFromTest(function(){
-                that.view.CmdDisplayCategoryList(that.model.listofcategories.D,that.qryCategoryChanged, that);
+            that.questionLib.GetCategoriesFromTest(function(cats){
+                that.view.CmdDisplayCategoryList(cats.D,that.qryCategoryChanged, that);
                 that.view.CmdSetTab(5, function () { });
             });
         }
@@ -164,8 +165,10 @@ QuestionController.prototype = {
             that.model.selectedCSV = evt;
           
             that.drive.ReadSheet(that.model.SelectedTestName().url, function(csv,cats){
-                that.model.listofCSVData = csv;
-                that.model.listofcategories = cats;
+                //that.model.listofCSVData = csv;
+                //that.model.listofcategories = cats;
+                that.questionLib.LoadInitialData(csv,cats);
+                
             });
             
             that.view.CmdSetTestName(that.model.SelectedTestName().value);
@@ -177,12 +180,109 @@ QuestionController.prototype = {
             
             this.model.ResetQuestion(evt);
             
-    	    this.model._calculateScore();
+    	    this.model.score = this.scoreLib.GetQuestionSetScore(this.model.questionset);
     	    
     	    this.view.CmdDisplayScore(this.model.currentQuestion().score, this.model.score);
     	    
-    	    this.model.displayQuestion();
+    	    this.displayQuestion();
         }
-    }
+    },
     
+    displayQuestion: function (pos) {
+
+        this.model.currentQuestionState = [];
+        this.model._changeCurrentQuestion(pos);
+        
+        this.view.CmdDisplayCorrectAnswer('');
+        this.view.CmdUpdateAnswerSoFar('');
+    
+        this.model.isAnswerDisplayed = false;
+        
+        if (this.model.currentQuestionSetLength() > 0) {
+            var question = this.model.currentQuestion();
+                         
+            this.view.CmdDisplayScore(question.score);
+
+            var attemptedAnswer = question.attemptedAnswer;
+
+            switch (question.type) {
+                case 0:
+                    this.view.CmdDisplayStandardQuestion(question.question,attemptedAnswer);
+                    break;
+                case 1:
+                    this.view.CmdDisplayMultipleChoice(question.question, 
+                                                        question.constAnswers, 
+                                                        parseInt(attemptedAnswer) + 1);
+                    break;
+                case 2:
+                    this.view.CmdDisplayImageQuestion(question.question, attemptedAnswer);
+                    break;
+                case 3:// multi answer
+                    this.view.CmdDisplayMultiAnswerQuestion(question.question, attemptedAnswer);
+                    this.view.CmdDisplayAnswerSoFar(question.correctAnswers);
+                    break;
+                case 4:// multi ordered answer
+                    this.view.CmdDisplaySortedMultiAnswerQuestion(question.question, attemptedAnswer);
+                    break;
+            }
+            this.view.CmdUpdateCurrentQuestionLabel(this.model.currentQuestionIdx + 1, this.model.currentQuestionSetLength());
+
+        } else {
+            this.view.CmdDisplayNoQuestion();
+        }
+
+
+        //  $('#mainbody').html(content);
+        //how long did it take to work out i needed to call this - on a containing div not the content!!
+        $("#rqs").trigger('create');
+
+    },
+    
+    answerQuestion: function () {
+        var that = this;
+
+        var gotAnswer = function(answer){
+
+            var question =  that.model.currentQuestion();
+
+            var processScore = function(){
+                that.model.score = that.scoreLib.GetQuestionSetScore(that.model.questionset);
+                
+                that.view.CmdDisplayScore(question.score, that.model.score);
+                
+                switch (question.type) {
+                    case 3:
+                    case 4:
+                        that.view.CmdUpdateMiscTextBoxs(question.correctAnswers, 
+                                                question.answer,
+                                                question.question, '');
+                        break;
+                }
+            };
+
+            question.attemptedAnswer = answer;
+            
+            switch (question.type) {
+                case 0:
+                case 1:  
+                    that.scoreLib.GetScoreBasic(question,answer,processScore);
+                    break;
+                case 2:
+                    // image question
+                    break;
+                case 3:
+                    // multiple answers
+                    that.scoreLib.GetScoreMultiAnswer(question,answer,processScore);
+                    break;
+                case 4:
+                    // multiple answers
+                    that.scoreLib.GetScoreOrderedMultiAnswer(question, answer,processScore);
+                    break;
+            }
+        };
+
+        that.view.QryAnswer(function(answer){
+            gotAnswer(answer);
+        },that);
+    }
 }

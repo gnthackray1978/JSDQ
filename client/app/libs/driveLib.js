@@ -532,10 +532,6 @@ MyDrive.prototype.ReadSheet = function(sheetUrl, ocallback){
     
 };
 
-
-
-
-
 MyDrive.prototype.ReadConfigFile = function(configId, callback){
     var that = this;        
     var request = gapi.client.drive.files.get({
@@ -561,7 +557,6 @@ MyDrive.prototype.ReadConfigFile = function(configId, callback){
         
         
 };
-
 
 MyDrive.prototype.QrySearchCache = function(text, callback){
     var nidx =0;
