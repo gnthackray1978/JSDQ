@@ -5,29 +5,9 @@ var MyDrive = function (view) {
     this.CLIENT_ID = '67881158341-i31rcec2rf6bi26elnf8njnrb7v9ij8q.apps.googleusercontent.com';
     this.SCOPES = 'https://www.googleapis.com/auth/drive';
     this.data = null;
-    
-    
-    this.IMAGEURL = '';
-    this.IMAGEWIDTH = 0;
-    this.IMAGEHEIGHT =0;
-    
-    this.CONFIGFILEID = null;
-    this.CONFIGFILEFOLDER = '.meta';
-    this.CONFIGFILEEXT = '.info';
-    this.CONFIGFOLDERID =-1;
-    this.CONFIGFILENAME = 'info.config';
-    this.FILENAME = '';
-    
-    this.PARENTFOLDERID=0;
-    this.FILEID = null;
-    
+
     this.authResult = null;
-    
-    this.generations =null;
-    this.options =null;
-    this.layers =null;
-    this.searchCache = [];
-    this.fileList;
+
     this._view = view;
     this.driveLoaded;
 };
@@ -68,7 +48,6 @@ MyDrive.prototype.init = function(driveLoaded){
     window.setTimeout($.proxy(checkAuth, this), 1);
 };
 
- 
 MyDrive.prototype.SearchForQuizFiles = function(parentId, ocallback){
     
     var fileArray = [];
@@ -258,14 +237,6 @@ MyDrive.prototype.ReadSheet = function(sheetUrl, ocallback){
         ocallback(listofCSVData,listofcategories);
     };
     
-};
-
-MyDrive.prototype.GetAccessToken = function(){
-    return gapi.auth.getToken().access_token;
-};
-
-MyDrive.prototype.Type = function(){
-    return 'GDRIVE';
 };
 
 function writeStatement(statement){
