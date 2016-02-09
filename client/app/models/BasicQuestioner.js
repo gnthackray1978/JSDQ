@@ -1,6 +1,6 @@
 
 
-var BasicQuestioner = function () {
+var BasicQuestioner = function (channel) {
     this.selectedcategory = '';
     this.selectedCSV = 3;
     this.listoftests = [];

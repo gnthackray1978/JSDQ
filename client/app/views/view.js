@@ -1,11 +1,40 @@
-function View() {       
+function View(channel) {       
   // this.tabChanged = null;
-   this.categoryChanged = null;
-   this.csvChanged = null;
-   this.modeChanged =null;
-   this.endTestLock =false;
-   this.startTestLock =false;
-   this.loginAllowed =false;
+    this._channel = channel;
+    
+    this.categoryChanged = null;
+    this.csvChanged = null;
+    this.modeChanged =null;
+    this.endTestLock =false;
+    this.startTestLock =false;
+    this.loginAllowed =false;
+    
+    var that = this;
+    
+    this._channel.subscribe("RequestAnswer", function(data, envelope) {
+        //that.QryAnswer(data.value);
+        
+        var radioBox = $("input[name*=radio-choice]:checked").val();
+        var txtBox = $('#answer-box').val();
+        
+        var answer = (txtBox == '') ? radioBox : txtBox;
+        
+        that._channel.publish( "QryAnswer", { value: answer});
+    
+    });
+    
+    that.PublishQryStartTestEvt();
+    that.PublishQryEndTestEvt();
+    that.PublishQryTestHistoryEvt();
+    that.PublishAnswerButtonPress();
+    that.PublishQryPrevQuestionEvt();
+    that.PublishQryNextQuestionEvt();
+    that.PublishQrySubmitEvt();
+    that.PublishQrySelectTestBtn();
+    that.PublishQryCatBtn();
+    that.PublishQryCsvBtn();
+    that.PublishQryResetQuestionEvt();
+    that.PublishQryCorrectAnswerButtonPress();
 } 
 
 View.prototype.CmdDisplayScore = function (questionScore, testScore){
@@ -261,54 +290,198 @@ View.prototype.CmdSetCatName= function (title) {
     $('#cat_name').html(title);
 };
 
-View.prototype.QryModeChanged= function(switchFunc){
-    this.modeChanged = switchFunc;
-};
 
-View.prototype.QryStartTestEvt= function (callback, context) {
+
+
+//QryStartTestEvt
+View.prototype.PublishQryStartTestEvt= function () {
     var that =this;
     
-    $('#taketest').bind("vclick", function () 
+    $('#taketest').bind("vclick", function (e) 
     { 
-        console.log('Take Test clicked');
-        that.startTestLock =true;    
+        // console.log('Take Test clicked');
+        // that.startTestLock =true;    
 
-        if(!that.endTestLock)
-            callback.apply(context);        
+        // if(!that.endTestLock)
+        //     callback.apply(context);        
         
-        setTimeout(function () {
-            that.startTestLock =false; 
-            console.log('unlocked');
-        }, 5000);
+        // setTimeout(function () {
+        //     that.startTestLock =false; 
+        //     console.log('unlocked');
+        // }, 5000);
+        
+        that._channel.publish( "QryStartTestEvt", { value: e});
+        
     });
 };
 
-View.prototype.QryEndTestEvt = function (callback, context) {
+//QryEndTestEvt
+View.prototype.PublishQryEndTestEvt = function () {
     var that = this;
-    $('#main').bind("vclick", function () {
-        console.log('Finish Test clicked');
-        that.endTestLock =true;
+    $('#main').bind("vclick", function (e) {
+        that._channel.publish( "QryEndTestEvt", { value: e});
+        // console.log('Finish Test clicked');
+        // that.endTestLock =true;
         
-        if(!that.startTestLock)
-            callback.apply(context);
+        // if(!that.startTestLock)
+        //     callback.apply(context);
             
-        setTimeout(function () {
-            that.endTestLock =false; 
-            console.log('unlocked');
-        }, 5000);
+        // setTimeout(function () {
+        //     that.endTestLock =false; 
+        //     console.log('unlocked');
+        // }, 5000);
     });
 };
 
-
-View.prototype.QryTestHistorytEvt= function (callback, context) {
-    var myArray = [1];
-    $('#history').bind("vclick", function () { callback.apply(context, myArray); });
+//QryTestHistorytEvt
+View.prototype.PublishQryTestHistoryEvt= function () {
+    var that = this;
+    $('#history').bind("vclick", function (e) { 
+        that._channel.publish( "QryTestHistoryEvt", { value: e});
+    });
 };
     
 // View.prototype.QryEndTestEvt= function (callback, context) {
 //     console.log('QryEndTestEvt N/I');
 //     // var myArray = [1];
 //     // $('#next').bind("vclick", function () { callback.apply(context, myArray); });
+// };
+
+View.prototype.PublishAnswerButtonPress = function () {
+    var that = this;
+    
+    $("#answer-box").keypress(function (event) {
+        if (event.which == 13) {
+            //callback.apply(context);
+            that._channel.publish( "QryAnswerButtonPress", { value: event});
+            
+            $('#mainbody').css('position', '');
+            $('#mainbody').css('bottom', '');
+        }
+    });
+};
+
+View.prototype.PublishQryPrevQuestionEvt = function () {
+    var that = this;
+    $('#prev').bind("vclick", function () { 
+        that._channel.publish( "QryPrevQuestionEvt", { value: [-1]});
+    });
+};
+
+View.prototype.PublishQryNextQuestionEvt = function () {
+    var that = this;
+    $('#next').bind("vclick", function () { 
+        that._channel.publish( "QryNextQuestionEvt", { value: [1]});
+    });
+};
+
+View.prototype.PublishQrySubmitEvt = function () {
+    var that = this;
+    $('#submit').bind("vclick", function (e) { 
+        //callback.apply(context); 
+        that._channel.publish( "QrySubmitEvt", { value: e});
+    });
+};
+
+View.prototype.PublishQrySelectTestBtn = function () {//context.listtests();
+    var that = this;
+    
+    $('#choosetest').bind("vclick", function (e) {
+        that._channel.publish( "QrySelectTestBtn", { value: e});
+        //callback.apply(context);
+    });
+};
+
+//now unused as cats has been commented out
+// we dont currently need that functionality 
+View.prototype.PublishQryCatBtn = function () {//context.listtests();
+    var that = this;
+    
+    $('#cats').bind("vclick", function (e) {
+        //callback.apply(context);
+        that._channel.publish( "QryCatBtn", { value: e});
+    });
+};
+
+//now unused as csv has been commented out
+// we dont currently need that functionality 
+View.prototype.PublishQryCsvBtn = function () {//context.listtests();
+    var that = this;
+    
+    $('#csvs').bind("vclick", function (e) {
+        //callback.apply(context);
+        that._channel.publish( "QryCsvBtn", { value: e});
+    });
+};
+
+////seems to be unused
+// View.prototype.QryCategoryChanged = function (action,context){
+//   this.categoryChanged = function(e) {
+//       action.call(context,e);
+//   };
+// };
+
+////seems to be unused
+// View.prototype.QryCSVChanged = function (action, context){
+//   var that =this;
+//   this.csvChanged = function(e) {
+//       action.call(context,e);
+//   };
+// };
+
+// View.prototype.QryModeChanged= function(switchFunc){
+//     this.modeChanged = switchFunc;
+// };
+
+View.prototype.PublishQryResetQuestionEvt = function () {
+    var that = this;
+    $('#select').bind("vclick", function (e) { 
+        that._channel.publish( "QryResetQuestionEvt", { value: e});
+    });
+};
+
+View.prototype.PublishQryCorrectAnswerButtonPress = function () {
+    
+    // var debounce = function (func, wait, immediate) {
+    //     var timeout;
+    //     return function () {
+    //         var context = this, args = arguments;
+    //         clearTimeout(timeout);
+    //         timeout = setTimeout(function () {
+    //             timeout = null;
+    //             if (!immediate) func.apply(context, args);
+    //         }, wait);
+    //         if (immediate && !timeout) func.apply(context, args);
+    //     };
+    // };
+    // var myEfficientFn = debounce(function () {
+    //     callback.apply(context);
+    // }, 500);
+    
+    // $('#show-answer').bind("vclick", myEfficientFn);
+    
+    var that = this;
+    
+    $('#show-answer').bind("vclick", function(e){
+        that._channel.publish( "QryCorrectAnswerButtonPress", { value: e});
+    });
+};
+
+//GetAnswer
+// View.prototype.QryAnswer = function (action, context){
+    
+//     var radioBox = $("input[name*=radio-choice]:checked").val();
+//     var txtBox = $('#answer-box').val();
+    
+//     var answer = (txtBox == '') ? radioBox : txtBox;
+    
+//     this._channel.publish( "QryAnswer", { value: answer});
+
+// };
+ 
+// View.prototype.QryTabChanged = function (action){
+//   this.tabChanged = action;
+   
 // };
 
 View.prototype.QryNA = function (callback, context) {
@@ -325,117 +498,4 @@ View.prototype.CmdUpdateLogin = function(enabled, text){
     this.loginAllowed = enabled;
     
     $('#login').html(text);
-};
-
-
-View.prototype.QryPrevQuestionEvt = function (callback, context) {
-    var myArray = [-1];
-    $('#prev').bind("vclick", function () { callback.apply(context, myArray); });
-};
-
-View.prototype.QryNextQuestionEvt = function (callback, context) {
-    var myArray = [1];
-    $('#next').bind("vclick", function () { callback.apply(context, myArray); });
-};
-
-View.prototype.QrySubmitEvt = function (callback, context) {
-    $('#submit').bind("vclick", function () { callback.apply(context); });
-};
-
-View.prototype.QryResetQuestionEvt = function (callback, context) {
-    $('#select').bind("vclick", function () { callback.apply(context); });
-};
-
-View.prototype.QryAnswerButtonPress = function (callback, context) {
-    $("#answer-box").keypress(function (event) {
-        if (event.which == 13) {
-            callback.apply(context);
-            $('#mainbody').css('position', '');
-            $('#mainbody').css('bottom', '');
-        }
-    });
-};
-
-View.prototype.QryCorrectAnswerButtonPress = function (callback, context) {
-    
-    var debounce = function (func, wait, immediate) {
-        var timeout;
-        return function () {
-            var context = this, args = arguments;
-            clearTimeout(timeout);
-            timeout = setTimeout(function () {
-                timeout = null;
-                if (!immediate) func.apply(context, args);
-            }, wait);
-            if (immediate && !timeout) func.apply(context, args);
-        };
-    };
-    var myEfficientFn = debounce(function () {
-        callback.apply(context);
-    }, 500);
-    
-    $('#show-answer').bind("vclick", myEfficientFn);
-    
-    
-};
-
-View.prototype.QrySelectTestBtn = function (callback, context) {//context.listtests();
-    $('#choosetest').bind("vclick", function () {
-            
-            callback.apply(context);
-        }
-    );
-};
-
-//now unused as cats has been commented out
-// we dont currently need that functionality 
-View.prototype.QryCatBtn = function (callback, context) {//context.listtests();
-    $('#cats').bind("vclick", function () {
-            callback.apply(context);
-        }
-    );
-};
-
-//now unused as csv has been commented out
-// we dont currently need that functionality 
-View.prototype.QryCsvBtn = function (callback, context) {//context.listtests();
-
-    $('#csvs').bind("vclick", function () {
-            callback.apply(context);
-        }
-    );
-};
-//GetAnswer
-View.prototype.QryAnswer = function (action, context){
-    
-    var radioBox = $("input[name*=radio-choice]:checked").val();
-    var txtBox = $('#answer-box').val();
-    
-    
-    var answer = (txtBox == '') ? radioBox : txtBox;
-    
-    
-    action.call(context,answer);
-    
-    
-};
- 
-// View.prototype.QryTabChanged = function (action){
-//   this.tabChanged = action;
-   
-// };
-
-View.prototype.QryCategoryChanged = function (action,context){
-   this.categoryChanged = function(e) {
-       action.call(context,e);
-   };
-};
-
-View.prototype.QryCSVChanged = function (action, context){
-   
-   this.csvChanged = function(e) {
-       action.call(context,e);
-   };
-   
- 
 };

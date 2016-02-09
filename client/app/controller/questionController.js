@@ -1,30 +1,151 @@
-var QuestionController = function (view, model,drive) {
+var QuestionController = function (view, model,drive,channel) {
+    this._channel = channel;;
+    
     this.view = view;
     this.drive = drive;
     this.model = model;
     this.scoreLib = new ScoreLib();
     this.questionLib = new QuestionLib();
     
+    this.viewData = {
+        categoryChanged : null,
+        csvChanged : null,
+        modeChanged :null,
+        endTestLock :false,
+        startTestLock :false,
+        loginAllowed :false 
+    };
+    
     this.init();
     
-    this.view.QryStartTestEvt(this.qryStartTestEvt, this); 
-    this.view.QryEndTestEvt(this.qryEndTestEvt, this);
+    var that = this;
     
-    this.view.QryTestHistorytEvt(this.qryTestHistorytEvt, this);
+    //this.view.QryStartTestEvt(this.qryStartTestEvt, this); 
+    this._channel.subscribe("QryStartTestEvt", function(data, envelope) {
+        
+        console.log('Take Test clicked');
+        that.viewData.startTestLock =true;    
+
+        if(!that.viewData.endTestLock)
+            that.qryStartTestEvt(data.value);      
+        
+        setTimeout(function () {
+            that.viewData.startTestLock =false; 
+            console.log('unlocked');
+        }, 5000);
+        
+    });
     
-    this.view.QryPrevQuestionEvt(this.qryPrevQuestionEvt, this); 
-    this.view.QryNextQuestionEvt(this.qryNextQuestionEvt, this); 
-    this.view.QrySubmitEvt(this.qrySubmitEvt, this); 
-    this.view.QryAnswerButtonPress(this.qryAnswerButtonPress, this);
-    this.view.QryCorrectAnswerButtonPress(this.qryCorrectAnswerButtonPress, this); 
-    this.view.QrySelectTestBtn(this.qrySelectTestBtn, this);
-    this.view.QryCatBtn(this.qryCatBtn, this);
-    this.view.QryCsvBtn(this.qryCsvBtn, this); 
-    this.view.QryCategoryChanged(this.qryCategoryChanged, this);
-    this.view.QryCSVChanged(this.qryCSVChanged, this);
-    this.view.QryModeChanged(this.qryModeChanged, this);
-    this.view.QryResetQuestionEvt(this.qryResetQuestionEvt, this);
+    
+    //this.view.QryEndTestEvt(this.qryEndTestEvt, this);
+    this._channel.subscribe("QryEndTestEvt", function(data, envelope) {
+        
+        console.log('Finish Test clicked');
+        that.viewData.endTestLock =true;
+        
+        if(!that.viewData.startTestLock)
+            that.qryEndTestEvt(data.value);
+            
+        setTimeout(function () {
+            that.viewData.endTestLock =false; 
+            console.log('unlocked');
+        }, 5000);
+        
+    });
+    
+    //this.view.QryTestHistorytEvt(this.qryTestHistorytEvt, this);
+    this._channel.subscribe("QryTestHistoryEvt", function(data, envelope) {
+        that.qryTestHistorytEvt(data.value);
+    });
+    
+    
+    //this.view.QryPrevQuetionEvt(this.qryPrevQuestionEvt, this);
+    this._channel.subscribe("QryPrevQuestionEvt", function(data, envelope) {
+        that.qryPrevQuestionEvt(data.value);
+    });
+    
+    //this.view.QryNextQuestionEvt(this.qryNextQuestionEvt, this); 
+    this._channel.subscribe("QryNextQuestionEvt", function(data, envelope) {
+        that.qryNextQuestionEvt(data.value);
+    });
+    
+    
+    //this.view.QrySubmitEvt(this.qrySubmitEvt, this); 
+    this._channel.subscribe("QrySubmitEvt", function(data, envelope) {
+        that.qrySubmitEvt(data.value);
+    });
+    
+    //this.view.QryAnswerButtonPress(this.qryAnswerButtonPress, this);
+    this._channel.subscribe("QryAnswerButtonPress", function(data, envelope) {
+        that.qryAnswerButtonPress(data.value);
+    });
+    
+    //this.view.QryCorrectAnswerButtonPress(this.qryCorrectAnswerButtonPress, this); 
+    this._channel.subscribe("QryCorrectAnswerButtonPress", function(data, envelope) {
+        
+        
+        var debounce = function (func, wait, immediate) {
+            var timeout;
+            return function () {
+                var context = this, args = arguments;
+                clearTimeout(timeout);
+                timeout = setTimeout(function () {
+                    timeout = null;
+                    if (!immediate) func.apply(context, args);
+                }, wait);
+                if (immediate && !timeout) func.apply(context, args);
+            };
+        };
+        
+        debounce(function () {
+            that.qryCorrectAnswerButtonPress(data.value);
+        }, 500);
+    
+    });
+    
+    //this.view.QrySelectTestBtn(this.qrySelectTestBtn, this);
+    this._channel.subscribe("QrySelectTestBtn", function(data, envelope) {
+        that.qrySelectTestBtn(data.value);
+    });
+    
+    //this.view.QryCatBtn(this.qryCatBtn, this);
+    this._channel.subscribe("QryCatBtn", function(data, envelope) {
+        that.qryCatBtn(data.value);
+    });
+    
+    //this.view.QryCsvBtn(this.qryCsvBtn, this); 
+    this._channel.subscribe("QryCsvBtn", function(data, envelope) {
+        that.qryCsvBtn(data.value);
+    });
+    
+    //this.view.QryCategoryChanged(this.qryCategoryChanged, this);
+    // this._channel.subscribe("QryCategoryChanged", function(data, envelope) {
+    //     that.qryCategoryChanged(data.value);
+    // });
+    
+    // this.view.QryCSVChanged(this.qryCSVChanged, this);
+    // this._channel.subscribe("QryCSVChanged", function(data, envelope) {
+    //     that.qryCSVChanged(data.value);
+    // });
+    
+    // this.view.QryModeChanged(this.qryModeChanged, this);
+    // this._channel.subscribe("QryModeChanged", function(data, envelope) {
+    //     that.qryModeChanged(data.value);
+    // });
+    
+    //this.view.QryResetQuestionEvt(this.qryResetQuestionEvt, this);
+    this._channel.subscribe("QryResetQuestionEvt", function(data, envelope) {
+        that.qryResetQuestionEvt(data.value);
+    });
+    
+    this._channel.subscribe("QryAnswer", function(data, envelope) {
+        that.gotAnswer(data.value);
+    });
+    
     this.view.QryNA(this.qryNA,this);
+    // this._channel.subscribe("QryNA", function(data, envelope) {
+    //     that.qryNA(data.value);
+    // });
 };
 
 QuestionController.prototype = {
@@ -37,12 +158,13 @@ QuestionController.prototype = {
             this.model.GoogleSheetTestLogin(evt);
         }
     },
-    
-    qryModeChanged:function(evt){
-        if (this.model !== null) {
-            this.model.ModeChanged(evt);
-        }
-    },
+
+//seems to be unused    
+    // qryModeChanged:function(evt){
+    //     if (this.model !== null) {
+    //         this.model.ModeChanged(evt);
+    //     }
+    // },
     
      
     
@@ -239,50 +361,53 @@ QuestionController.prototype = {
     },
     
     answerQuestion: function () {
-        var that = this;
+        
+        this._channel.publish( "RequestAnswer", { value: undefined});
+        
+        // var that = this;
 
-        var gotAnswer = function(answer){
+        // that.view.QryAnswer(function(answer){
+        //     that.gotAnswer(answer);
+        // },that);
+    },
+    
+    gotAnswer : function(answer){
 
-            var question =  that.model.currentQuestion();
+        var question = that.model.currentQuestion();
 
-            var processScore = function(){
-                that.model.score = that.scoreLib.GetQuestionSetScore(that.model.questionset);
-                
-                that.view.CmdDisplayScore(question.score, that.model.score);
-                
-                switch (question.type) {
-                    case 3:
-                    case 4:
-                        that.view.CmdUpdateMiscTextBoxs(question.correctAnswers, 
-                                                question.answer,
-                                                question.question, '');
-                        break;
-                }
-            };
-
-            question.attemptedAnswer = answer;
+        var processScore = function(){
+            that.model.score = that.scoreLib.GetQuestionSetScore(that.model.questionset);
+            
+            that.view.CmdDisplayScore(question.score, that.model.score);
             
             switch (question.type) {
-                case 0:
-                case 1:  
-                    that.scoreLib.GetScoreBasic(question,answer,processScore);
-                    break;
-                case 2:
-                    // image question
-                    break;
                 case 3:
-                    // multiple answers
-                    that.scoreLib.GetScoreMultiAnswer(question,answer,processScore);
-                    break;
                 case 4:
-                    // multiple answers
-                    that.scoreLib.GetScoreOrderedMultiAnswer(question, answer,processScore);
+                    that.view.CmdUpdateMiscTextBoxs(question.correctAnswers, 
+                                            question.answer,
+                                            question.question, '');
                     break;
             }
         };
 
-        that.view.QryAnswer(function(answer){
-            gotAnswer(answer);
-        },that);
+        question.attemptedAnswer = answer;
+        
+        switch (question.type) {
+            case 0:
+            case 1:  
+                that.scoreLib.GetScoreBasic(question,answer,processScore);
+                break;
+            case 2:
+                // image question
+                break;
+            case 3:
+                // multiple answers
+                that.scoreLib.GetScoreMultiAnswer(question,answer,processScore);
+                break;
+            case 4:
+                // multiple answers
+                that.scoreLib.GetScoreOrderedMultiAnswer(question, answer,processScore);
+                break;
+        }
     }
 };
