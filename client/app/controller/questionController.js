@@ -142,10 +142,24 @@ var QuestionController = function (view, model,drive,channel) {
         that.gotAnswer(data.value);
     });
     
-    this.view.QryNA(this.qryNA,this);
-    // this._channel.subscribe("QryNA", function(data, envelope) {
-    //     that.qryNA(data.value);
-    // });
+    this._channel.subscribe("QryAnswer", function(data, envelope) {
+        that.gotAnswer(data.value);
+    });
+    
+    this._channel.subscribe("Login", function(data, envelope) {
+        that.viewData.loginAllowed = data.value;
+        
+        if(data.value)
+            that._view.CmdUpdateLogin(true,'Login');
+        else
+            that._view.CmdUpdateLogin(false,'LOGGED IN');
+    });
+    
+    //this.view.QryNA(this.qryNA,this);
+    this._channel.subscribe("LoginClick", function(data, envelope) {
+        if(that.viewData.loginAllowed)
+            that.qryNA(data.value);
+    });
 };
 
 QuestionController.prototype = {

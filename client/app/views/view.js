@@ -486,16 +486,18 @@ View.prototype.PublishQryCorrectAnswerButtonPress = function () {
 
 View.prototype.QryNA = function (callback, context) {
     var that = this;
-    $('#login').bind("vclick", function () { 
+    $('#login').bind("vclick", function (e) { 
         
-        if(that.loginAllowed)
-            callback.apply(context); 
+        that._channel.publish( "LoginClick", { value: e});
+        
+        // if(that.loginAllowed)
+        //     callback.apply(context); 
     });
 };
 
 View.prototype.CmdUpdateLogin = function(enabled, text){
     
-    this.loginAllowed = enabled;
+    //this.loginAllowed = enabled;
     
     $('#login').html(text);
 };

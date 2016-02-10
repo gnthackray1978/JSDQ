@@ -25,7 +25,8 @@ MyDrive.prototype.autherizeResult = function(authResult) {
         writeStatement('Authenticated');
         //SET AUTH RESULT
         that.authResult = authResult;
-        that._view.CmdUpdateLogin(false,'LOGGED IN');
+        //that._view.CmdUpdateLogin(false,'LOGGED IN');
+        that._channel.publish( "Login", { value: false} );
         gapi.client.load('drive', 'v2', function(r){
             //$.proxy(that.driveLoaded, that)
             that.driveLoaded();
@@ -33,7 +34,8 @@ MyDrive.prototype.autherizeResult = function(authResult) {
     }
     else {
         writeStatement('Couldnt authenticate displaying button!');
-        that._view.CmdUpdateLogin(true,'Login');
+        //that._view.CmdUpdateLogin(true,'Login');
+        that._channel.publish( "Login", { value: true} );
     }
 };     
     
