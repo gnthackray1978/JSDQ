@@ -150,9 +150,9 @@ var QuestionController = function (view, model,drive,channel) {
         that.viewData.loginAllowed = data.value;
         
         if(data.value)
-            that._view.CmdUpdateLogin(true,'Login');
+            that.view.CmdUpdateLogin(true,'Login');
         else
-            that._view.CmdUpdateLogin(false,'LOGGED IN');
+            that.view.CmdUpdateLogin(false,'LOGGED IN');
     });
     
     //this.view.QryNA(this.qryNA,this);
