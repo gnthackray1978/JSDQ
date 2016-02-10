@@ -364,14 +364,14 @@ View.prototype.PublishAnswerButtonPress = function () {
 View.prototype.PublishQryPrevQuestionEvt = function () {
     var that = this;
     $('#prev').bind("vclick", function () { 
-        that._channel.publish( "QryPrevQuestionEvt", { value: [-1]});
+        that._channel.publish( "QryPrevQuestionEvt", { value: -1});
     });
 };
 
 View.prototype.PublishQryNextQuestionEvt = function () {
     var that = this;
     $('#next').bind("vclick", function () { 
-        that._channel.publish( "QryNextQuestionEvt", { value: [1]});
+        that._channel.publish( "QryNextQuestionEvt", { value: 1});
     });
 };
 
