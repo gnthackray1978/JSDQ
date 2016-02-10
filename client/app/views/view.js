@@ -35,6 +35,7 @@ function View(channel) {
     that.PublishQryCsvBtn();
     that.PublishQryResetQuestionEvt();
     that.PublishQryCorrectAnswerButtonPress();
+    that.PublishQryLoginClick();
 } 
 
 View.prototype.CmdDisplayScore = function (questionScore, testScore){
@@ -484,7 +485,7 @@ View.prototype.PublishQryCorrectAnswerButtonPress = function () {
    
 // };
 
-View.prototype.QryNA = function (callback, context) {
+View.prototype.PublishQryLoginClick = function (callback, context) {
     var that = this;
     $('#login').bind("vclick", function (e) { 
         
