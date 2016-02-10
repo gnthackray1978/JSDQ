@@ -19,11 +19,17 @@ $(document).bind("pageinit", function () {
     var driveLoadedF = function(){
         if(driveLoaded){
             
-            
             var drive = new MyDrive(appView,channel);
+            
+            var appController = new QuestionController(appView,new BasicQuestioner(channel), drive,channel);
+            
+            extend( new Subject(), appController.model );
+            
+            
+            
+            
             drive.init(function(){
-               var appController = new QuestionController(appView,new BasicQuestioner(channel), drive,channel);
-               extend( new Subject(), appController.model );
+               
             });
         }
     };
