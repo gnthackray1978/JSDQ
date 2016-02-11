@@ -38,11 +38,16 @@ function View(channel) {
     that.PublishQryLoginClick();
 } 
 
-View.prototype.CmdDisplayScore = function (questionScore, testScore){
-      $('#question-score').html(questionScore + '%');
+View.prototype.CmdUpdateLogin = function(enabled, text){
 
-        if (testScore != undefined)
-            $('#perc-correct').html(testScore + '%');
+    $('#login').html(text);
+};
+
+View.prototype.CmdDisplayScore = function (questionScore, testScore){
+    $('#question-score').html(questionScore + '%');
+
+    if (testScore != undefined)
+        $('#perc-correct').html(testScore + '%');
 };
 
 View.prototype.CmdDisplayCorrectAnswer = function (answers){
@@ -269,7 +274,6 @@ View.prototype.CmdResetAnswers =function () {
     $('#answer-so-far').html(''); 
 };
 
-
 View.prototype.CmdUpdateCurrentQuestionLabel= function (currentQuestion, totalQuestions) {
     $('#current-question').html(currentQuestion + ' of ' + totalQuestions);
 };
@@ -294,7 +298,6 @@ View.prototype.CmdSetCatName= function (title) {
 
 
 
-//QryStartTestEvt
 View.prototype.PublishQryStartTestEvt= function () {
     var that =this;
     
@@ -316,7 +319,6 @@ View.prototype.PublishQryStartTestEvt= function () {
     });
 };
 
-//QryEndTestEvt
 View.prototype.PublishQryEndTestEvt = function () {
     var that = this;
     $('#main').bind("vclick", function (e) {
@@ -334,19 +336,12 @@ View.prototype.PublishQryEndTestEvt = function () {
     });
 };
 
-//QryTestHistorytEvt
 View.prototype.PublishQryTestHistoryEvt= function () {
     var that = this;
     $('#history').bind("vclick", function (e) { 
         that._channel.publish( "QryTestHistoryEvt", { value: e});
     });
 };
-    
-// View.prototype.QryEndTestEvt= function (callback, context) {
-//     console.log('QryEndTestEvt N/I');
-//     // var myArray = [1];
-//     // $('#next').bind("vclick", function () { callback.apply(context, myArray); });
-// };
 
 View.prototype.PublishAnswerButtonPress = function () {
     var that = this;
@@ -415,25 +410,6 @@ View.prototype.PublishQryCsvBtn = function () {//context.listtests();
     });
 };
 
-////seems to be unused
-// View.prototype.QryCategoryChanged = function (action,context){
-//   this.categoryChanged = function(e) {
-//       action.call(context,e);
-//   };
-// };
-
-////seems to be unused
-// View.prototype.QryCSVChanged = function (action, context){
-//   var that =this;
-//   this.csvChanged = function(e) {
-//       action.call(context,e);
-//   };
-// };
-
-// View.prototype.QryModeChanged= function(switchFunc){
-//     this.modeChanged = switchFunc;
-// };
-
 View.prototype.PublishQryResetQuestionEvt = function () {
     var that = this;
     $('#select').bind("vclick", function (e) { 
@@ -442,25 +418,7 @@ View.prototype.PublishQryResetQuestionEvt = function () {
 };
 
 View.prototype.PublishQryCorrectAnswerButtonPress = function () {
-    
-    // var debounce = function (func, wait, immediate) {
-    //     var timeout;
-    //     return function () {
-    //         var context = this, args = arguments;
-    //         clearTimeout(timeout);
-    //         timeout = setTimeout(function () {
-    //             timeout = null;
-    //             if (!immediate) func.apply(context, args);
-    //         }, wait);
-    //         if (immediate && !timeout) func.apply(context, args);
-    //     };
-    // };
-    // var myEfficientFn = debounce(function () {
-    //     callback.apply(context);
-    // }, 500);
-    
-    // $('#show-answer').bind("vclick", myEfficientFn);
-    
+
     var that = this;
     
     $('#show-answer').bind("vclick", function(e){
@@ -468,37 +426,13 @@ View.prototype.PublishQryCorrectAnswerButtonPress = function () {
     });
 };
 
-//GetAnswer
-// View.prototype.QryAnswer = function (action, context){
-    
-//     var radioBox = $("input[name*=radio-choice]:checked").val();
-//     var txtBox = $('#answer-box').val();
-    
-//     var answer = (txtBox == '') ? radioBox : txtBox;
-    
-//     this._channel.publish( "QryAnswer", { value: answer});
-
-// };
- 
-// View.prototype.QryTabChanged = function (action){
-//   this.tabChanged = action;
-   
-// };
-
 View.prototype.PublishQryLoginClick = function (callback, context) {
     var that = this;
     $('#login').bind("vclick", function (e) { 
         
         that._channel.publish( "LoginClick", { value: e});
-        
-        // if(that.loginAllowed)
-        //     callback.apply(context); 
+
     });
 };
 
-View.prototype.CmdUpdateLogin = function(enabled, text){
-    
-    //this.loginAllowed = enabled;
-    
-    $('#login').html(text);
-};
+
