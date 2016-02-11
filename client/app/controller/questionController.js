@@ -4,6 +4,7 @@ var QuestionController = function (view, model,drive,channel) {
     this.view = view;
     this.drive = drive;
     this.quizObj = model;
+    
     this.scoreLib = new ScoreLib();
     this.questionLib = new QuestionLib();
     
@@ -17,6 +18,7 @@ var QuestionController = function (view, model,drive,channel) {
     };
     
     this.init();
+    this.model = new QuizVM(channel);
     
     var that = this;
 
