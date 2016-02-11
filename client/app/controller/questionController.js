@@ -171,7 +171,7 @@ QuestionController.prototype = {
     			
     			that.displayQuestion(0);
     			
-    			that.view.CmdSetTab(-1,function(){});
+    			that.view.CmdSetTab(0,function(){});
     			
     			that.view.CmdSwitchHeaderContent(0, function () {});
             }
@@ -181,7 +181,7 @@ QuestionController.prototype = {
         if (this.quizObj !== null) {
             var that = this;
             
-            that.view.CmdSetTab(0,function(){});
+            that.view.CmdSetTab(-1,function(){});
             
         	that.view.CmdSwitchHeaderContent(1, function () {});
         }
