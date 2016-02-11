@@ -114,10 +114,6 @@ var QuestionController = function (view, model,drive,channel) {
         that.gotAnswer(data.value);
     });
     
-    this._channel.subscribe("QryAnswer", function(data, envelope) {
-        that.gotAnswer(data.value);
-    });
-    
     this._channel.subscribe("Login", function(data, envelope) {
         that.viewData.loginAllowed = data.value;
         
@@ -175,18 +171,19 @@ QuestionController.prototype = {
     			
     			that.displayQuestion(0);
     			
-    			that.view.CmdSwitchHeaderContent(0, function () {
-    				that.view.CmdSetTab(0,function(){});
-    			});
+    			that.view.CmdSetTab(-1,function(){});
+    			
+    			that.view.CmdSwitchHeaderContent(0, function () {});
             }
         }
     },
     qryEndTestEvt:function(evt){
         if (this.quizObj !== null) {
             var that = this;
-        	that.view.CmdSwitchHeaderContent(1, function () {
-    			that.view.CmdSetTab(-1,function(){});
-    		});
+            
+            that.view.CmdSetTab(0,function(){});
+            
+        	that.view.CmdSwitchHeaderContent(1, function () {});
         }
     },
     qryPrevQuestionEvt:function(evt){

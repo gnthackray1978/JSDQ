@@ -37,7 +37,6 @@ function View(channel) {
     that.PublishQryCorrectAnswerButtonPress();
     that.PublishQryLoginClick();
 } 
-
 View.prototype.CmdUpdateLogin = function(enabled, text){
 
     $('#login').html(text);
@@ -81,19 +80,18 @@ View.prototype.CmdDisplayCorrectAnswer = function (answers){
 };
 
 View.prototype.CmdSwitchHeaderContent= function (type, modeChanged) {
-        
+    var that = this;
+    
     // main header
     if (type == 0) {            
         $("#header-answer-block").removeClass("hidePanel").addClass("displayPanel");
         $("#header-home-block").removeClass("displayPanel").addClass("hidePanel");
-        modeChanged();
     }
     
     // answer mode header
     if (type == 1) {
         $("#header-answer-block").removeClass("displayPanel").addClass("hidePanel");
         $("#header-home-block").removeClass("hidePanel").addClass("displayPanel");           
-        modeChanged();
     }            
 };
 
