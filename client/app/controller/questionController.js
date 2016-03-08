@@ -75,22 +75,22 @@ var QuestionController = function (view, model,drive,channel) {
     this._channel.subscribe("QryCorrectAnswerButtonPress", function(data, envelope) {
         
         
-        var debounce = function (func, wait, immediate) {
-            var timeout;
-            return function () {
-                var context = this, args = arguments;
-                clearTimeout(timeout);
-                timeout = setTimeout(function () {
-                    timeout = null;
-                    if (!immediate) func.apply(context, args);
-                }, wait);
-                if (immediate && !timeout) func.apply(context, args);
-            };
-        };
+        // var debounce = function (func, wait, immediate) {
+        //     var timeout;
+        //     return function () {
+        //         var context = this, args = arguments;
+        //         clearTimeout(timeout);
+        //         timeout = setTimeout(function () {
+        //             timeout = null;
+        //             if (!immediate) func.apply(context, args);
+        //         }, wait);
+        //         if (immediate && !timeout) func.apply(context, args);
+        //     };
+        // };
         
-        debounce(function () {
+        // debounce(function () {
             that.qryCorrectAnswerButtonPress(data.value);
-        }, 500);
+        //}, 500);
     
     });
     
