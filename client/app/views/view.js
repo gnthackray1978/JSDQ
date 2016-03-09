@@ -478,10 +478,10 @@ View.prototype.UpdateView= function (view) {
         
         
     if(view.visibleAnswer){
-        $("#answer").removeClass("displayPanel").addClass("hidePanel");
+        $("#answer").removeClass("hidePanel").addClass("displayPanel");
     }else
     {
-        $("#answer").removeClass("hidePanel").addClass("displayPanel");
+        $("#answer").removeClass("displayPanel").addClass("hidePanel");
     }
     
     //
