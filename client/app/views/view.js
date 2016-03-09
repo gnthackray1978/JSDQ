@@ -11,7 +11,7 @@ function TestView(){
     this.percentageCorrect =0;
     this.questionScore=0;
     this.tabIdx =0;
-    this.headerIdx=0;
+    this.headerIdx=1;
     
     this.visibleAnswer=false;
     this.visibleImage=false;
