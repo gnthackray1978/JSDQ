@@ -278,7 +278,7 @@ QuestionController.prototype = {
         if (this.quizObj.currentQuestionSetLength() > 0) {
             var question = this.quizObj.currentQuestion();
                          
-            this.view.CmdDisplayScore(question.score);
+            this.view.CmdDisplayQuestionScore(question.score);
 
             var attemptedAnswer = question.attemptedAnswer;
 

@@ -95,6 +95,19 @@ View.prototype.CmdDisplayScore = function (questionScore, percentageCorrect){
     this.UpdateView(this._testView);    
 };
 
+View.prototype.CmdDisplayQuestionScore = function (questionScore){
+    // $('#question-score').html(questionScore + '%');
+
+    // if (percentageCorrect != undefined)
+    //     $('#perc-correct').html(percentageCorrect + '%');
+        
+    this._testView.questionScore = questionScore;
+
+    this.UpdateView(this._testView);    
+};
+
+
+
 View.prototype.CmdDisplayCorrectAnswer = function (answers){
 
     var formattedAnswers = this.FormatCorrectAnswer(answers);
