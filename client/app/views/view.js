@@ -461,7 +461,7 @@ View.prototype.UpdateView= function (view) {
     $('#question-score').html(view.questionScore + '%');
 
     $('#perc-correct').html(view.percentageCorrect + '%');
-        
+    $('#current-question').html(view.currentQuestion);
         
         
     if(view.visibleAnswer){
