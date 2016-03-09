@@ -92,6 +92,14 @@ var QuestionController = function (view, model,drive,channel) {
         that.gotAnswer(data.value);
     });
     
+    this._channel.subscribe("QryCSVChanged", function(data, envelope) {
+        that.qryCSVChanged(data.value);
+    });
+    
+    this._channel.subscribe("QryCategoryChanged", function(data, envelope) {
+        that.qryCategoryChanged(data.value);
+    });
+    
     this._channel.subscribe("Login", function(data, envelope) {
         that.viewData.loginAllowed = data.value;
         
@@ -203,10 +211,8 @@ QuestionController.prototype = {
                 console.log('fetched list of quizs: '+quizlist);
                 that.quizObj.listoftests = quizlist;
                 
-                that.view.CmdDisplayCSVList(that.quizObj.listoftests,that.qryCSVChanged, that);
-                
-                
-                
+                //that.view.CmdDisplayCSVList(that.quizObj.listoftests, that);
+                that.model.csvList = that.quizObj.listoftests;
                 that.model.tabIdx = 4;
                 that.view.UpdateView(that.model);
             });
@@ -232,7 +238,9 @@ QuestionController.prototype = {
                 that.questionLib.ParseCats(csv, function(csv,cats){
                     that.quizObj.rawCSVData = csv;
                     that.quizObj.categories = cats;
-                    that.view.CmdDisplayCategoryList(cats.D,that.qryCategoryChanged, that);
+                    //that.view.CmdDisplayCategoryList(cats.D, that);
+                    that.model.catList = cats.D;
+                    that.view.UpdateView(that.model);
                 });
                 
             });

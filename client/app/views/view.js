@@ -23,6 +23,9 @@ function View(channel) {
     this._channel = channel;
     this._testView = new TestView();
     
+    this.cacheCatList =[];
+    this.cacheCSVList =[];
+    
     this.categoryChanged = null;
     this.csvChanged = null;
     this.modeChanged =null;
@@ -182,7 +185,7 @@ View.prototype.CmdSetTab = function (tabidx,tabChanged){
 };
 
 //exception
-View.prototype.CmdDisplayCategoryList = function (catList,evt, context){
+View.prototype.CmdDisplayCategoryList = function (catList, context){
     var listHelper = new ListHelper();
     var cats = '';
     var selectEvents = [];
@@ -198,12 +201,16 @@ View.prototype.CmdDisplayCategoryList = function (catList,evt, context){
     
 
     $('#categories').html(cats);       
-
-    listHelper.Addlinks(selectEvents, evt, context);
+    
+    var that = this;
+    
+    listHelper.Addlinks(selectEvents, function(e){
+        that._channel.publish( "QryCategoryChanged", { value: e});
+    }, context);
 };
 
 //exception
-View.prototype.CmdDisplayCSVList = function (catList,evt, context) {
+View.prototype.CmdDisplayCSVList = function (catList, context) {
     var listHelper = new ListHelper();
     var cats = '';
     var selectEvents = [];
@@ -219,7 +226,11 @@ View.prototype.CmdDisplayCSVList = function (catList,evt, context) {
     
     $('#webcategories').html(cats);
     
-    listHelper.Addlinks(selectEvents, evt, context);
+    var that = this;
+    
+    listHelper.Addlinks(selectEvents, function(e){
+        that._channel.publish( "QryCSVChanged", { value: e});
+    }, context);
 };
 
 //updateBoxs
@@ -322,6 +333,20 @@ View.prototype.CmdSetCatName= function (title) {
 View.prototype.UpdateView= function (view) {
     //return;
     
+    var listEqual = function(l1,l2){
+        if(l1.length != l2.length) return false;
+        if(l1.length ==0) return true;
+        
+        var idx =0;
+        while(idx < l1.length){
+            if(l1[idx]!= l2[idx])
+                return false;
+            idx++;
+        }
+        
+        return true;
+    };
+    
     //hide everything initially.
     $("#pnlCategories").removeClass("displayPanel").addClass("hidePanel");      //hide categories
     $("#test-sel").removeClass("displayPanel").addClass("hidePanel");           //hide test selectors
@@ -337,7 +362,8 @@ View.prototype.UpdateView= function (view) {
     
     $('#cat_name').html(view.catName);
     $('#test_name').html(view.testName);
-    $('#answer-so-far').html(view.answerSoFar);
+    //this.FormatAnswerSoFar(currentQuestionState)
+    $('#answer-so-far').html(this.FormatAnswerSoFar(view.answerSoFar));
     
     if(view.isMultipleChoice){
         var tpMainBody = this.FormatMultipleChoice(view.multiChoiceQuestion, view.multiChoiceConstantAnswer, view.multiChoiceIdx);            
@@ -417,10 +443,20 @@ View.prototype.UpdateView= function (view) {
         $("#header-answer-block").removeClass("displayPanel").addClass("hidePanel");
         $("#header-home-block").removeClass("hidePanel").addClass("displayPanel");           
     }
+
+    //something has changed so display
+    if(!listEqual(this.cacheCatList,view.catList)){
+        this.cacheCatList = view.catList;
+        this.CmdDisplayCategoryList(view.catList, this);
+    }
     
-
-
+    if(!listEqual(this.cacheCSVList,view.csvList)){
+        this.cacheCSVList = view.csvList;
+        this.CmdDisplayCSVList(view.csvList, this);
+    }
+    
 };
+
 
 
 View.prototype.PublishQryStartTestEvt= function () {

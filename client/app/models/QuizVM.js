@@ -21,6 +21,9 @@ var QuizVM = function (channel) {
     this.multiChoiceQuestion='';
     this.multiChoiceConstantAnswer ='';
     this.multiChoiceIdx=0;
+  
+    this.catList =[];
+    this.csvList =[];
     
 };
 
