@@ -52,10 +52,6 @@ var QuestionController = function (view, model,drive,channel) {
         
     });
     
-    this._channel.subscribe("QryTestHistoryEvt", function(data, envelope) {
-        that.qryTestHistorytEvt(data.value);
-    });
-    
     this._channel.subscribe("QryPrevQuestionEvt", function(data, envelope) {
         that.qryPrevQuestionEvt(data.value);
     });
@@ -124,17 +120,11 @@ QuestionController.prototype = {
 
     qrySelectTestEvt:function(evt){
         if (this.quizObj !== null) {
-            this.view.CmdSetTab(4, function () {});
+            this.model.tabIdx = 4;
+            this.view.UpdateView(this.model);
         }
     },
-    qryTestHistorytEvt:function(evt){
-        if (this.quizObj !== null) {
-            this.view.switchtab(5, function () {});
-        }
-    },
-    
-   
-    
+
     qryStartTestEvt:function(evt){
         if (this.quizObj !== null) {
             var that = this;
@@ -142,7 +132,7 @@ QuestionController.prototype = {
             
     		if(that.quizObj.validTestSelected()){
     		    
-                that.view.CmdResetAnswers();
+                
     		   	
     		   	var selectedCat = that.quizObj.selectedcategory;
     		   	var rawCSVData = that.quizObj.rawCSVData;
@@ -152,64 +142,55 @@ QuestionController.prototype = {
     			that.quizObj.setQuestionData(qdata);
     			
     			that.displayQuestion(0);
+
+                that.model.questionScore = 0;
+                that.model.percentageCorrect = 0;
+                that.model.answersofar ='';
+                that.model.mainBody ='';
+    			that.model.tabIdx = 0;
+    			that.model.headerIdx = 0;
+    			that.view.UpdateView(that.model);
     			
-    			that.view.CmdSetTab(0,function(){});
-    			
-    			that.view.CmdSwitchHeaderContent(0, function () {});
             }
         }
     },
     qryEndTestEvt:function(evt){
-        if (this.quizObj !== null) {
-            var that = this;
-            
-            that.view.CmdSetTab(-1,function(){});
-            
-        	that.view.CmdSwitchHeaderContent(1, function () {});
-        }
+        this.model.tabIdx = -1;
+        this.model.headerIdx = 1;
+    	this.view.UpdateView(this.model);
     },
     qryPrevQuestionEvt:function(evt){
-        if (this.quizObj !== null) {
-            this.displayQuestion(evt);
-        }
+        this.displayQuestion(evt);
     },
     qryNextQuestionEvt:function(evt){
-        if (this.quizObj !== null) {
-            this.displayQuestion(evt);
-        }
+        this.displayQuestion(evt);
     },
     qrySubmitEvt:function(evt){
-        if (this.quizObj !== null) {
-            this.answerQuestion(evt);
-        }
+        this.answerQuestion(evt);
     },
     qryAnswerButtonPress:function(evt){
-        if (this.quizObj !== null) {
-            this.answerQuestion(evt);
-        }
+        this.answerQuestion(evt);
     },
     qryCorrectAnswerButtonPress:function(evt){
         if (this.quizObj !== null) {
             if (this.quizObj.isAnswerDisplayed == true) {
-                this.view.CmdDisplayCorrectAnswer('');
+                this.model.correctAnswer = '';
                 this.quizObj.isAnswerDisplayed = false;
             } else {
-                this.view.CmdDisplayCorrectAnswer(this.quizObj.currentQuestionAnswer());
+                this.model.correctAnswer = this.quizObj.currentQuestionAnswer();
                 this.quizObj.isAnswerDisplayed = true;
             }
+            
+            this.view.UpdateView(this.model);
         }
     },
     qrySelectTestBtn:function(evt){
-        if (this.quizObj !== null) {
-            this.view.CmdSetTab(2, function () { });
-        }
+        this.model.tabIdx = 2;
+        this.view.UpdateView(this.model);
     },
     qryCatBtn:function(evt){
-        //button in ui commented out
-        if (this.quizObj !== null) {
-            console.log('listing categories');
-            this.view.CmdSetTab(5, function () { });
-        }
+        this.model.tabIdx = 5;
+        this.view.UpdateView(this.model);
     },
     
     qryCsvBtn:function(evt){
@@ -221,8 +202,13 @@ QuestionController.prototype = {
             that.drive.SearchForQuizFolder('quiz', function(quizlist){
                 console.log('fetched list of quizs: '+quizlist);
                 that.quizObj.listoftests = quizlist;
+                
                 that.view.CmdDisplayCSVList(that.quizObj.listoftests,that.qryCSVChanged, that);
-                that.view.CmdSetTab(4, function () { });
+                
+                
+                
+                that.model.tabIdx = 4;
+                that.view.UpdateView(that.model);
             });
             
         }
@@ -231,9 +217,12 @@ QuestionController.prototype = {
     qryCategoryChanged:function(evt){
         if (this.quizObj !== null) {
             this.quizObj.selectedcategory = evt;
-            this.view.CmdSetCatName(this.quizObj.selectedcategory);
+            
+            this.model.catName = this.quizObj.selectedcategory;
+            this.view.UpdateView(this.model);
         }
     },
+    
     qryCSVChanged:function(evt){
         var that = this;
         
@@ -248,7 +237,8 @@ QuestionController.prototype = {
                 
             });
             
-            that.view.CmdSetTestName(that.quizObj.SelectedTestName().value);
+            that.model.testName = that.quizObj.SelectedTestName().value;
+            that.view.UpdateView(that.model);
         }
     },
     
@@ -259,8 +249,13 @@ QuestionController.prototype = {
             
     	    this.quizObj.score = this.scoreLib.GetQuestionSetScore(this.quizObj.questionset);
     	    
-    	    this.view.CmdDisplayScore(this.quizObj.currentQuestion().score, this.quizObj.score);
     	    
+    	    this.model.questionScore = this.quizObj.currentQuestion().score;
+    
+            this.model.percentageCorrect = this.quizObj.score;
+    	    
+            this.view.UpdateView(this.model);
+            
     	    this.displayQuestion();
         }
     },
@@ -270,46 +265,81 @@ QuestionController.prototype = {
         this.quizObj.currentQuestionState = [];
         this.quizObj._changeCurrentQuestion(pos);
         
-        this.view.CmdDisplayCorrectAnswer('');
-        this.view.CmdUpdateAnswerSoFar('');
+        this.model.isMultipleChoice =false; //make sure this is reset
+        
+        
+        //this.view.CmdDisplayCorrectAnswer('');
+        this.model.correctAnswer = '';
+//        this.view.CmdUpdateAnswerSoFar('');
+        
+        this.model.answerSoFar = '';
+    
     
         this.quizObj.isAnswerDisplayed = false;
         
         if (this.quizObj.currentQuestionSetLength() > 0) {
             var question = this.quizObj.currentQuestion();
                          
-            this.view.CmdDisplayQuestionScore(question.score);
+            //this.view.CmdDisplayQuestionScore(question.score);
+            this.model.questionScore = question.score;
 
             var attemptedAnswer = question.attemptedAnswer;
 
             switch (question.type) {
                 case 0:
-                    this.view.CmdDisplayStandardQuestion(question.question,attemptedAnswer);
+                    //this.view.CmdDisplayStandardQuestion(question.question,attemptedAnswer);
+                    this.model.visibleImage =false;
+                    this.model.visibleAnswer =true;
+                    this.model.answerBox = attemptedAnswer;
+                    this.model.mainBody = question.question;
+                    
                     break;
                 case 1:
-                    this.view.CmdDisplayMultipleChoice(question.question, 
-                                                        question.constAnswers, 
-                                                        parseInt(attemptedAnswer) + 1);
+                    // this.view.CmdDisplayMultipleChoice(question.question, 
+                    //                                     question.constAnswers, 
+                    //                                     parseInt(attemptedAnswer) + 1);
+                    
+                    this.model.multiChoiceQuestion = question.question;
+                    this.model.multiChoiceConstantAnswer = question.constAnswers;
+                    this.model.multiChoiceIdx = parseInt(attemptedAnswer) + 1;
+                    this.model.isMultipleChoice =true; 
+                    
                     break;
                 case 2:
-                    this.view.CmdDisplayImageQuestion(question.question, attemptedAnswer);
+                    //this.view.CmdDisplayImageQuestion(question.question, attemptedAnswer);
+                    this.model.answerBox = attemptedAnswer;
+                    this.model.visibleImage =true;
+                    this.model.imagePath = question.question;
+    
                     break;
                 case 3:// multi answer
-                    this.view.CmdDisplayMultiAnswerQuestion(question.question, attemptedAnswer);
-                    this.view.CmdDisplayAnswerSoFar(question.correctAnswers);
+                    //this.view.CmdDisplayMultiAnswerQuestion(question.question, attemptedAnswer);
+                    this.model.visibleAnswer =true;
+                    this.model.visibleImage =false;
+                    this.model.mainBody = question.question;
+                    this.model.answerBox = attemptedAnswer;
+    
+                    //this.view.CmdDisplayAnswerSoFar(question.correctAnswers);
+                    this.model.answerSoFar = question.correctAnswers;
                     break;
                 case 4:// multi ordered answer
-                    this.view.CmdDisplaySortedMultiAnswerQuestion(question.question, attemptedAnswer);
+                    //this.view.CmdDisplaySortedMultiAnswerQuestion(question.question, attemptedAnswer);
+                    this.model.visibleAnswer =true;
+                    this.model.visibleImage =false;
+                    this.model.mainBody = question.question;
+                    this.model.answerBox = attemptedAnswer;
                     break;
             }
-            this.view.CmdUpdateCurrentQuestionLabel(this.quizObj.currentQuestionIdx + 1, this.quizObj.currentQuestionSetLength());
+            //this.view.CmdUpdateCurrentQuestionLabel(this.quizObj.currentQuestionIdx + 1, this.quizObj.currentQuestionSetLength());
+            this.model.currentQuestion = (this.quizObj.currentQuestionIdx + 1) + ' of ' + this.quizObj.currentQuestionSetLength();
 
         } else {
-            this.view.CmdDisplayNoQuestion();
+            this.model.mainBody = 'no questions';
+            this.model.visibleAnswer =false;
         }
 
-
-        //  $('#mainbody').html(content);
+        this.view.UpdateView(this.model);
+  
         //how long did it take to work out i needed to call this - on a containing div not the content!!
         $("#rqs").trigger('create');
 
@@ -328,16 +358,26 @@ QuestionController.prototype = {
         var processScore = function(){
             that.quizObj.score = that.scoreLib.GetQuestionSetScore(that.quizObj.questionset);
             
-            that.view.CmdDisplayScore(question.score, that.quizObj.score);
+            //that.view.CmdDisplayScore(question.score, that.quizObj.score);
+            
+            that.model.questionScore = question.score;
+    
+            that.model.percentageCorrect = that.quizObj.score;
             
             switch (question.type) {
                 case 3:
                 case 4:
-                    that.view.CmdUpdateMiscTextBoxs(question.correctAnswers, 
-                                            question.answer,
-                                            question.question, '');
+                    that.model.answerSoFar =question.correctAnswers;
+                    that.model.answerBox = '';
+                    that.model.mainBody = '';
+                    
+                    // that.view.CmdUpdateMiscTextBoxs(question.correctAnswers, 
+                    //                         question.answer,
+                    //                         question.question, '');
                     break;
             }
+            
+            that.view.UpdateView(that.model);
         };
 
         question.attemptedAnswer = answer;
