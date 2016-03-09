@@ -437,7 +437,7 @@ View.prototype.CmdSetCatName= function (title) {
 };
 
 View.prototype.UpdateView= function (view) {
-    return;
+    //return;
     
     //hide everything initially.
     $("#pnlCategories").removeClass("displayPanel").addClass("hidePanel");      //hide categories
