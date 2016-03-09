@@ -368,8 +368,8 @@ QuestionController.prototype = {
                 case 3:
                 case 4:
                     that.model.answerSoFar =question.correctAnswers;
-                    that.model.answerBox = '';
-                    that.model.mainBody = '';
+                    //that.model.answerBox = '';
+                    //that.model.mainBody = '';
                     
                     // that.view.CmdUpdateMiscTextBoxs(question.correctAnswers, 
                     //                         question.answer,
