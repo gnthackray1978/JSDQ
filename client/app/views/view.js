@@ -483,34 +483,34 @@ View.prototype.UpdateView= function (view) {
     
     
         //display nothing
-    if (view.tabidx == -1) { 
+    if (view.tabIdx == -1) { 
     }
     
-    if (view.tabidx == 0) {                                                          //show questions
+    if (view.tabIdx == 0) {                                                          //show questions
         $("#pnlQuestions").removeClass("hidePanel").addClass("displayPanel");   //show questions panel
         $("#answer-block").removeClass("hidePanel").addClass("displayPanel");
         $("#score-nav").removeClass("hidePanel").addClass("displayPanel");
         $("#question-nav").removeClass("hidePanel").addClass("displayPanel");
     }
 
-    if (view.tabidx == 1) {                                                           
+    if (view.tabIdx == 1) {                                                           
         $("#pnlCategories").removeClass("hidePanel").addClass("displayPanel");  //show categories
         $("#test-sel").removeClass("hidePanel").addClass("displayPanel");       //show test selectors
         $("#answer-block").removeClass("hidePanel").addClass("displayPanel");
     }
 
-    if (view.tabidx == 2) {                                                          
+    if (view.tabIdx == 2) {                                                          
         $("#pnlCSVList").removeClass("hidePanel").addClass("displayPanel");     //show csv list
         $("#test-sel").removeClass("hidePanel").addClass("displayPanel");       //show test selectors
         $("#answer-block").removeClass("hidePanel").addClass("displayPanel");
     }
 
-    if (view.tabidx == 4) {                                                          //show web cats
+    if (view.tabIdx == 4) {                                                          //show web cats
         $("#pnlWebCategories").removeClass("hidePanel").addClass("displayPanel"); 
         $("#test-sel").removeClass("hidePanel").addClass("displayPanel");       //show test selectors
         $("#answer-block").removeClass("hidePanel").addClass("displayPanel");
     }
-    if (view.tabidx == 5) {                                                           
+    if (view.tabIdx == 5) {                                                           
         $("#pnlCategories").removeClass("hidePanel").addClass("displayPanel");  //show categories
     }
     
