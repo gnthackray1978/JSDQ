@@ -128,27 +128,27 @@ QuestionController.prototype = {
     qryStartTestEvt:function(evt){
         if (this.quizObj !== null) {
             var that = this;
+            
+            that.model.questionScore = 0;
+            that.model.percentageCorrect = 0;
+            that.model.answersofar ='';
+            that.model.mainBody ='';
+            that.model.tabIdx = 0;
+            that.model.headerIdx = 0;
+            
             console.log('start test');
             
     		if(that.quizObj.validTestSelected()){
-    		    
-                
-    		   	
+
     		   	var selectedCat = that.quizObj.selectedcategory;
     		   	var rawCSVData = that.quizObj.rawCSVData;
     		   	
     		   	var qdata = that.questionLib.CreateQuestionSet(rawCSVData,selectedCat);
     		   	
     			that.quizObj.setQuestionData(qdata);
-    			
+
     			that.displayQuestion(0);
 
-                that.model.questionScore = 0;
-                that.model.percentageCorrect = 0;
-                that.model.answersofar ='';
-                that.model.mainBody ='';
-    			that.model.tabIdx = 0;
-    			that.model.headerIdx = 0;
     			that.view.UpdateView(that.model);
     			
             }
