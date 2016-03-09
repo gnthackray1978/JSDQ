@@ -65,10 +65,10 @@ View.prototype.CmdUpdateLogin = function(enabled, text){
 
 View.prototype.CmdResetAnswers =function () {
     
-    $('#perc-correct').html('');
-    $('#question-score').html('');
-    $('#answer-so-far').html(''); 
-    $('#mainbody').html('');
+    // $('#perc-correct').html('');
+    // $('#question-score').html('');
+    // $('#answer-so-far').html(''); 
+    // $('#mainbody').html('');
     
     this._testView.questionScore = 0;
     
@@ -82,10 +82,10 @@ View.prototype.CmdResetAnswers =function () {
 };
 
 View.prototype.CmdDisplayScore = function (questionScore, percentageCorrect){
-    $('#question-score').html(questionScore + '%');
+    // $('#question-score').html(questionScore + '%');
 
-    if (percentageCorrect != undefined)
-        $('#perc-correct').html(percentageCorrect + '%');
+    // if (percentageCorrect != undefined)
+    //     $('#perc-correct').html(percentageCorrect + '%');
         
         
     this._testView.questionScore = questionScore;
@@ -99,7 +99,7 @@ View.prototype.CmdDisplayCorrectAnswer = function (answers){
 
     var formattedAnswers = this.FormatCorrectAnswer(answers);
     
-    $('#correct-answer').html(formattedAnswers);
+    //$('#correct-answer').html(formattedAnswers);
 
     this._testView.correctAnswer = formattedAnswers;
     
@@ -139,19 +139,19 @@ View.prototype.FormatCorrectAnswer = function(answers){
 
 
 View.prototype.CmdSwitchHeaderContent= function (type, modeChanged) {
-    var that = this;
+    // var that = this;
     
-    // main header
-    if (type == 0) {            
-        $("#header-answer-block").removeClass("hidePanel").addClass("displayPanel");
-        $("#header-home-block").removeClass("displayPanel").addClass("hidePanel");
-    }
+    // // main header
+    // if (type == 0) {            
+    //     $("#header-answer-block").removeClass("hidePanel").addClass("displayPanel");
+    //     $("#header-home-block").removeClass("displayPanel").addClass("hidePanel");
+    // }
     
-    // answer mode header
-    if (type == 1) {
-        $("#header-answer-block").removeClass("displayPanel").addClass("hidePanel");
-        $("#header-home-block").removeClass("hidePanel").addClass("displayPanel");           
-    }
+    // // answer mode header
+    // if (type == 1) {
+    //     $("#header-answer-block").removeClass("displayPanel").addClass("hidePanel");
+    //     $("#header-home-block").removeClass("hidePanel").addClass("displayPanel");           
+    // }
     
     this._testView.headerIdx = type;
     
@@ -159,52 +159,52 @@ View.prototype.CmdSwitchHeaderContent= function (type, modeChanged) {
 };
 
 View.prototype.CmdSetTab = function (tabidx,tabChanged){
-    $("#pnlCategories").removeClass("displayPanel").addClass("hidePanel");      //hide categories
-    $("#test-sel").removeClass("displayPanel").addClass("hidePanel");           //hide test selectors
-    $("#answer-block").removeClass("displayPanel").addClass("hidePanel");       //hide answer block
-    $("#pnlQuestions").removeClass("displayPanel").addClass("hidePanel");       //hide questions panel
-    $("#pnlCSVList").removeClass("displayPanel").addClass("hidePanel");         //hide csvs
-    $("#pnlWebCategories").removeClass("displayPanel").addClass("hidePanel");   //hide web categories
-    $("#score-nav").removeClass("displayPanel").addClass("hidePanel");          //hide score 
-    $("#question-nav").removeClass("displayPanel").addClass("hidePanel");       //hide question navs
+    // $("#pnlCategories").removeClass("displayPanel").addClass("hidePanel");      //hide categories
+    // $("#test-sel").removeClass("displayPanel").addClass("hidePanel");           //hide test selectors
+    // $("#answer-block").removeClass("displayPanel").addClass("hidePanel");       //hide answer block
+    // $("#pnlQuestions").removeClass("displayPanel").addClass("hidePanel");       //hide questions panel
+    // $("#pnlCSVList").removeClass("displayPanel").addClass("hidePanel");         //hide csvs
+    // $("#pnlWebCategories").removeClass("displayPanel").addClass("hidePanel");   //hide web categories
+    // $("#score-nav").removeClass("displayPanel").addClass("hidePanel");          //hide score 
+    // $("#question-nav").removeClass("displayPanel").addClass("hidePanel");       //hide question navs
     
-    //display nothing
-    if (tabidx == -1) { 
-        tabChanged();
-    }
+    // //display nothing
+    // if (tabidx == -1) { 
+    //     tabChanged();
+    // }
     
-    if (tabidx == 0) {                                                          //show questions
-        $("#pnlQuestions").removeClass("hidePanel").addClass("displayPanel");   //show questions panel
-        $("#answer-block").removeClass("hidePanel").addClass("displayPanel");
-        $("#score-nav").removeClass("hidePanel").addClass("displayPanel");
-        $("#question-nav").removeClass("hidePanel").addClass("displayPanel");
-        tabChanged();
-    }
+    // if (tabidx == 0) {                                                          //show questions
+    //     $("#pnlQuestions").removeClass("hidePanel").addClass("displayPanel");   //show questions panel
+    //     $("#answer-block").removeClass("hidePanel").addClass("displayPanel");
+    //     $("#score-nav").removeClass("hidePanel").addClass("displayPanel");
+    //     $("#question-nav").removeClass("hidePanel").addClass("displayPanel");
+    //     tabChanged();
+    // }
 
-    if (tabidx == 1) {                                                           
-        $("#pnlCategories").removeClass("hidePanel").addClass("displayPanel");  //show categories
-        $("#test-sel").removeClass("hidePanel").addClass("displayPanel");       //show test selectors
-        $("#answer-block").removeClass("hidePanel").addClass("displayPanel");
-        tabChanged();
-    }
+    // if (tabidx == 1) {                                                           
+    //     $("#pnlCategories").removeClass("hidePanel").addClass("displayPanel");  //show categories
+    //     $("#test-sel").removeClass("hidePanel").addClass("displayPanel");       //show test selectors
+    //     $("#answer-block").removeClass("hidePanel").addClass("displayPanel");
+    //     tabChanged();
+    // }
 
-    if (tabidx == 2) {                                                          
-        $("#pnlCSVList").removeClass("hidePanel").addClass("displayPanel");     //show csv list
-        $("#test-sel").removeClass("hidePanel").addClass("displayPanel");       //show test selectors
-        $("#answer-block").removeClass("hidePanel").addClass("displayPanel");
-        tabChanged();
-    }
+    // if (tabidx == 2) {                                                          
+    //     $("#pnlCSVList").removeClass("hidePanel").addClass("displayPanel");     //show csv list
+    //     $("#test-sel").removeClass("hidePanel").addClass("displayPanel");       //show test selectors
+    //     $("#answer-block").removeClass("hidePanel").addClass("displayPanel");
+    //     tabChanged();
+    // }
 
-    if (tabidx == 4) {                                                          //show web cats
-        $("#pnlWebCategories").removeClass("hidePanel").addClass("displayPanel"); 
-        $("#test-sel").removeClass("hidePanel").addClass("displayPanel");       //show test selectors
-        $("#answer-block").removeClass("hidePanel").addClass("displayPanel");
-        tabChanged();
-    }
-    if (tabidx == 5) {                                                           
-        $("#pnlCategories").removeClass("hidePanel").addClass("displayPanel");  //show categories
-        tabChanged();
-    }
+    // if (tabidx == 4) {                                                          //show web cats
+    //     $("#pnlWebCategories").removeClass("hidePanel").addClass("displayPanel"); 
+    //     $("#test-sel").removeClass("hidePanel").addClass("displayPanel");       //show test selectors
+    //     $("#answer-block").removeClass("hidePanel").addClass("displayPanel");
+    //     tabChanged();
+    // }
+    // if (tabidx == 5) {                                                           
+    //     $("#pnlCategories").removeClass("hidePanel").addClass("displayPanel");  //show categories
+    //     tabChanged();
+    // }
     
     this._testView.tabIdx = tabidx;
     
@@ -257,10 +257,10 @@ View.prototype.CmdDisplayCSVList = function (catList,evt, context) {
 //updateBoxs
 View.prototype.CmdUpdateMiscTextBoxs = function(currentQuestionState, answer, content, answerBox){
    
-    $('#answer-box').val(answerBox);
+   // $('#answer-box').val(answerBox);
     this._testView.answerBox = answerBox;
     
-    $('#mainbody').html(content); //question box
+  //  $('#mainbody').html(content); //question box
     this._testView.mainBody = answerBox;
  
     //this.CmdDisplayAnswerSoFar(currentQuestionState, answer);
@@ -269,7 +269,7 @@ View.prototype.CmdUpdateMiscTextBoxs = function(currentQuestionState, answer, co
     
     this._testView.answerSoFar = answersofar;
     
-    $('#answer-so-far').html(answersofar);
+   // $('#answer-so-far').html(answersofar);
     
     
     this.UpdateView(this._testView);
@@ -281,7 +281,7 @@ View.prototype.CmdDisplayAnswerSoFar = function(currentQuestionState){
     
     this._testView.answerSoFar = answersofar;
     
-    $('#answer-so-far').html(answersofar);
+   // $('#answer-so-far').html(answersofar);
     
     this.UpdateView(this._testView);
 };
@@ -298,16 +298,16 @@ View.prototype.FormatAnswerSoFar =function (currentQuestionState) {
 };
 
 View.prototype.CmdDisplayStandardQuestion =function (question, answer) {
-    $("#imgPanel").removeClass("displayPanel").addClass("hidePanel");
+ //   $("#imgPanel").removeClass("displayPanel").addClass("hidePanel");
     this._testView.visibleImage =false;
 
-    $("#answer").removeClass("hidePanel").addClass("displayPanel");
+  //  $("#answer").removeClass("hidePanel").addClass("displayPanel");
     this._testView.visibleAnswer =true;
 
-    $('#answer-box').val(answer);
+  //  $('#answer-box').val(answer);
     this._testView.answerBox = answer;
 
-    $('#mainbody').html(question);
+  //  $('#mainbody').html(question);
     this._testView.mainBody = question;
     
     
@@ -316,17 +316,17 @@ View.prototype.CmdDisplayStandardQuestion =function (question, answer) {
 
 View.prototype.CmdDisplayMultipleChoice = function (question, constAnswers, selectionIdx) {
 
-    $("#imgPanel").removeClass("displayPanel").addClass("hidePanel");
+ //   $("#imgPanel").removeClass("displayPanel").addClass("hidePanel");
     this._testView.visibleImage =false;
 
-    $("#answer").removeClass("displayPanel").addClass("hidePanel");
+ //   $("#answer").removeClass("displayPanel").addClass("hidePanel");
     this._testView.visibleAnswer =false;
 
     var content = this.FormatMultipleChoice(question, constAnswers, selectionIdx);
 
     this._testView.mainBody = content;
 
-    $('#mainbody').html(content);
+ //   $('#mainbody').html(content);
     
     this.UpdateView(this._testView);
 };
@@ -350,13 +350,13 @@ View.prototype.FormatMultipleChoice = function (question, constAnswers, selectio
 
 View.prototype.CmdDisplayImageQuestion = function (question, answerSet) {
 
-    $('#answer-box').val(answerSet);
+  //  $('#answer-box').val(answerSet);
     this._testView.answerBox = answerSet;
     
-    $("#imgPanel").removeClass("hidePanel").addClass("displayPanel");
+   // $("#imgPanel").removeClass("hidePanel").addClass("displayPanel");
     this._testView.visibleImage =true;
     
-    $("#sourceid").attr("src", question);
+   // $("#sourceid").attr("src", question);
     
     this._testView.imagePath = question;
     
@@ -366,16 +366,16 @@ View.prototype.CmdDisplayImageQuestion = function (question, answerSet) {
 };
 
 View.prototype.CmdDisplayMultiAnswerQuestion = function (question,answer) {
-    $("#answer").removeClass("hidePanel").addClass("displayPanel");
+   // $("#answer").removeClass("hidePanel").addClass("displayPanel");
     this._testView.visibleAnswer =true;
     
-    $("#imgPanel").removeClass("displayPanel").addClass("hidePanel");
+ //   $("#imgPanel").removeClass("displayPanel").addClass("hidePanel");
     this._testView.visibleImage =false;
     
-    $('#mainbody').html(question);
+   // $('#mainbody').html(question);
     this._testView.mainBody = question;
     
-    $('#answer-box').val(answer);
+   // $('#answer-box').val(answer);
     this._testView.answerBox = answer;
     
     
@@ -383,16 +383,16 @@ View.prototype.CmdDisplayMultiAnswerQuestion = function (question,answer) {
 };
 
 View.prototype.CmdDisplaySortedMultiAnswerQuestion = function (question,answer) {
-    $("#answer").removeClass("hidePanel").addClass("displayPanel");
+  //  $("#answer").removeClass("hidePanel").addClass("displayPanel");
     this._testView.visibleAnswer =true;
     
-    $("#imgPanel").removeClass("displayPanel").addClass("hidePanel");
+   // $("#imgPanel").removeClass("displayPanel").addClass("hidePanel");
    
     this._testView.visibleImage =false;
     
-    $('#mainbody').html(question);
+  //  $('#mainbody').html(question);
     this._testView.mainBody = question;
-    $('#answer-box').val(answer);
+   // $('#answer-box').val(answer);
     this._testView.answerBox = answer;
     //multi answer   
     
@@ -400,15 +400,15 @@ View.prototype.CmdDisplaySortedMultiAnswerQuestion = function (question,answer) 
 };
 
 View.prototype.CmdUpdateCurrentQuestionLabel= function (currentQuestion, totalQuestions) {
-    $('#current-question').html(currentQuestion + ' of ' + totalQuestions);
+  //  $('#current-question').html(currentQuestion + ' of ' + totalQuestions);
     
     this._testView.currentQuestion = currentQuestion + ' of ' + totalQuestions;
     this.UpdateView(this._testView);
 };
     
 View.prototype.CmdDisplayNoQuestion= function () {
-    $("#answer").removeClass("displayPanel").addClass("hidePanel");
-    $('#mainbody').html('no questions');
+   // $("#answer").removeClass("displayPanel").addClass("hidePanel");
+   // $('#mainbody').html('no questions');
     
     this._testView.mainBody = 'no questions';
     this._testView.visibleAnswer =false;
@@ -416,21 +416,21 @@ View.prototype.CmdDisplayNoQuestion= function () {
 };
     
 View.prototype.CmdUpdateAnswerSoFar= function (answerSoFar) {
-    $('#answer-so-far').html(answerSoFar);
+  //  $('#answer-so-far').html(answerSoFar);
     
     this._testView.answerSoFar = answerSoFar;
     this.UpdateView(this._testView);
 };
     
 View.prototype.CmdSetTestName= function (title) {
-    $('#test_name').html(title);
+   // $('#test_name').html(title);
     
     this._testView.testName = title;
     this.UpdateView(this._testView);
 };
 
 View.prototype.CmdSetCatName= function (title) {
-    $('#cat_name').html(title);
+ //   $('#cat_name').html(title);
     
     this._testView.catName = title;
     this.UpdateView(this._testView);
