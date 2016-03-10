@@ -3,7 +3,7 @@
 var MyDrive = function (view,channel) {
 
     this.CLIENT_ID = '67881158341-i31rcec2rf6bi26elnf8njnrb7v9ij8q.apps.googleusercontent.com';
-    this.SCOPES = 'https://www.googleapis.com/auth/drive';
+    this.SCOPES = 'https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/plus.login';
     this.data = null;
     this._channel = channel;
     
@@ -29,14 +29,14 @@ MyDrive.prototype.autherizeResult = function(authResult) {
         that._channel.publish( "Login", { value: false} );
         gapi.client.load('drive', 'v2', function(r){
             that.driveLoaded();
-            gapi.client.oauth2.userinfo.get().execute(function(userData)
-            {
-                console.log('userdata name: ' + userData.name);
-                // userData.id;
-                // userData.name;
-                // userData.email;
+            // gapi.client.oauth2.userinfo.get().execute(function(userData)
+            // {
+            //     console.log('userdata name: ' + userData.name);
+            //     // userData.id;
+            //     // userData.name;
+            //     // userData.email;
 
-            });
+            // });
       
         });
     }
