@@ -1,4 +1,4 @@
-/*global QuizVM ScoreLib QuestionLib*/
+/*global QuizVM ScoreLib */
 
 var QuestionController = function (quizObj,drive,channel) {
     this._channel = channel;;
@@ -130,9 +130,7 @@ QuestionController.prototype = {
     },
     
     qryNA:function(evt){
-        if (this.quizObj !== null) {
-            this.quizObj.GoogleSheetTestLogin(evt);
-        }
+        this.drive.GoogleSheetTestLogin(evt);
     },
 
     qryStartTestEvt:function(evt){
