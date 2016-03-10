@@ -38,13 +38,8 @@ MyDrive.prototype.autherizeResult = function(authResult) {
             'userId': 'me'
           });
           request.execute(function(resp) {
-            console.log(resp.displayName);  
-            // var heading = document.createElement('h4');
-            // var image = document.createElement('img');
-            // image.src = resp.image.url;
-            // heading.appendChild(image);
-            // heading.appendChild(document.createTextNode(resp.displayName));
-            // document.getElementById('content').appendChild(heading);
+            //console.log(resp.displayName);  
+            that._channel.publish( "LoginData", { value: resp} );
           });
         });
     }
