@@ -1,43 +1,17 @@
-function TestView(){
-    
-    this.currentQuestion ='';
-    this.answerSoFar ='';
-    this.answerBox ='';
-    this.testName ='';
-    this.catName ='';
-    this.mainBody ='';
-    this.imagePath = '';
-    this.correctAnswer ='';
-    this.percentageCorrect =0;
-    this.questionScore=0;
-    this.tabIdx =0;
-    this.headerIdx=1;
-    
-    this.visibleAnswer=false;
-    this.visibleImage=false;
-    
-}
+/*global ListHelper*/
+
 
 function View(channel) {       
-  // this.tabChanged = null;
+
     this._channel = channel;
-    this._testView = new TestView();
-    
+
     this.cacheCatList =[];
     this.cacheCSVList =[];
-    
-    this.categoryChanged = null;
-    this.csvChanged = null;
-    this.modeChanged =null;
-    this.endTestLock =false;
-    this.startTestLock =false;
-    this.loginAllowed =false;
     
     var that = this;
     
     this._channel.subscribe("RequestAnswer", function(data, envelope) {
-        //that.QryAnswer(data.value);
-        
+       
         var radioBox = $("input[name*=radio-choice]:checked").val();
         var txtBox = $('#answer-box').val();
         
@@ -47,21 +21,24 @@ function View(channel) {
     
     });
     
-    that.PublishQryStartTestEvt();
-    that.PublishQryEndTestEvt();
-    that.PublishQryTestHistoryEvt();
-    that.PublishAnswerButtonPress();
-    that.PublishQryPrevQuestionEvt();
-    that.PublishQryNextQuestionEvt();
-    that.PublishQrySubmitEvt();
-    that.PublishQrySelectTestBtn();
-    that.PublishQryCatBtn();
-    that.PublishQryCsvBtn();
-    that.PublishQryResetQuestionEvt();
-    that.PublishQryCorrectAnswerButtonPress();
-    that.PublishQryLoginClick();
+    this._channel.subscribe("UpdateView", function(data, envelope) {
+        that.UpdateView(data.value);
+    });
+    
+    this.PublishStartTestEvent();
+    this.PublishEndTestEvent();
+    this.PublishHistoryLoadEvent();
+    this.PublishAnswerButtonEvent();
+    this.PublishPrevQuestionEvent();
+    this.PublishNextQuestionEvent();
+    this.PublishSubmitAnswerEvent();
+    this.PublishSelectTestEvent();
+    this.PublishCatBtnEvent();
+    this.PublishCsvBtnEvent();
+    this.PublishResetQuestionEvent();
+    this.PublishCorrectAnswerButtonEvent();
+    this.PublishLoginClickEvent();
 } 
-
 
 View.prototype.FormatAnswerSoFar =function (currentQuestionState) {
     var answersofar = '<\BR>' + 'Progress so far: ' + '<\BR>' + currentQuestionState.length + '<\BR>';
@@ -121,71 +98,7 @@ View.prototype.FormatCorrectAnswer = function(answers){
     }
 };
 
-
-View.prototype.CmdUpdateLogin = function(enabled, text){
-
-    $('#login').html(text);
-};
-
-View.prototype.CmdResetAnswers =function () {
-    
-    // $('#perc-correct').html('');
-    // $('#question-score').html('');
-    // $('#answer-so-far').html(''); 
-    // $('#mainbody').html('');
-    
-    this._testView.questionScore = 0;
-    
-    this._testView.percentageCorrect = 0;
-    
-    this._testView.answersofar ='';
-    
-    this._testView.mainBody ='';
-    
-    this.UpdateView(this._testView); 
-};
-
-View.prototype.CmdDisplayScore = function (questionScore, percentageCorrect){
-  
-    this._testView.questionScore = questionScore;
-    
-    this._testView.percentageCorrect = percentageCorrect;
-    
-    this.UpdateView(this._testView);    
-};
-
-View.prototype.CmdDisplayQuestionScore = function (questionScore){
- 
-    this._testView.questionScore = questionScore;
-
-    this.UpdateView(this._testView);    
-};
-
-View.prototype.CmdDisplayCorrectAnswer = function (answers){
-
-    var formattedAnswers = this.FormatCorrectAnswer(answers);
-
-    this._testView.correctAnswer = formattedAnswers;
-    
-    this.UpdateView(this._testView);
-};
-
-View.prototype.CmdSwitchHeaderContent= function (type, modeChanged) {
-
-    this._testView.headerIdx = type;
-    
-    this.UpdateView(this._testView);
-};
-
-View.prototype.CmdSetTab = function (tabidx,tabChanged){
-
-    this._testView.tabIdx = tabidx;
-    
-    this.UpdateView(this._testView);
-};
-
-//exception
-View.prototype.CmdDisplayCategoryList = function (catList, context){
+View.prototype.CreateCategoryList = function (catList, context){
     var listHelper = new ListHelper();
     var cats = '';
     var selectEvents = [];
@@ -209,8 +122,7 @@ View.prototype.CmdDisplayCategoryList = function (catList, context){
     }, context);
 };
 
-//exception
-View.prototype.CmdDisplayCSVList = function (catList, context) {
+View.prototype.CreateCSVList = function (catList, context) {
     var listHelper = new ListHelper();
     var cats = '';
     var selectEvents = [];
@@ -232,102 +144,6 @@ View.prototype.CmdDisplayCSVList = function (catList, context) {
         that._channel.publish( "QryCSVChanged", { value: e});
     }, context);
 };
-
-//updateBoxs
-View.prototype.CmdUpdateMiscTextBoxs = function(currentQuestionState, answer, content, answerBox){
-
-    this._testView.answerBox = answerBox;
-    this._testView.mainBody = answerBox;
-    this._testView.answerSoFar = this.FormatAnswerSoFar(currentQuestionState);
-
-    this.UpdateView(this._testView);
-};
-
-View.prototype.CmdDisplayAnswerSoFar = function(currentQuestionState){
-
-    this._testView.answerSoFar = this.FormatAnswerSoFar(currentQuestionState);
-    this.UpdateView(this._testView);
-};
-
-View.prototype.CmdDisplayStandardQuestion =function (question, answer) {
-
-    this._testView.visibleImage =false;
-    this._testView.visibleAnswer =true;
-    this._testView.answerBox = answer;
-    this._testView.mainBody = question;
-    
-    this.UpdateView(this._testView);
-};
-
-View.prototype.CmdDisplayMultipleChoice = function (question, constAnswers, selectionIdx) {
-
-    this._testView.visibleImage =false;
-    this._testView.visibleAnswer =false;
-    
-    this._testView.mainBody = this.FormatMultipleChoice(question, constAnswers, selectionIdx);
-    
-    this.UpdateView(this._testView);
-};
-
-
-
-
-View.prototype.CmdDisplayImageQuestion = function (question, answerSet) {
-    this._testView.answerBox = answerSet;
-    this._testView.visibleImage =true;
-    this._testView.imagePath = question;
-    this.UpdateView(this._testView);
-};
-
-View.prototype.CmdDisplayMultiAnswerQuestion = function (question,answer) {
-    this._testView.visibleAnswer =true;
-    this._testView.visibleImage =false;
-    this._testView.mainBody = question;
-    this._testView.answerBox = answer;
-    
-    this.UpdateView(this._testView);
-};
-
-View.prototype.CmdDisplaySortedMultiAnswerQuestion = function (question,answer) {
-    this._testView.visibleAnswer =true;
-    this._testView.visibleImage =false;
-    this._testView.mainBody = question;
-    this._testView.answerBox = answer;
-    
-    this.UpdateView(this._testView);
-};
-
-View.prototype.CmdUpdateCurrentQuestionLabel= function (currentQuestion, totalQuestions) {
-
-    this._testView.currentQuestion = currentQuestion + ' of ' + totalQuestions;
-    this.UpdateView(this._testView);
-};
-    
-View.prototype.CmdDisplayNoQuestion= function () {
-
-    this._testView.mainBody = 'no questions';
-    this._testView.visibleAnswer =false;
-    this.UpdateView(this._testView);
-};
-    
-View.prototype.CmdUpdateAnswerSoFar= function (answerSoFar) {
-
-    this._testView.answerSoFar = answerSoFar;
-    this.UpdateView(this._testView);
-};
-    
-View.prototype.CmdSetTestName= function (title) {
-
-    this._testView.testName = title;
-    this.UpdateView(this._testView);
-};
-
-View.prototype.CmdSetCatName= function (title) {
-
-    this._testView.catName = title;
-    this.UpdateView(this._testView);
-};
-
 
 
 View.prototype.UpdateView= function (view) {
@@ -362,7 +178,6 @@ View.prototype.UpdateView= function (view) {
     
     $('#cat_name').html(view.catName);
     $('#test_name').html(view.testName);
-    //this.FormatAnswerSoFar(currentQuestionState)
     $('#answer-so-far').html(this.FormatAnswerSoFar(view.answerSoFar));
     
     if(view.isMultipleChoice){
@@ -380,7 +195,7 @@ View.prototype.UpdateView= function (view) {
 
     $('#perc-correct').html(view.percentageCorrect + '%');
     $('#current-question').html(view.currentQuestion);
-        
+    $('#login').html(view.loginName);    
         
     if(view.visibleAnswer){
         $("#answer").removeClass("hidePanel").addClass("displayPanel");
@@ -447,19 +262,19 @@ View.prototype.UpdateView= function (view) {
     //something has changed so display
     if(!listEqual(this.cacheCatList,view.catList)){
         this.cacheCatList = view.catList;
-        this.CmdDisplayCategoryList(view.catList, this);
+        this.CreateCategoryList(view.catList, this);
     }
     
     if(!listEqual(this.cacheCSVList,view.csvList)){
         this.cacheCSVList = view.csvList;
-        this.CmdDisplayCSVList(view.csvList, this);
+        this.CreateCSVList(view.csvList, this);
     }
     
 };
 
 
 
-View.prototype.PublishQryStartTestEvt= function () {
+View.prototype.PublishStartTestEvent= function () {
     var that =this;
     
     $('#taketest').bind("vclick", function (e) 
@@ -480,7 +295,7 @@ View.prototype.PublishQryStartTestEvt= function () {
     });
 };
 
-View.prototype.PublishQryEndTestEvt = function () {
+View.prototype.PublishEndTestEvent = function () {
     var that = this;
     $('#main').bind("vclick", function (e) {
         that._channel.publish( "QryEndTestEvt", { value: e});
@@ -497,14 +312,14 @@ View.prototype.PublishQryEndTestEvt = function () {
     });
 };
 
-View.prototype.PublishQryTestHistoryEvt= function () {
+View.prototype.PublishHistoryLoadEvent= function () {
     var that = this;
     $('#history').bind("vclick", function (e) { 
         that._channel.publish( "QryTestHistoryEvt", { value: e});
     });
 };
 
-View.prototype.PublishAnswerButtonPress = function () {
+View.prototype.PublishAnswerButtonEvent = function () {
     var that = this;
     
     $("#answer-box").keypress(function (event) {
@@ -518,21 +333,21 @@ View.prototype.PublishAnswerButtonPress = function () {
     });
 };
 
-View.prototype.PublishQryPrevQuestionEvt = function () {
+View.prototype.PublishPrevQuestionEvent = function () {
     var that = this;
     $('#prev').bind("vclick", function () { 
         that._channel.publish( "QryPrevQuestionEvt", { value: -1});
     });
 };
 
-View.prototype.PublishQryNextQuestionEvt = function () {
+View.prototype.PublishNextQuestionEvent = function () {
     var that = this;
     $('#next').bind("vclick", function () { 
         that._channel.publish( "QryNextQuestionEvt", { value: 1});
     });
 };
 
-View.prototype.PublishQrySubmitEvt = function () {
+View.prototype.PublishSubmitAnswerEvent = function () {
     var that = this;
     $('#submit').bind("vclick", function (e) { 
         //callback.apply(context); 
@@ -540,45 +355,38 @@ View.prototype.PublishQrySubmitEvt = function () {
     });
 };
 
-View.prototype.PublishQrySelectTestBtn = function () {//context.listtests();
+View.prototype.PublishSelectTestEvent = function () {//context.listtests();
     var that = this;
     
     $('#choosetest').bind("vclick", function (e) {
         that._channel.publish( "QrySelectTestBtn", { value: e});
-        //callback.apply(context);
     });
 };
-
-//now unused as cats has been commented out
-// we dont currently need that functionality 
-View.prototype.PublishQryCatBtn = function () {//context.listtests();
+ 
+View.prototype.PublishCatBtnEvent = function () {//context.listtests();
     var that = this;
     
     $('#cats').bind("vclick", function (e) {
-        //callback.apply(context);
         that._channel.publish( "QryCatBtn", { value: e});
     });
 };
 
-//now unused as csv has been commented out
-// we dont currently need that functionality 
-View.prototype.PublishQryCsvBtn = function () {//context.listtests();
+View.prototype.PublishCsvBtnEvent = function () {//context.listtests();
     var that = this;
     
     $('#csvs').bind("vclick", function (e) {
-        //callback.apply(context);
         that._channel.publish( "QryCsvBtn", { value: e});
     });
 };
 
-View.prototype.PublishQryResetQuestionEvt = function () {
+View.prototype.PublishResetQuestionEvent = function () {
     var that = this;
     $('#select').bind("vclick", function (e) { 
         that._channel.publish( "QryResetQuestionEvt", { value: e});
     });
 };
 
-View.prototype.PublishQryCorrectAnswerButtonPress = function () {
+View.prototype.PublishCorrectAnswerButtonEvent = function () {
 
     var that = this;
     
@@ -587,7 +395,7 @@ View.prototype.PublishQryCorrectAnswerButtonPress = function () {
     });
 };
 
-View.prototype.PublishQryLoginClick = function (callback, context) {
+View.prototype.PublishLoginClickEvent = function (callback, context) {
     var that = this;
     $('#login').bind("vclick", function (e) { 
         

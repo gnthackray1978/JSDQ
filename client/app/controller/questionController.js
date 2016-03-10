@@ -1,7 +1,7 @@
-var QuestionController = function (view, model,drive,channel) {
+var QuestionController = function (model,drive,channel) {
     this._channel = channel;;
     
-    this.view = view;
+    //this.view = view;
     this.drive = drive;
     this.quizObj = model;
     
@@ -104,9 +104,11 @@ var QuestionController = function (view, model,drive,channel) {
         that.viewData.loginAllowed = data.value;
         
         if(data.value)
-            that.view.CmdUpdateLogin(true,'Login');
+            that.model.loginName = 'Login';
         else
-            that.view.CmdUpdateLogin(false,'LOGGED IN');
+            that.model.loginName = 'LOGGED IN';
+            
+        that.updateView();
     });
     
     this._channel.subscribe("LoginClick", function(data, envelope) {
@@ -116,20 +118,18 @@ var QuestionController = function (view, model,drive,channel) {
 };
 
 QuestionController.prototype = {
+    
     init:function(){
         
+    },
+    
+    updateView:function(){
+        this._channel.publish( "UpdateView", { value: this.model});
     },
     
     qryNA:function(evt){
         if (this.quizObj !== null) {
             this.quizObj.GoogleSheetTestLogin(evt);
-        }
-    },
-
-    qrySelectTestEvt:function(evt){
-        if (this.quizObj !== null) {
-            this.model.tabIdx = 4;
-            this.view.UpdateView(this.model);
         }
     },
 
@@ -157,7 +157,7 @@ QuestionController.prototype = {
 
     			that.displayQuestion(0);
 
-    			that.view.UpdateView(that.model);
+    			that.updateView();
     			
             }
         }
@@ -165,7 +165,7 @@ QuestionController.prototype = {
     qryEndTestEvt:function(evt){
         this.model.tabIdx = -1;
         this.model.headerIdx = 1;
-    	this.view.UpdateView(this.model);
+    	this.updateView();
     },
     qryPrevQuestionEvt:function(evt){
         this.displayQuestion(evt);
@@ -189,16 +189,16 @@ QuestionController.prototype = {
                 this.quizObj.isAnswerDisplayed = true;
             }
             
-            this.view.UpdateView(this.model);
+            this.updateView();
         }
     },
     qrySelectTestBtn:function(evt){
         this.model.tabIdx = 2;
-        this.view.UpdateView(this.model);
+        this.updateView();
     },
     qryCatBtn:function(evt){
         this.model.tabIdx = 5;
-        this.view.UpdateView(this.model);
+        this.updateView();
     },
     
     qryCsvBtn:function(evt){
@@ -211,10 +211,9 @@ QuestionController.prototype = {
                 console.log('fetched list of quizs: '+quizlist);
                 that.quizObj.listoftests = quizlist;
                 
-                //that.view.CmdDisplayCSVList(that.quizObj.listoftests, that);
                 that.model.csvList = that.quizObj.listoftests;
                 that.model.tabIdx = 4;
-                that.view.UpdateView(that.model);
+                that.updateView();
             });
             
         }
@@ -225,7 +224,7 @@ QuestionController.prototype = {
             this.quizObj.selectedcategory = evt;
             
             this.model.catName = this.quizObj.selectedcategory;
-            this.view.UpdateView(this.model);
+            this.updateView();
         }
     },
     
@@ -238,15 +237,15 @@ QuestionController.prototype = {
                 that.questionLib.ParseCats(csv, function(csv,cats){
                     that.quizObj.rawCSVData = csv;
                     that.quizObj.categories = cats;
-                    //that.view.CmdDisplayCategoryList(cats.D, that);
+                    
                     that.model.catList = cats.D;
-                    that.view.UpdateView(that.model);
+                    that.updateView();
                 });
                 
             });
             
             that.model.testName = that.quizObj.SelectedTestName().value;
-            that.view.UpdateView(that.model);
+            that.updateView();
         }
     },
     
@@ -262,7 +261,7 @@ QuestionController.prototype = {
     
             this.model.percentageCorrect = this.quizObj.score;
     	    
-            this.view.UpdateView(this.model);
+            this.updateView();
             
     	    this.displayQuestion();
         }
@@ -272,30 +271,21 @@ QuestionController.prototype = {
 
         this.quizObj.currentQuestionState = [];
         this.quizObj._changeCurrentQuestion(pos);
-        
-        this.model.isMultipleChoice =false; //make sure this is reset
-        
-        
-        //this.view.CmdDisplayCorrectAnswer('');
-        this.model.correctAnswer = '';
-//        this.view.CmdUpdateAnswerSoFar('');
-        
-        this.model.answerSoFar = '';
-    
-    
         this.quizObj.isAnswerDisplayed = false;
         
+        this.model.isMultipleChoice =false; //make sure this is reset
+        this.model.correctAnswer = '';
+        this.model.answerSoFar = '';
+
         if (this.quizObj.currentQuestionSetLength() > 0) {
             var question = this.quizObj.currentQuestion();
                          
-            //this.view.CmdDisplayQuestionScore(question.score);
             this.model.questionScore = question.score;
 
             var attemptedAnswer = question.attemptedAnswer;
 
             switch (question.type) {
                 case 0:
-                    //this.view.CmdDisplayStandardQuestion(question.question,attemptedAnswer);
                     this.model.visibleImage =false;
                     this.model.visibleAnswer =true;
                     this.model.answerBox = attemptedAnswer;
@@ -303,10 +293,6 @@ QuestionController.prototype = {
                     
                     break;
                 case 1:
-                    // this.view.CmdDisplayMultipleChoice(question.question, 
-                    //                                     question.constAnswers, 
-                    //                                     parseInt(attemptedAnswer) + 1);
-                    
                     this.model.multiChoiceQuestion = question.question;
                     this.model.multiChoiceConstantAnswer = question.constAnswers;
                     this.model.multiChoiceIdx = parseInt(attemptedAnswer) + 1;
@@ -314,31 +300,26 @@ QuestionController.prototype = {
                     
                     break;
                 case 2:
-                    //this.view.CmdDisplayImageQuestion(question.question, attemptedAnswer);
                     this.model.answerBox = attemptedAnswer;
                     this.model.visibleImage =true;
                     this.model.imagePath = question.question;
     
                     break;
                 case 3:// multi answer
-                    //this.view.CmdDisplayMultiAnswerQuestion(question.question, attemptedAnswer);
                     this.model.visibleAnswer =true;
                     this.model.visibleImage =false;
                     this.model.mainBody = question.question;
                     this.model.answerBox = attemptedAnswer;
     
-                    //this.view.CmdDisplayAnswerSoFar(question.correctAnswers);
                     this.model.answerSoFar = question.correctAnswers;
                     break;
                 case 4:// multi ordered answer
-                    //this.view.CmdDisplaySortedMultiAnswerQuestion(question.question, attemptedAnswer);
                     this.model.visibleAnswer =true;
                     this.model.visibleImage =false;
                     this.model.mainBody = question.question;
                     this.model.answerBox = attemptedAnswer;
                     break;
             }
-            //this.view.CmdUpdateCurrentQuestionLabel(this.quizObj.currentQuestionIdx + 1, this.quizObj.currentQuestionSetLength());
             this.model.currentQuestion = (this.quizObj.currentQuestionIdx + 1) + ' of ' + this.quizObj.currentQuestionSetLength();
 
         } else {
@@ -346,7 +327,7 @@ QuestionController.prototype = {
             this.model.visibleAnswer =false;
         }
 
-        this.view.UpdateView(this.model);
+        this.updateView();
   
         //how long did it take to work out i needed to call this - on a containing div not the content!!
         $("#rqs").trigger('create');
@@ -366,8 +347,6 @@ QuestionController.prototype = {
         var processScore = function(){
             that.quizObj.score = that.scoreLib.GetQuestionSetScore(that.quizObj.questionset);
             
-            //that.view.CmdDisplayScore(question.score, that.quizObj.score);
-            
             that.model.questionScore = question.score;
     
             that.model.percentageCorrect = that.quizObj.score;
@@ -376,16 +355,11 @@ QuestionController.prototype = {
                 case 3:
                 case 4:
                     that.model.answerSoFar =question.correctAnswers;
-                    //that.model.answerBox = '';
-                    //that.model.mainBody = '';
                     
-                    // that.view.CmdUpdateMiscTextBoxs(question.correctAnswers, 
-                    //                         question.answer,
-                    //                         question.question, '');
                     break;
             }
             
-            that.view.UpdateView(that.model);
+            that.updateView();
         };
 
         question.attemptedAnswer = answer;

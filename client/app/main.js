@@ -21,7 +21,7 @@ $(document).bind("pageinit", function () {
             
             var drive = new MyDrive(appView,channel);
             
-            var appController = new QuestionController(appView,new BasicQuestioner(channel), drive,channel);
+            var appController = new QuestionController(new BasicQuestioner(channel), drive,channel);
             
             extend( new Subject(), appController.model );
             
