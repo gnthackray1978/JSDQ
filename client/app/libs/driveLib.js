@@ -25,11 +25,19 @@ MyDrive.prototype.autherizeResult = function(authResult) {
         writeStatement('Authenticated');
         //SET AUTH RESULT
         that.authResult = authResult;
-        //that._view.CmdUpdateLogin(false,'LOGGED IN');
+       
         that._channel.publish( "Login", { value: false} );
         gapi.client.load('drive', 'v2', function(r){
-            //$.proxy(that.driveLoaded, that)
             that.driveLoaded();
+            gapi.client.oauth2.userinfo.get().execute(function(userData)
+            {
+                console.log('userdata name: ' + userData.name);
+                // userData.id;
+                // userData.name;
+                // userData.email;
+
+            });
+      
         });
     }
     else {
