@@ -22,7 +22,7 @@ MyDrive.prototype.LogInGoogle= function(){
 
 MyDrive.prototype.LogOutGoogle= function(){
     console.log('Logout Google');
-    window.open("https://accounts.google.com/logout.");
+    window.open("https://accounts.google.com/logout");
 }; 
     
      

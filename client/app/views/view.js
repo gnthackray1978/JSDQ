@@ -198,7 +198,7 @@ View.prototype.UpdateView= function (view) {
     
     $('#login').html(view.loginMessage);    
     
-    $('#username').html(view.loginName);
+    $('#username').html('Logged in as: '+ view.loginName);
       
     if(view.visibleAnswer){
         $("#answer").removeClass("hidePanel").addClass("displayPanel");
