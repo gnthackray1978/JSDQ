@@ -1,4 +1,4 @@
-
+/*global gapi*/
 
 var MyDrive = function (view,channel) {
 
@@ -14,11 +14,17 @@ var MyDrive = function (view,channel) {
     this.driveLoaded;
 };
 
-MyDrive.prototype.GoogleSheetTestLogin= function(e){
-    console.log('Google Sheet Test Login');
+MyDrive.prototype.LogInGoogle= function(){
+    console.log('Login Google');
     var that = this;
     gapi.auth.authorize({'client_id': that.CLIENT_ID, 'scope': that.SCOPES, 'immediate': false},$.proxy(that.autherizeResult, that));
 };
+
+MyDrive.prototype.LogOutGoogle= function(){
+    console.log('Logout Google');
+    window.open("https://accounts.google.com/logout.");
+}; 
+    
      
 MyDrive.prototype.autherizeResult = function(authResult) {
     var that = this;

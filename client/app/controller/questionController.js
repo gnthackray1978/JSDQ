@@ -16,7 +16,8 @@ var QuestionController = function (quizObj,drive,channel) {
         modeChanged :null,
         endTestLock :false,
         startTestLock :false,
-        loginAllowed :false 
+        loginAllowed :false,
+        loggedIn: false
     };
     
     this.init();
@@ -104,11 +105,17 @@ var QuestionController = function (quizObj,drive,channel) {
     
     this._channel.subscribe("Login", function(data, envelope) {
         that.viewData.loginAllowed = data.value;
+        that.viewData.loggedIn = data.value;
         
         if(data.value)
+        {
             that.model.loginMessage = 'Log In';
+            
+        }
         else
+        {
             that.model.loginMessage = 'Log Out';
+        }
             
         that.updateView();
     });
@@ -121,8 +128,8 @@ var QuestionController = function (quizObj,drive,channel) {
     });
     
     this._channel.subscribe("LoginClick", function(data, envelope) {
-        if(that.viewData.loginAllowed)
-            that.qryNA(data.value);
+        
+        that.qryNA(data.value);
     });
 };
 
@@ -137,7 +144,10 @@ QuestionController.prototype = {
     },
     
     qryNA:function(evt){
-        this.drive.GoogleSheetTestLogin(evt);
+        if(this.viewData.loggedIn)
+            this.drive.LogInGoogle();
+        else
+            this.drive.LogOutGoogle();
     },
 
     qryStartTestEvt:function(evt){
