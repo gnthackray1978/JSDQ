@@ -12,6 +12,8 @@ var QuizVM = function (channel) {
     this.percentageCorrect =0;
     this.questionScore=0;
     this.loginName ='';
+    this.loginMessage ='';
+    
     this.tabIdx =-1;
     this.headerIdx=1;
     

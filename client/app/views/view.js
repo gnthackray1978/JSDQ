@@ -195,8 +195,11 @@ View.prototype.UpdateView= function (view) {
 
     $('#perc-correct').html(view.percentageCorrect + '%');
     $('#current-question').html(view.currentQuestion);
-    $('#login').html(view.loginName);    
-        
+    
+    $('#login').html(view.loginMessage);    
+    
+    $('#username').html(view.loginName);
+      
     if(view.visibleAnswer){
         $("#answer").removeClass("hidePanel").addClass("displayPanel");
     }else

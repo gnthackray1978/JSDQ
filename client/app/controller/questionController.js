@@ -106,10 +106,17 @@ var QuestionController = function (quizObj,drive,channel) {
         that.viewData.loginAllowed = data.value;
         
         if(data.value)
-            that.model.loginName = 'Login';
+            that.model.loginMessage = 'Log In';
         else
-            that.model.loginName = 'LOGGED IN';
+            that.model.loginMessage = 'Log Out';
             
+        that.updateView();
+    });
+    
+    this._channel.subscribe("LoginData", function(data, envelope) {
+         
+        that.model.loginName = data.value.displayName;
+        
         that.updateView();
     });
     
