@@ -17,7 +17,7 @@ var MyDrive = function (view,channel) {
 MyDrive.prototype.GoogleSheetTestLogin= function(e){
     console.log('Google Sheet Test Login');
     var that = this;
-    gapi.auth.authorize({'client_id': that.CLIENT_ID, 'scope': that.SCOPES, 'immediate': false},$.proxy(that.autherizeResult, that));
+    gapi.auth.authorize({'client_id': that.CLIENT_ID, 'scope': that.SCOPES, 'immediate': true},$.proxy(that.autherizeResult, that));
 };
      
 MyDrive.prototype.autherizeResult = function(authResult) {
