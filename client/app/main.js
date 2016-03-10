@@ -24,10 +24,7 @@ $(document).bind("pageinit", function () {
             var appController = new QuestionController(new BasicQuestioner(channel), drive,channel);
             
             extend( new Subject(), appController.model );
-            
-            
-            
-            
+
             drive.init(function(){
                
             });

@@ -1,9 +1,11 @@
-var QuestionController = function (model,drive,channel) {
+/*global QuizVM ScoreLib QuestionLib*/
+
+var QuestionController = function (quizObj,drive,channel) {
     this._channel = channel;;
     
     //this.view = view;
     this.drive = drive;
-    this.quizObj = model;
+    this.quizObj = quizObj;
     
     this.scoreLib = new ScoreLib();
     this.questionLib = new QuestionLib();
