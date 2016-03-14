@@ -140,7 +140,7 @@ QuestionController.prototype = {
     init:function(){
         var that = this;
         
-        this.scoreTracker.GetResults(function(results){
+        this.scoreTracker.GetResults('','',function(results){
            that.model.results = results;
            that.updateView();
         });
