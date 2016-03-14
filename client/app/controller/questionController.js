@@ -138,8 +138,13 @@ var QuestionController = function (quizObj,drive,channel) {
 QuestionController.prototype = {
     
     init:function(){
-       this.model.results = this.scoreTracker.GetResults();
-       this.updateView();
+        var that = this;
+        
+        this.scoreTracker.GetResults(function(results){
+           that.model.results = results;
+           that.updateView();
+        });
+       
     },
     
     updateView:function(){
