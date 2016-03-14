@@ -157,7 +157,7 @@ View.prototype.CreateResultList = function (results) {
     var idx = 0;
     while (idx < results.length) {
         if (results[idx] !== undefined) {
-            resultsElements += makeCol('a',results[idx].type) + makeCol('b',results[idx].subtype + makeCol('c',results[idx].score +'%'));
+            resultsElements += makeCol('a',results[idx].type) + makeCol('b',results[idx].subtype) + makeCol('c',results[idx].score +'%');
         }
         idx++;
     }
