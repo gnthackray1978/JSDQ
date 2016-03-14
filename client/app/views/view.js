@@ -279,6 +279,10 @@ View.prototype.UpdateView= function (view) {
         this.CreateCSVList(view.csvList, this);
     }
     
+    if(!listEqual(this.cacheCSVList,view.csvList)){
+        this.cacheResultsList = view.csvList;
+         
+    }
 };
 
 

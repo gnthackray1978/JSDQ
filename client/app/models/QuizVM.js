@@ -27,6 +27,7 @@ var QuizVM = function (channel) {
   
     this.catList =[];
     this.csvList =[];
+    this.results =[];
     
 };
 
