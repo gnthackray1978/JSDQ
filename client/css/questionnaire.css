@@ -1,6 +1,10 @@
 body {
 }
 
+#resultsList span{
+    float:left;
+    width: 150px;
+}
 
 .alt-cAnswer2 {
     color: red;

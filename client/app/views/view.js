@@ -148,10 +148,10 @@ View.prototype.CreateCSVList = function (catList, context) {
 
 View.prototype.CreateResultList = function (results) {
     
-    var makeCol= function(key,val){
-        var col = '<div class="ui-block-'+ key+'"><div class="ui-bar" style="height:30px"><span>'+ val+'</span></div></div>';
-        return col;
-    };
+    // var makeCol= function(key,val){
+    //     var col = '<div class="ui-block-'+ key+'"><div class="ui-bar" style="height:30px"><span>'+ val+'</span></div></div>';
+    //     return col;
+    // };
     
     var resultsElements = ''; 
     var idx = 0;
@@ -159,7 +159,11 @@ View.prototype.CreateResultList = function (results) {
         if (results[idx] !== undefined) {
             //resultsElements += makeCol('a',results[idx].type) + makeCol('b',results[idx].subtype) + makeCol('c',results[idx].score +'%');
             
-            resultsElements += '<div class="ui-block-a"><div class="ui-bar" style="height:30px"><span>'+ results[idx].type+'</span>' + '<span>'+ results[idx].subtype+'</span>'+ '<span>'+ results[idx].score+'</span>'+ '</div></div>';
+            resultsElements += '<div class="ui-block-a"><div class="ui-bar" style="height:30px">'+ 
+                                + '<span>' + results[idx].type+'</span>' 
+                                + '<span>' + results[idx].subtype+'</span>'
+                                + '<span>' + results[idx].score+'</span>'
+                                + '</div></div>';
         }
         idx++;
     }
