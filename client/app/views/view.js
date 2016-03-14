@@ -146,6 +146,21 @@ View.prototype.CreateCSVList = function (catList, context) {
     }, context);
 };
 
+View.prototype.CreateResultList = function (results, context) {
+    
+    var resultsElements = ''; 
+    var idx = 0;
+    while (idx < results.length) {
+        if (results[idx] !== undefined) {
+            resultsElements += '';
+ 
+        }
+        idx++;
+    }
+    
+    $('#resultsList').html(resultsElements);
+     
+};
 
 View.prototype.UpdateView= function (view) {
     //return;
@@ -279,8 +294,8 @@ View.prototype.UpdateView= function (view) {
         this.CreateCSVList(view.csvList, this);
     }
     
-    if(!listEqual(this.cacheCSVList,view.csvList)){
-        this.cacheResultsList = view.csvList;
+    if(!listEqual(this.cacheResultsList,view.results)){
+        this.cacheResultsList = view.results;
          
     }
 };
