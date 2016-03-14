@@ -7,6 +7,7 @@ function View(channel) {
 
     this.cacheCatList =[];
     this.cacheCSVList =[];
+    this.cacheResultsList =[];
     
     var that = this;
     
@@ -172,8 +173,9 @@ View.prototype.UpdateView= function (view) {
     $("#pnlWebCategories").removeClass("displayPanel").addClass("hidePanel");   //hide web categories
     $("#score-nav").removeClass("displayPanel").addClass("hidePanel");          //hide score 
     $("#question-nav").removeClass("displayPanel").addClass("hidePanel");       //hide question navs
-    
-    
+    $("#pnlResults").removeClass("displayPanel").addClass("hidePanel");         //hide result panel
+    $("#result-block").removeClass("displayPanel").addClass("hidePanel");       //hide result block
+    //
 
     
     $('#cat_name').html(view.catName);
@@ -219,7 +221,10 @@ View.prototype.UpdateView= function (view) {
     
     
         //display nothing
-    if (view.tabIdx == -1) { 
+    if (view.tabIdx == -1) {//not in test 
+        $("#pnlResults").removeClass("hidePanel").addClass("displayPanel");         //hide result panel
+        $("#result-block").removeClass("hidePanel").addClass("displayPanel");       //hide result block
+    
     }
     
     if (view.tabIdx == 0) {                                                          //show questions
@@ -229,10 +234,11 @@ View.prototype.UpdateView= function (view) {
         $("#question-nav").removeClass("hidePanel").addClass("displayPanel");
     }
 
-    if (view.tabIdx == 1) {                                                           
-        $("#pnlCategories").removeClass("hidePanel").addClass("displayPanel");  //show categories
-        $("#test-sel").removeClass("hidePanel").addClass("displayPanel");       //show test selectors
-        $("#answer-block").removeClass("hidePanel").addClass("displayPanel");
+    if (view.tabIdx == 1) {
+        alert('pseudo exception shouldnt be here');
+        // $("#pnlCategories").removeClass("hidePanel").addClass("displayPanel");  //show categories
+        // $("#test-sel").removeClass("hidePanel").addClass("displayPanel");       //show test selectors
+        // $("#answer-block").removeClass("hidePanel").addClass("displayPanel");
     }
 
     if (view.tabIdx == 2) {                                                          

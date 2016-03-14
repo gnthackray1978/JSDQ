@@ -9,6 +9,8 @@ var QuestionController = function (quizObj,drive,channel) {
     
     this.scoreLib = new ScoreLib();
     this.questionLib = new QuestionLib();
+    this.scoreTracker = new ScoreTracker(channel);
+    
     
     this.viewData = {
         categoryChanged : null,
@@ -136,7 +138,8 @@ var QuestionController = function (quizObj,drive,channel) {
 QuestionController.prototype = {
     
     init:function(){
-        
+       this.model.results = this.scoreTracker.GetResults();
+       this.updateView();
     },
     
     updateView:function(){
