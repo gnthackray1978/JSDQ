@@ -146,14 +146,18 @@ View.prototype.CreateCSVList = function (catList, context) {
     }, context);
 };
 
-View.prototype.CreateResultList = function (results, context) {
+View.prototype.CreateResultList = function (results) {
+    
+    var makeCol= function(key,val){
+        var col = '<div class="ui-block-"'+ key+'><div class="ui-bar" style="height:30px">'+ val+'</div></div>';
+        return col;
+    };
     
     var resultsElements = ''; 
     var idx = 0;
     while (idx < results.length) {
         if (results[idx] !== undefined) {
-            resultsElements += '';
- 
+            resultsElements += makeCol('a',results[idx].type) + makeCol('b',results[idx].subtype + makeCol('c',results[idx].score +'%'));
         }
         idx++;
     }
@@ -296,7 +300,7 @@ View.prototype.UpdateView= function (view) {
     
     if(!listEqual(this.cacheResultsList,view.results)){
         this.cacheResultsList = view.results;
-         
+        this.CreateResultList(view.results) ;
     }
 };
 
