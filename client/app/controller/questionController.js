@@ -22,10 +22,12 @@ var QuestionController = function (quizObj,drive,channel) {
         loggedIn: false
     };
     
-    this.init();
+    
     this.model = new QuizVM(channel);
     
     var that = this;
+    
+    
 
     this._channel.subscribe("QryStartTestEvt", function(data, envelope) {
         
@@ -133,6 +135,8 @@ var QuestionController = function (quizObj,drive,channel) {
         
         that.qryNA(data.value);
     });
+    
+    this.init();
 };
 
 QuestionController.prototype = {
