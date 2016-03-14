@@ -200,7 +200,8 @@ View.prototype.UpdateView= function (view) {
     $("#question-nav").removeClass("displayPanel").addClass("hidePanel");       //hide question navs
     $("#pnlResults").removeClass("displayPanel").addClass("hidePanel");         //hide result panel
     $("#result-block").removeClass("displayPanel").addClass("hidePanel");       //hide result block
-    //
+    $("#results-header-block").removeClass("displayPanel").addClass("hidePanel"); 
+    //results-header-block
 
     
     $('#cat_name').html(view.catName);
@@ -249,7 +250,7 @@ View.prototype.UpdateView= function (view) {
     if (view.tabIdx == -1) {//not in test 
         $("#pnlResults").removeClass("hidePanel").addClass("displayPanel");         //hide result panel
         $("#result-block").removeClass("hidePanel").addClass("displayPanel");       //hide result block
-    
+        $("#results-header-block").removeClass("hidePanel").addClass("displayPanel"); 
     }
     
     if (view.tabIdx == 0) {                                                          //show questions
