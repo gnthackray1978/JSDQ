@@ -149,7 +149,7 @@ View.prototype.CreateCSVList = function (catList, context) {
 View.prototype.CreateResultList = function (results) {
     
     var makeCol= function(key,val){
-        var col = '<div class="ui-block-"'+ key+'><div class="ui-bar" style="height:30px">'+ val+'</div></div>';
+        var col = '<div class="ui-block-'+ key+'"><div class="ui-bar" style="height:30px">'+ val+'</div></div>';
         return col;
     };
     
