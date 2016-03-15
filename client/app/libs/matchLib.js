@@ -140,19 +140,19 @@ MatchLib.prototype._multiAnswer =  function () {
     console.log('multi answer matching: ' + this.answer + ' == ' + this.solution);
     var remainingAnswers = [];
     var correctAnswers = [];
-    
+    var that = this;
     
     var checkAnswer = function(charCount){
         remainingAnswers = [];
         correctAnswers = [];
     
         var idx = 0;
-        while (idx < this.answer.length) {
+        while (idx < that.answer.length) {
     
-            if (this._arrayEqual(this.answer[idx], this.solution,charCount)) {
-                correctAnswers.push(this.solution);
+            if (that._arrayEqual(that.answer[idx], that.solution,charCount)) {
+                correctAnswers.push(that.solution);
             } else {
-                remainingAnswers.push(this.answer[idx]);
+                remainingAnswers.push(that.answer[idx]);
             }
             idx++;
         }
