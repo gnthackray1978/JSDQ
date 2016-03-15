@@ -158,13 +158,12 @@ MatchLib.prototype._multiAnswer =  function () {
         }
     }
     
+    checkAnswer(2);
     
-    var charCount =2;
-    
-    while(charCount < this.solution.length && correctAnswers.length >1)
+    var charCount =3;
+    while(charCount < this.solution.length && correctAnswers.length > 1)
     {
         checkAnswer(charCount);
-        
         charCount++;
     }
     
