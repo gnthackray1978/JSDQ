@@ -159,8 +159,14 @@ MatchLib.prototype._multiAnswer =  function () {
     }
     
     
+    var charCount =2;
     
-    checkAnswer(2);
+    while(charCount < this.solution.length && correctAnswers.length != 1)
+    {
+        checkAnswer(charCount);
+        
+        charCount++;
+    }
     
     this.matchCallback(correctAnswers,remainingAnswers);
         
