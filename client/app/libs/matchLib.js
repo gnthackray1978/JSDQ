@@ -142,6 +142,14 @@ MatchLib.prototype._multiAnswer =  function () {
     var correctAnswers = [];
     var that = this;
     
+    var formatAnswer = function(correctAnswer, answer){
+        if(correctAnswer.length == answer.length) return answer;
+        
+        var edittedAnswer = correctAnswer.slice(0, answer.length) + "(" + correctAnswer.slice(answer.length) +')'; 
+        
+        return edittedAnswer;
+    };
+    
     var checkAnswer = function(charCount){
         remainingAnswers = [];
         correctAnswers = [];
@@ -150,7 +158,7 @@ MatchLib.prototype._multiAnswer =  function () {
         while (idx < that.answer.length) {
     
             if (that._arrayEqual(that.answer[idx], that.solution,charCount)) {
-                correctAnswers.push(that.solution);
+                correctAnswers.push(formatAnswer(that.answer[idx], that.solution));
             } else {
                 remainingAnswers.push(that.answer[idx]);
             }
