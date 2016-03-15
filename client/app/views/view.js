@@ -296,17 +296,18 @@ View.prototype.UpdateView= function (view) {
 
     //something has changed so display
     if(!listEqual(this.cacheCatList,view.catList)){
-        this.cacheCatList = view.catList;
+        this.cacheCatList = JSON.parse(JSON.stringify(view.catList));
         this.CreateCategoryList(view.catList, this);
     }
+    //JSON.parse(JSON.stringify(o));
     
     if(!listEqual(this.cacheCSVList,view.csvList)){
-        this.cacheCSVList = view.csvList;
+        this.cacheCSVList = JSON.parse(JSON.stringify(view.csvList));
         this.CreateCSVList(view.csvList, this);
     }
     
     if(!listEqual(this.cacheResultsList,view.results)){
-        this.cacheResultsList = view.results;
+        this.cacheResultsList = JSON.parse(JSON.stringify(view.results));
         this.CreateResultList(view.results) ;
     }
 };
