@@ -32,7 +32,7 @@ MatchLib.prototype.Match =  function (callback) {
 MatchLib.prototype._basicMatch =  function () {
     console.log('basic matching: ' + this.answer + ' == ' + this.solution);
     
-    if (this._arrayEqual(this.answer,this.solution)) {
+    if (this._arrayEqual(this.answer,this.solution,2)) {
             this.matchCallback(true);
         } else {
             this.matchCallback(false);
@@ -53,7 +53,7 @@ MatchLib.prototype._equals =  function (answer,solution) {
     }
 },
 
-MatchLib.prototype._arrayEqual =  function (answer,solution) {
+MatchLib.prototype._arrayEqual =  function (answer,solution,charCount) {
      
     var that =this;
     var answerParts  =answer.split(' ');
@@ -77,7 +77,7 @@ MatchLib.prototype._arrayEqual =  function (answer,solution) {
     };
     
     while(aIdx < solutionParts.length){
-        if(that._equals(part(answerParts[aIdx],2),part(solutionParts[aIdx],2)))
+        if(that._equals(part(answerParts[aIdx],charCount),part(solutionParts[aIdx],charCount)))
         {
             matchCount++;
         }
@@ -140,17 +140,27 @@ MatchLib.prototype._multiAnswer =  function () {
     console.log('multi answer matching: ' + this.answer + ' == ' + this.solution);
     var remainingAnswers = [];
     var correctAnswers = [];
-    var idx = 0;
-
-    while (idx < this.answer.length) {
-
-        if (this._arrayEqual(this.answer[idx], this.solution)) {
-            correctAnswers.push(this.solution);
-        } else {
-            remainingAnswers.push(this.answer[idx]);
+    
+    
+    var checkAnswer = function(charCount){
+        remainingAnswers = [];
+        correctAnswers = [];
+    
+        var idx = 0;
+        while (idx < this.answer.length) {
+    
+            if (this._arrayEqual(this.answer[idx], this.solution,charCount)) {
+                correctAnswers.push(this.solution);
+            } else {
+                remainingAnswers.push(this.answer[idx]);
+            }
+            idx++;
         }
-        idx++;
     }
+    
+    
+    
+    checkAnswer(2);
     
     this.matchCallback(correctAnswers,remainingAnswers);
         
