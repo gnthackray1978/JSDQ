@@ -2,9 +2,9 @@ function ScoreTracker(channel) {
     
     this.results = [];
 
-    this.AddNewResult(23,'wcf','c#');
-    this.AddNewResult(75,'wcf','c#');
-    this.AddNewResult(56,'wcf','c#');
+    // this.AddNewResult(23,'wcf','c#');
+    // this.AddNewResult(75,'wcf','c#');
+    // this.AddNewResult(56,'wcf','c#');
 }
 
 ScoreTracker.prototype.AddNewResult = function(score,type,subtype){

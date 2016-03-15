@@ -192,9 +192,19 @@ QuestionController.prototype = {
         }
     },
     qryEndTestEvt:function(evt){
-        this.model.tabIdx = -1;
-        this.model.headerIdx = 1;
-    	this.updateView();
+     
+    	var that = this;
+    	
+    	this.scoreTracker.AddNewResult(this.model.percentageCorrect,this.model.catName, this.model.testName);
+    	
+    	this.scoreTracker.GetResults('','',function(results){
+    	   that.model.tabIdx = -1;
+           that.model.headerIdx = 1;
+           that.model.results = results;
+           that.updateView();
+        });
+        
+        
     },
     qryPrevQuestionEvt:function(evt){
         this.displayQuestion(evt);
