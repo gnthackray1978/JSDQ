@@ -354,8 +354,8 @@ View.prototype.PublishEndTestEvent = function () {
 
 View.prototype.PublishHistoryLoadEvent= function () {
     var that = this;
-    $('#history').bind("vclick", function (e) { 
-        that._channel.publish( "QryTestHistoryEvt", { value: e});
+    $('#createtest').bind("vclick", function (e) { 
+        that._channel.publish( "QryCreateTestEvt", { value: e});
     });
 };
 
