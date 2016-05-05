@@ -202,6 +202,7 @@ View.prototype.UpdateView= function (view) {
     $("#result-block").removeClass("displayPanel").addClass("hidePanel");       //hide result block
     $("#results-header-block").removeClass("displayPanel").addClass("hidePanel"); 
     $("#pnlCreateTest").removeClass("displayPanel").addClass("hidePanel");         //hide result panel
+    $("#create-block").removeClass("displayPanel").addClass("hidePanel");
     //results-header-block
 //pnlCreateTest
     
