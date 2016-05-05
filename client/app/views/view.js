@@ -201,8 +201,9 @@ View.prototype.UpdateView= function (view) {
     $("#pnlResults").removeClass("displayPanel").addClass("hidePanel");         //hide result panel
     $("#result-block").removeClass("displayPanel").addClass("hidePanel");       //hide result block
     $("#results-header-block").removeClass("displayPanel").addClass("hidePanel"); 
+    $("#pnlCreateTest").removeClass("displayPanel").addClass("hidePanel");         //hide result panel
     //results-header-block
-
+//pnlCreateTest
     
     $('#cat_name').html(view.catName);
     $('#test_name').html(view.testName);
@@ -286,6 +287,8 @@ View.prototype.UpdateView= function (view) {
         $("#result-block").removeClass("displayPanel").addClass("hidePanel");  
         $("#answer-block").removeClass("displayPanel").addClass("hidePanel"); 
         $("#create-block").removeClass("hidePanel").addClass("displayPanel");
+        $("#pnlCreateTest").removeClass("hidePanel").addClass("displayPanel");
+        //pnlCreateTest
     }
     
     
