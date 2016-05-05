@@ -282,6 +282,14 @@ View.prototype.UpdateView= function (view) {
         $("#pnlCategories").removeClass("hidePanel").addClass("displayPanel");  //show categories
     }
     
+    if (view.tabIdx == 6) {                                                           
+        $("#result-block").removeClass("displayPanel").addClass("hidePanel");  
+        $("#answer-block").removeClass("displayPanel").addClass("hidePanel"); 
+        $("#create-block").removeClass("hidePanel").addClass("displayPanel");
+    }
+    
+    
+    
     // main header
     if (view.headerIdx == 0) {            
         $("#header-answer-block").removeClass("hidePanel").addClass("displayPanel");
