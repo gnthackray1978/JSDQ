@@ -51,11 +51,13 @@ var QuestionController = function (quizObj,drive,channel) {
         
         if(!that.viewData.startTestLock)
             that.qryEndTestEvt(data.value);
-            
+
+        //time outs because jquery mobile sometimes triggers multiple  events rapidly screwing things up            
         setTimeout(function () {
             that.viewData.endTestLock =false; 
+            that.viewData.startTestLock =false;
             console.log('unlocked');
-        }, 5000);
+        }, 3000);
         
     });
     
