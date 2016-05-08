@@ -145,12 +145,12 @@ View.prototype.CreateCSVList = function (catList, context) {
     console.log('adding links for S');
     
     
-    idx =0;
+    //idx =0;
     
-    while(idx < selectEvents.length){
-        console.log(selectEvents[idx].key + ' ' + selectEvents[idx].value);
-        idx++;    
-    }
+    // while(idx < selectEvents.length){
+    //     console.log(selectEvents[idx].key + ' ' + selectEvents[idx].value);
+    //     idx++;    
+    // }
     
     
     listHelper.Addlinks(selectEvents, function(e){
