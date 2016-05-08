@@ -143,6 +143,7 @@ View.prototype.CreateCSVList = function (catList, context) {
     var that = this;
     
     listHelper.Addlinks(selectEvents, function(e){
+        console.log('event hit: ' + e);
         that._channel.publish( "QryCSVChanged", { value: e});
     }, context);
 };
