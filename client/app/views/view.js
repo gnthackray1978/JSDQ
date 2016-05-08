@@ -194,13 +194,25 @@ View.prototype.UpdateView= function (view) {
         
         var idx =0;
         while(idx < l1.length){
-            if(l1[idx]!= l2[idx])
-                return false;
+            
+            if(l1[idx].key!= undefined && l2[idx].key!=undefined){
+               if(l1[idx].key!= l2[idx].key)
+                    return false; 
+            }
+            else
+            {
+                if(l1[idx]!= l2[idx])
+                    return false;
+            }   
+                
             idx++;
         }
         
         return true;
     };
+    
+    
+    
     
     //hide everything initially.
     $("#pnlCategories").removeClass("displayPanel").addClass("hidePanel");      //hide categories
