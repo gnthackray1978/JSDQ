@@ -138,6 +138,7 @@ View.prototype.CreateCSVList = function (catList, context) {
     }
     
     $('#webcategories').html(cats);
+    $( "#webcategories" ).off();
     
     var that = this;
     
@@ -366,10 +367,17 @@ View.prototype.PublishEndTestEvent = function () {
 
 View.prototype.PublishHistoryLoadEvent= function () {
     var that = this;
+    
     $('#createtest').bind("vclick", function (e) { 
-        that._channel.publish( "QryCreateTestEvt", { value: e});
+        that._channel.publish( "createtestmodeselected", { value: e});
     });
+    
+    
 };
+
+
+
+
 
 View.prototype.PublishAnswerButtonEvent = function () {
     var that = this;

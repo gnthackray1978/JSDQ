@@ -136,8 +136,12 @@ var QuestionController = function (quizObj,drive,channel) {
         that.qryNA(data.value);
     });
     
-    this._channel.subscribe("QryCreateTestEvt", function(data, envelope) {
-        that.qryCreateTestEvt(data.value);
+    this._channel.subscribe("createtestmodeselected", function(data, envelope) {
+        that.qryCreatetestmodeselected(data.value);
+    });
+    
+    this._channel.subscribe("createtestclicked", function(data, envelope) {
+        that.createtestclicked(data.value);
     });
     
     this.init();
@@ -219,7 +223,10 @@ QuestionController.prototype = {
     qrySubmitEvt:function(evt){
         this.answerQuestion(evt);
     },
-    qryCreateTestEvt:function(evt){
+    createtestclicked:function(evt){
+     
+    },
+    qryCreatetestmodeselected:function(evt){
         this.model.tabIdx = 6;
         this.updateView();
     },
