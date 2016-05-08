@@ -117,7 +117,7 @@ View.prototype.CreateCategoryList = function (catList, context){
     $('#categories').html(cats);       
     
     var that = this;
-    
+    console.log('adding links for z');
     listHelper.Addlinks(selectEvents, function(e){
         that._channel.publish( "QryCategoryChanged", { value: e});
     }, context);
@@ -141,6 +141,7 @@ View.prototype.CreateCSVList = function (catList, context) {
     $( "#webcategories" ).off();
     
     var that = this;
+    console.log('adding links for S');
     
     listHelper.Addlinks(selectEvents, function(e){
         console.log('event hit: ' + e);
