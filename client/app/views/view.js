@@ -138,23 +138,17 @@ View.prototype.CreateCSVList = function (catList, context) {
         idx++;
     }
     
-    $('#webcategories').html(cats);
-    $(".cat-but").off();
-    
+    if(catList.length > 0)
+        $('#webcategories').html(cats);
+    else
+        $('#webcategories').html('<b>No tests found (Click Create to create some)</b>');
+
+
+
+
     var that = this;
-    console.log('adding links for S');
-    
-    
-    //idx =0;
-    
-    // while(idx < selectEvents.length){
-    //     console.log(selectEvents[idx].key + ' ' + selectEvents[idx].value);
-    //     idx++;    
-    // }
-    
-    
+
     listHelper.Addlinks(selectEvents, function(e){
-        console.log('event hit: ' + e);
         that._channel.publish( "QryCSVChanged", { value: e});
     }, context);
 };
