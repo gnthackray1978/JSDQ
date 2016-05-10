@@ -313,10 +313,7 @@ View.prototype.UpdateView= function (view) {
         $("#test-sel").removeClass("hidePanel").addClass("displayPanel");       //show test selectors
         $("#answer-block").removeClass("hidePanel").addClass("displayPanel");
         
-        if(!listEqual(this.cacheCSVList,view.csvList)){
-            this.cacheCSVList = JSON.parse(JSON.stringify(view.csvList));
-            this.CreateCSVList(view.csvList, this);
-        }
+       
     }
 
     if (view.tabIdx == 4) {                                                          //show web cats
@@ -324,7 +321,10 @@ View.prototype.UpdateView= function (view) {
         $("#test-sel").removeClass("hidePanel").addClass("displayPanel");       //show test selectors
         $("#answer-block").removeClass("hidePanel").addClass("displayPanel");
         
-        
+         if(!listEqual(this.cacheCSVList,view.csvList)){
+            this.cacheCSVList = JSON.parse(JSON.stringify(view.csvList));
+            this.CreateCSVList(view.csvList, this);
+        }
     }
     
     if (view.tabIdx == 5) {                                                           
