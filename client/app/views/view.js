@@ -323,16 +323,18 @@ View.prototype.UpdateView= function (view) {
         $("#pnlWebCategories").removeClass("hidePanel").addClass("displayPanel"); 
         $("#test-sel").removeClass("hidePanel").addClass("displayPanel");       //show test selectors
         $("#answer-block").removeClass("hidePanel").addClass("displayPanel");
-    }
-    
-    if (view.tabIdx == 5) {                                                           
-        $("#pnlCategories").removeClass("hidePanel").addClass("displayPanel");  //show categories
         
         //something has changed so display
         if(!listEqual(this.cacheCatList,view.catList)){
             this.cacheCatList = JSON.parse(JSON.stringify(view.catList));
             this.CreateCategoryList(view.catList, this);
         }
+    }
+    
+    if (view.tabIdx == 5) {                                                           
+        $("#pnlCategories").removeClass("hidePanel").addClass("displayPanel");  //show categories
+        
+
     }
     
     if (view.tabIdx == 6) {                                                           
