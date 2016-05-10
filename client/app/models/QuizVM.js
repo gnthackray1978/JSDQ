@@ -1,3 +1,12 @@
+var ENUM_STATES = {
+    LOGGEDIN: -1,
+    LOGGEDOUT: -2,
+    INTEST: 0,
+    CATEGORYSELECT :5,
+    TESTSELECT:4,
+    TESTCREATE :6
+};
+
 var QuizVM = function (channel) {
     this._channel = channel;
     
@@ -14,7 +23,7 @@ var QuizVM = function (channel) {
     this.loginName ='';
     this.loginMessage ='';
     
-    this.tabIdx =-1;
+    this.MSTATE = ENUM_STATES.LOGGEDIN;
     this.headerIdx=1;
     
     this.visibleAnswer=false;

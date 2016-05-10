@@ -116,7 +116,6 @@ var QuestionController = function (quizObj,drive,channel) {
         if(data.value)
         {
             that.model.loginMessage = 'Log In';
-            
         }
         else
         {
@@ -180,7 +179,7 @@ QuestionController.prototype = {
             that.model.percentageCorrect = 0;
             that.model.answersofar ='';
             that.model.mainBody ='';
-            that.model.tabIdx = 0;
+            that.model.MSTATE = ENUM_STATES.INTEST;
             that.model.headerIdx = 0;
             
             console.log('start test');
@@ -208,7 +207,7 @@ QuestionController.prototype = {
     	this.scoreTracker.AddNewResult(this.model.percentageCorrect,this.model.catName, this.model.testName);
     	
     	this.scoreTracker.GetResults('','',function(results){
-    	   that.model.tabIdx = -1;
+    	   that.model.MSTATE = ENUM_STATES.LOGGEDIN;
            that.model.headerIdx = 1;
            that.model.results = results;
            that.updateView();
@@ -229,7 +228,7 @@ QuestionController.prototype = {
      
     },
     qryCreatetestmodeselected:function(evt){
-        this.model.tabIdx = 6;
+        this.model.MSTATE = ENUM_STATES.TESTCREATE;
         this.updateView();
     },
     qryAnswerButtonPress:function(evt){
@@ -249,18 +248,8 @@ QuestionController.prototype = {
         }
     },
     qrySelectTestBtn:function(evt){
-        this.model.tabIdx = 2;
-        this.updateView();
-    },
-    qryCatBtn:function(evt){
-        this.model.tabIdx = 5;
-        this.updateView();
-    },
-    
-    qryCsvBtn:function(evt){
-        // button in ui commented out
         if (this.quizObj !== null) {
-            console.log('listing csvs(tests)');
+            console.log('listing TESTS');
             var that = this;
             
             that.drive.SearchForQuizFolder('quiz', function(quizlist){
@@ -268,11 +257,33 @@ QuestionController.prototype = {
                 that.quizObj.listoftests = quizlist;
                 
                 that.model.csvList = that.quizObj.listoftests;
-                that.model.tabIdx = 4;
+                that.model.MSTATE = ENUM_STATES.TESTSELECT;
                 that.updateView();
             });
             
         }
+    },
+    qryCatBtn:function(evt){
+        this.model.MSTATE = ENUM_STATES.CATEGORYSELECT;
+        this.updateView();
+    },
+    
+    qryCsvBtn:function(evt){
+        // button in ui commented out
+        // if (this.quizObj !== null) {
+        //     console.log('listing csvs(tests)');
+        //     var that = this;
+            
+        //     that.drive.SearchForQuizFolder('quiz', function(quizlist){
+        //         console.log('fetched list of quizs: '+quizlist);
+        //         that.quizObj.listoftests = quizlist;
+                
+        //         that.model.csvList = that.quizObj.listoftests;
+        //         that.model.MSTATE = ENUM_STATES.TESTSELECT;
+        //         that.updateView();
+        //     });
+            
+        // }
     },
     
     qryCategoryChanged:function(evt){

@@ -222,9 +222,7 @@ View.prototype.UpdateView= function (view) {
     $("#results-header-block").removeClass("displayPanel").addClass("hidePanel"); 
     $("#pnlCreateTest").removeClass("displayPanel").addClass("hidePanel");         //hide result panel
     $("#create-block").removeClass("displayPanel").addClass("hidePanel");
-    //results-header-block
-//pnlCreateTest
-    
+
     $('#cat_name').html(view.catName);
     $('#test_name').html(view.testName);
 
@@ -236,7 +234,7 @@ View.prototype.UpdateView= function (view) {
 
     //display nothing
     //not in test 
-    if (view.tabIdx == -1) {
+    if (view.MSTATE == ENUM_STATES.LOGGEDIN) {
         $("#pnlResults").removeClass("hidePanel").addClass("displayPanel");     
         $("#result-block").removeClass("hidePanel").addClass("displayPanel");   
         $("#results-header-block").removeClass("hidePanel").addClass("displayPanel"); 
@@ -253,7 +251,7 @@ View.prototype.UpdateView= function (view) {
         }
     }
     
-    if (view.tabIdx == 0) {//show questions
+    if (view.MSTATE == ENUM_STATES.INTEST) {//show questions
         $('#answer-so-far').html(this.FormatAnswerSoFar(view.answerSoFar));
     
         if(view.isMultipleChoice){
@@ -301,22 +299,15 @@ View.prototype.UpdateView= function (view) {
         }
     }
 
-    if (view.tabIdx == 1) {
-        alert('pseudo exception shouldnt be here');
-        // $("#pnlCategories").removeClass("hidePanel").addClass("displayPanel");  //show categories
-        // $("#test-sel").removeClass("hidePanel").addClass("displayPanel");       //show test selectors
-        // $("#answer-block").removeClass("hidePanel").addClass("displayPanel");
-    }
-
-    if (view.tabIdx == 2) {                                                          
-        $("#pnlCSVList").removeClass("hidePanel").addClass("displayPanel");     //show csv list
-        $("#test-sel").removeClass("hidePanel").addClass("displayPanel");       //show test selectors
-        $("#answer-block").removeClass("hidePanel").addClass("displayPanel");
+    // if (view.MSTATE == 2) {                                                          
+    //     $("#pnlCSVList").removeClass("hidePanel").addClass("displayPanel");     //show csv list
+    //     $("#test-sel").removeClass("hidePanel").addClass("displayPanel");       //show test selectors
+    //     $("#answer-block").removeClass("hidePanel").addClass("displayPanel");
         
        
-    }
+    // }
 
-    if (view.tabIdx == 4) {                                                          //show web cats
+    if (view.MSTATE == ENUM_STATES.TESTSELECT) {                                                          //show web cats
         $("#pnlWebCategories").removeClass("hidePanel").addClass("displayPanel"); 
         $("#test-sel").removeClass("hidePanel").addClass("displayPanel");       //show test selectors
         $("#answer-block").removeClass("hidePanel").addClass("displayPanel");
@@ -327,7 +318,7 @@ View.prototype.UpdateView= function (view) {
         }
     }
     
-    if (view.tabIdx == 5) {                                                           
+    if (view.MSTATE == ENUM_STATES.CATEGORYSELECT) {                                                           
         $("#pnlCategories").removeClass("hidePanel").addClass("displayPanel");  //show categories
         
         //something has changed so display
@@ -337,19 +328,14 @@ View.prototype.UpdateView= function (view) {
         }
     }
     
-    if (view.tabIdx == 6) {                                                           
+    // create test panel
+    if (view.MSTATE == ENUM_STATES.TESTCREATE) {                                                           
         $("#result-block").removeClass("displayPanel").addClass("hidePanel");  
         $("#answer-block").removeClass("displayPanel").addClass("hidePanel"); 
         $("#create-block").removeClass("hidePanel").addClass("displayPanel");
         $("#pnlCreateTest").removeClass("hidePanel").addClass("displayPanel");
         //pnlCreateTest
     }
-    
-    
-    
-
-    
-
 
 };
 
