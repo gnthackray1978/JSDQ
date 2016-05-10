@@ -227,58 +227,78 @@ View.prototype.UpdateView= function (view) {
     
     $('#cat_name').html(view.catName);
     $('#test_name').html(view.testName);
-    $('#answer-so-far').html(this.FormatAnswerSoFar(view.answerSoFar));
-    
-    if(view.isMultipleChoice){
-        var tpMainBody = this.FormatMultipleChoice(view.multiChoiceQuestion, view.multiChoiceConstantAnswer, view.multiChoiceIdx);            
-        $('#mainbody').html(tpMainBody);               
-    }else
-    {
-        $('#mainbody').html(view.mainBody);
-    }
-    
-    $('#answer-box').val(view.answerBox);
-    $('#correct-answer').html(this.FormatCorrectAnswer(view.correctAnswer));
-    
-    $('#question-score').html(view.questionScore + '%');
 
-    $('#perc-correct').html(view.percentageCorrect + '%');
-    $('#current-question').html(view.currentQuestion);
     
     $('#login').html(view.loginMessage);    
     
     $('#username').html('Logged in as: '+ view.loginName);
       
-    if(view.visibleAnswer){
-        $("#answer").removeClass("hidePanel").addClass("displayPanel");
-    }else
-    {
-        $("#answer").removeClass("displayPanel").addClass("hidePanel");
-    }
-    
-    //
-    if(view.visibleImage){
-        $("#imgPanel").removeClass("hidePanel").addClass("displayPanel");
-        $("#sourceid").attr("src", view.imagePath);
-    }else
-    {
-        $("#imgPanel").removeClass("displayPanel").addClass("hidePanel");
-        $("#sourceid").attr("src", view.imagePath);
-    }
-    
-    
-        //display nothing
-    if (view.tabIdx == -1) {//not in test 
-        $("#pnlResults").removeClass("hidePanel").addClass("displayPanel");         //hide result panel
-        $("#result-block").removeClass("hidePanel").addClass("displayPanel");       //hide result block
+
+    //display nothing
+    //not in test 
+    if (view.tabIdx == -1) {
+        $("#pnlResults").removeClass("hidePanel").addClass("displayPanel");     
+        $("#result-block").removeClass("hidePanel").addClass("displayPanel");   
         $("#results-header-block").removeClass("hidePanel").addClass("displayPanel"); 
+        
+        if(!listEqual(this.cacheResultsList,view.results)){
+            this.cacheResultsList = JSON.parse(JSON.stringify(view.results));
+            this.CreateResultList(view.results) ;
+        }
+        
+            // answer mode header
+        if (view.headerIdx == 1) {
+            $("#header-answer-block").removeClass("displayPanel").addClass("hidePanel");
+            $("#header-home-block").removeClass("hidePanel").addClass("displayPanel");           
+        }
     }
     
-    if (view.tabIdx == 0) {                                                          //show questions
+    if (view.tabIdx == 0) {//show questions
+        $('#answer-so-far').html(this.FormatAnswerSoFar(view.answerSoFar));
+    
+        if(view.isMultipleChoice){
+            var tpMainBody = this.FormatMultipleChoice(view.multiChoiceQuestion, view.multiChoiceConstantAnswer, view.multiChoiceIdx);            
+            $('#mainbody').html(tpMainBody);               
+        }else
+        {
+            $('#mainbody').html(view.mainBody);
+        }
+        $('#answer-box').val(view.answerBox);
+        
+        if(view.visibleAnswer){
+            $("#answer").removeClass("hidePanel").addClass("displayPanel");
+        }else
+        {
+            $("#answer").removeClass("displayPanel").addClass("hidePanel");
+        }
+        
+        //
+        if(view.visibleImage){
+            $("#imgPanel").removeClass("hidePanel").addClass("displayPanel");
+            $("#sourceid").attr("src", view.imagePath);
+        }else
+        {
+            $("#imgPanel").removeClass("displayPanel").addClass("hidePanel");
+            $("#sourceid").attr("src", view.imagePath);
+        }
+        
+        $('#correct-answer').html(this.FormatCorrectAnswer(view.correctAnswer));
+        
+        $('#question-score').html(view.questionScore + '%');
+        
+        $('#perc-correct').html(view.percentageCorrect + '%');
+        $('#current-question').html(view.currentQuestion);
+    
+    
         $("#pnlQuestions").removeClass("hidePanel").addClass("displayPanel");   //show questions panel
         $("#answer-block").removeClass("hidePanel").addClass("displayPanel");
         $("#score-nav").removeClass("hidePanel").addClass("displayPanel");
         $("#question-nav").removeClass("hidePanel").addClass("displayPanel");
+        
+        if (view.headerIdx == 0) {            
+            $("#header-answer-block").removeClass("hidePanel").addClass("displayPanel");
+            $("#header-home-block").removeClass("displayPanel").addClass("hidePanel");
+        }
     }
 
     if (view.tabIdx == 1) {
@@ -292,6 +312,11 @@ View.prototype.UpdateView= function (view) {
         $("#pnlCSVList").removeClass("hidePanel").addClass("displayPanel");     //show csv list
         $("#test-sel").removeClass("hidePanel").addClass("displayPanel");       //show test selectors
         $("#answer-block").removeClass("hidePanel").addClass("displayPanel");
+        
+        if(!listEqual(this.cacheCSVList,view.csvList)){
+            this.cacheCSVList = JSON.parse(JSON.stringify(view.csvList));
+            this.CreateCSVList(view.csvList, this);
+        }
     }
 
     if (view.tabIdx == 4) {                                                          //show web cats
@@ -299,8 +324,15 @@ View.prototype.UpdateView= function (view) {
         $("#test-sel").removeClass("hidePanel").addClass("displayPanel");       //show test selectors
         $("#answer-block").removeClass("hidePanel").addClass("displayPanel");
     }
+    
     if (view.tabIdx == 5) {                                                           
         $("#pnlCategories").removeClass("hidePanel").addClass("displayPanel");  //show categories
+        
+        //something has changed so display
+        if(!listEqual(this.cacheCatList,view.catList)){
+            this.cacheCatList = JSON.parse(JSON.stringify(view.catList));
+            this.CreateCategoryList(view.catList, this);
+        }
     }
     
     if (view.tabIdx == 6) {                                                           
@@ -313,34 +345,10 @@ View.prototype.UpdateView= function (view) {
     
     
     
-    // main header
-    if (view.headerIdx == 0) {            
-        $("#header-answer-block").removeClass("hidePanel").addClass("displayPanel");
-        $("#header-home-block").removeClass("displayPanel").addClass("hidePanel");
-    }
-    
-    // answer mode header
-    if (view.headerIdx == 1) {
-        $("#header-answer-block").removeClass("displayPanel").addClass("hidePanel");
-        $("#header-home-block").removeClass("hidePanel").addClass("displayPanel");           
-    }
 
-    //something has changed so display
-    if(!listEqual(this.cacheCatList,view.catList)){
-        this.cacheCatList = JSON.parse(JSON.stringify(view.catList));
-        this.CreateCategoryList(view.catList, this);
-    }
-    //JSON.parse(JSON.stringify(o));
     
-    if(!listEqual(this.cacheCSVList,view.csvList)){
-        this.cacheCSVList = JSON.parse(JSON.stringify(view.csvList));
-        this.CreateCSVList(view.csvList, this);
-    }
-    
-    if(!listEqual(this.cacheResultsList,view.results)){
-        this.cacheResultsList = JSON.parse(JSON.stringify(view.results));
-        this.CreateResultList(view.results) ;
-    }
+
+
 };
 
 
