@@ -204,13 +204,8 @@ View.prototype.UpdateView= function (view) {
         
         return true;
     };
-    
-    
-    
-    
     //hide everything initially.
     $("#pnlCategories").removeClass("displayPanel").addClass("hidePanel");      //hide categories
-    //$("#test-sel").removeClass("displayPanel").addClass("hidePanel");           //hide test selectors
     $("#answer-block").removeClass("displayPanel").addClass("hidePanel");       //hide answer block
     $("#pnlQuestions").removeClass("displayPanel").addClass("hidePanel");       //hide questions panel
     $("#pnlCSVList").removeClass("displayPanel").addClass("hidePanel");         //hide csvs
@@ -222,6 +217,10 @@ View.prototype.UpdateView= function (view) {
     $("#results-header-block").removeClass("displayPanel").addClass("hidePanel"); 
     $("#pnlCreateTest").removeClass("displayPanel").addClass("hidePanel");         //hide result panel
     $("#create-block").removeClass("displayPanel").addClass("hidePanel");
+
+    //headers
+    $("#header-answer-block").removeClass("displayPanel").addClass("hidePanel");
+    $("#header-home-block").removeClass("displayPanel").addClass("hidePanel");
 
     $('#cat_name').html(view.catName);
     $('#test_name').html(view.testName);
@@ -238,21 +237,25 @@ View.prototype.UpdateView= function (view) {
         $("#pnlResults").removeClass("hidePanel").addClass("displayPanel");     
         $("#result-block").removeClass("hidePanel").addClass("displayPanel");   
         $("#results-header-block").removeClass("hidePanel").addClass("displayPanel"); 
+        //header
+        $("#header-home-block").removeClass("hidePanel").addClass("displayPanel");
         
         if(!listEqual(this.cacheResultsList,view.results)){
             this.cacheResultsList = JSON.parse(JSON.stringify(view.results));
             this.CreateResultList(view.results) ;
         }
         
-            // answer mode header
-        if (view.headerIdx == 1) {
-            $("#header-answer-block").removeClass("displayPanel").addClass("hidePanel");
-            $("#header-home-block").removeClass("hidePanel").addClass("displayPanel");           
-        }
+        // answer mode header
+        //if (view.headerIdx == 1) {
+        //$("#header-answer-block").removeClass("displayPanel").addClass("hidePanel");
+        //$("#header-home-block").removeClass("hidePanel").addClass("displayPanel");           
+        //}
     }
     
     if (view.MSTATE == ENUM_STATES.INTEST) {//show questions
         $('#answer-so-far').html(this.FormatAnswerSoFar(view.answerSoFar));
+        //header
+        $("#header-answer-block").removeClass("hidePanel").addClass("displayPanel");
     
         if(view.isMultipleChoice){
             var tpMainBody = this.FormatMultipleChoice(view.multiChoiceQuestion, view.multiChoiceConstantAnswer, view.multiChoiceIdx);            
@@ -293,26 +296,19 @@ View.prototype.UpdateView= function (view) {
         $("#score-nav").removeClass("hidePanel").addClass("displayPanel");
         $("#question-nav").removeClass("hidePanel").addClass("displayPanel");
         
-        if (view.headerIdx == 0) {            
-            $("#header-answer-block").removeClass("hidePanel").addClass("displayPanel");
-            $("#header-home-block").removeClass("displayPanel").addClass("hidePanel");
-        }
+        //if (view.headerIdx == 0) {            
+        //$("#header-answer-block").removeClass("hidePanel").addClass("displayPanel");
+        //$("#header-home-block").removeClass("displayPanel").addClass("hidePanel");
+        //}
     }
-
-    // if (view.MSTATE == 2) {                                                          
-    //     $("#pnlCSVList").removeClass("hidePanel").addClass("displayPanel");     //show csv list
-    //     $("#test-sel").removeClass("hidePanel").addClass("displayPanel");       //show test selectors
-    //     $("#answer-block").removeClass("hidePanel").addClass("displayPanel");
-        
-       
-    // }
 
     if (view.MSTATE == ENUM_STATES.TESTSELECT) {                                                          //show web cats
         $("#pnlWebCategories").removeClass("hidePanel").addClass("displayPanel"); 
-    //    $("#test-sel").removeClass("hidePanel").addClass("displayPanel");       //show test selectors
         $("#answer-block").removeClass("hidePanel").addClass("displayPanel");
+        //header
+        $("#header-home-block").removeClass("hidePanel").addClass("displayPanel");
         
-         if(!listEqual(this.cacheCSVList,view.csvList)){
+        if(!listEqual(this.cacheCSVList,view.csvList)){
             this.cacheCSVList = JSON.parse(JSON.stringify(view.csvList));
             this.CreateCSVList(view.csvList, this);
         }
@@ -320,6 +316,8 @@ View.prototype.UpdateView= function (view) {
     
     if (view.MSTATE == ENUM_STATES.CATEGORYSELECT) {                                                           
         $("#pnlCategories").removeClass("hidePanel").addClass("displayPanel");  //show categories
+        //header
+        $("#header-home-block").removeClass("hidePanel").addClass("displayPanel");
         
         //something has changed so display
         if(!listEqual(this.cacheCatList,view.catList)){
@@ -329,7 +327,10 @@ View.prototype.UpdateView= function (view) {
     }
     
     // create test panel
-    if (view.MSTATE == ENUM_STATES.TESTCREATE) {                                                           
+    if (view.MSTATE == ENUM_STATES.TESTCREATE) {
+        //header
+        $("#header-home-block").removeClass("hidePanel").addClass("displayPanel");
+        
         $("#result-block").removeClass("displayPanel").addClass("hidePanel");  
         $("#answer-block").removeClass("displayPanel").addClass("hidePanel"); 
         $("#create-block").removeClass("hidePanel").addClass("displayPanel");

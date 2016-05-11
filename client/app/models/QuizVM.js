@@ -24,7 +24,7 @@ var QuizVM = function (channel) {
     this.loginMessage ='';
     
     this.MSTATE = ENUM_STATES.LOGGEDIN;
-    this.headerIdx=1;
+  //  this.headerIdx=1;
     
     this.visibleAnswer=false;
     this.visibleImage=false;

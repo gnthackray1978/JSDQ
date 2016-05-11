@@ -109,10 +109,12 @@ var QuestionController = function (quizObj,drive,channel) {
         
         if(data.value)
         {
+            that.model.MSTATE = ENUM_STATES.LOGGEDOUT;
             that.model.loginMessage = 'Log In';
         }
         else
         {
+            that.model.MSTATE = ENUM_STATES.LOGGEDIN;
             that.model.loginMessage = 'Log Out';
         }
             
@@ -176,7 +178,7 @@ QuestionController.prototype = {
             that.model.answersofar ='';
             that.model.mainBody ='';
             that.model.MSTATE = ENUM_STATES.INTEST;
-            that.model.headerIdx = 0;
+         //   that.model.headerIdx = 0;
             
             console.log('start test');
             
@@ -204,7 +206,7 @@ QuestionController.prototype = {
     	
     	this.scoreTracker.GetResults('','',function(results){
     	   that.model.MSTATE = ENUM_STATES.LOGGEDIN;
-           that.model.headerIdx = 1;
+         //  that.model.headerIdx = 1;
            that.model.results = results;
            that.updateView();
         });
