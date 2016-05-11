@@ -264,8 +264,8 @@ QuestionController.prototype = {
         }
     },
     qryCatBtn:function(evt){
-        this.model.MSTATE = ENUM_STATES.CATEGORYSELECT;
-        this.updateView();
+        // this.model.MSTATE = ENUM_STATES.CATEGORYSELECT;
+        // this.updateView();
     },
     
     qryCsvBtn:function(evt){
@@ -306,6 +306,7 @@ QuestionController.prototype = {
                     that.quizObj.categories = cats;
                     
                     that.model.catList = cats.D;
+                    that.model.MSTATE = ENUM_STATES.CATEGORYSELECT;
                     that.updateView();
                 });
                 
