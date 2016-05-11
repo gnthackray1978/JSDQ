@@ -174,7 +174,7 @@ MyDrive.prototype.SearchForQuizFolder = function(name, ocallback){
         
         // fix this
         // file list contains one undefined entry sometimes when connection cant be established
-        if(fileList.length > 0){
+        if(fileList.length > 0 && fileList[0]!=undefined){
             writeStatement('quiz folder found: '+ fileList[0].title + ' ' + fileList[0].id);
             that.SearchForQuizFiles(fileList[0].id,ocallback);
         }
