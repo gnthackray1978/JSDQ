@@ -34,8 +34,8 @@ function View(channel) {
     this.PublishNextQuestionEvent();
     this.PublishSubmitAnswerEvent();
     this.PublishSelectTestEvent();
-    this.PublishCatBtnEvent();
-    this.PublishCsvBtnEvent();
+    // this.PublishCatBtnEvent();
+    // this.PublishCsvBtnEvent();
     this.PublishResetQuestionEvent();
     this.PublishCorrectAnswerButtonEvent();
     this.PublishLoginClickEvent();
