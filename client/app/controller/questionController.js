@@ -102,6 +102,8 @@ var QuestionController = function (quizObj,drive,channel) {
     });
     
     this._channel.subscribe("Login", function(data, envelope) {
+        console.log('Login: ' + data.value);
+        
         that.viewData.loginAllowed = data.value;
         that.viewData.loggedIn = data.value;
         
@@ -118,6 +120,7 @@ var QuestionController = function (quizObj,drive,channel) {
     });
     
     this._channel.subscribe("LoginData", function(data, envelope) {
+        console.log('LoginData: ' + data.value.displayName);
          
         that.model.loginName = data.value.displayName;
         
@@ -125,6 +128,7 @@ var QuestionController = function (quizObj,drive,channel) {
     });
     
     this._channel.subscribe("LoginClick", function(data, envelope) {
+        console.log('LoginClick: ' + data.value.displayName);
         
         that.qryNA(data.value);
     });
@@ -244,7 +248,8 @@ QuestionController.prototype = {
             console.log('listing TESTS');
             var that = this;
             
-            that.drive.SearchForQuizFolder('quiz', function(quizlist){
+            that.drive.SearchForQuizFolder('quiz', function(quizlist)
+            {
                 console.log('fetched list of quizs: '+quizlist);
                 that.quizObj.listoftests = quizlist;
                 
