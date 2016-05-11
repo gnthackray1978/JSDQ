@@ -210,7 +210,7 @@ View.prototype.UpdateView= function (view) {
     
     //hide everything initially.
     $("#pnlCategories").removeClass("displayPanel").addClass("hidePanel");      //hide categories
-    $("#test-sel").removeClass("displayPanel").addClass("hidePanel");           //hide test selectors
+    //$("#test-sel").removeClass("displayPanel").addClass("hidePanel");           //hide test selectors
     $("#answer-block").removeClass("displayPanel").addClass("hidePanel");       //hide answer block
     $("#pnlQuestions").removeClass("displayPanel").addClass("hidePanel");       //hide questions panel
     $("#pnlCSVList").removeClass("displayPanel").addClass("hidePanel");         //hide csvs
@@ -309,7 +309,7 @@ View.prototype.UpdateView= function (view) {
 
     if (view.MSTATE == ENUM_STATES.TESTSELECT) {                                                          //show web cats
         $("#pnlWebCategories").removeClass("hidePanel").addClass("displayPanel"); 
-        $("#test-sel").removeClass("hidePanel").addClass("displayPanel");       //show test selectors
+    //    $("#test-sel").removeClass("hidePanel").addClass("displayPanel");       //show test selectors
         $("#answer-block").removeClass("hidePanel").addClass("displayPanel");
         
          if(!listEqual(this.cacheCSVList,view.csvList)){
@@ -434,22 +434,6 @@ View.prototype.PublishSelectTestEvent = function () {//context.listtests();
     
     $('#choosetest').bind("vclick", function (e) {
         that._channel.publish( "QrySelectTestBtn", { value: e});
-    });
-};
- 
-View.prototype.PublishCatBtnEvent = function () {//context.listtests();
-    var that = this;
-    
-    $('#cats').bind("vclick", function (e) {
-        that._channel.publish( "QryCatBtn", { value: e});
-    });
-};
-
-View.prototype.PublishCsvBtnEvent = function () {//context.listtests();
-    var that = this;
-    
-    $('#csvs').bind("vclick", function (e) {
-        that._channel.publish( "QryCsvBtn", { value: e});
     });
 };
 

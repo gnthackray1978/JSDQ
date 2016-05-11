@@ -85,14 +85,6 @@ var QuestionController = function (quizObj,drive,channel) {
         that.qrySelectTestBtn(data.value);
     });
     
-    this._channel.subscribe("QryCatBtn", function(data, envelope) {
-        that.qryCatBtn(data.value);
-    });
-    
-    this._channel.subscribe("QryCsvBtn", function(data, envelope) {
-        that.qryCsvBtn(data.value);
-    });
-    
     this._channel.subscribe("QryResetQuestionEvt", function(data, envelope) {
         that.qryResetQuestionEvt(data.value);
     });
@@ -262,28 +254,6 @@ QuestionController.prototype = {
             });
             
         }
-    },
-    qryCatBtn:function(evt){
-        // this.model.MSTATE = ENUM_STATES.CATEGORYSELECT;
-        // this.updateView();
-    },
-    
-    qryCsvBtn:function(evt){
-        // button in ui commented out
-        // if (this.quizObj !== null) {
-        //     console.log('listing csvs(tests)');
-        //     var that = this;
-            
-        //     that.drive.SearchForQuizFolder('quiz', function(quizlist){
-        //         console.log('fetched list of quizs: '+quizlist);
-        //         that.quizObj.listoftests = quizlist;
-                
-        //         that.model.csvList = that.quizObj.listoftests;
-        //         that.model.MSTATE = ENUM_STATES.TESTSELECT;
-        //         that.updateView();
-        //     });
-            
-        // }
     },
     
     qryCategoryChanged:function(evt){
