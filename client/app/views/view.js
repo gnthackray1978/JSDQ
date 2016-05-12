@@ -235,10 +235,12 @@ View.prototype.UpdateView= function (view) {
         //header
         $("#header-loggedout-block").removeClass("hidePanel").addClass("displayPanel");
         $('#username').html('Please Log In');
+        $('#logo').html('Quiz App');
     }
     else
     {
         $('#username').html('Logged in as: '+ view.loginName);
+        $('#logo').html('');
     }
 
     //display nothing$("#header-loggedout-block").removeClass("displayPanel").addClass("hidePanel");
