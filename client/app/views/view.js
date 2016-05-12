@@ -221,6 +221,7 @@ View.prototype.UpdateView= function (view) {
     //headers
     $("#header-answer-block").removeClass("displayPanel").addClass("hidePanel");
     $("#header-home-block").removeClass("displayPanel").addClass("hidePanel");
+    $("#header-loggedout-block").removeClass("displayPanel").addClass("hidePanel");
 
     $('#cat_name').html(view.catName);
     $('#test_name').html(view.testName);
@@ -230,8 +231,12 @@ View.prototype.UpdateView= function (view) {
     
     $('#username').html('Logged in as: '+ view.loginName);
       
+    if (view.MSTATE == ENUM_STATES.LOGGEDOUT) {
+        //header
+        $("#header-loggedout-block").removeClass("hidePanel").addClass("displayPanel");
+    }
 
-    //display nothing
+    //display nothing$("#header-loggedout-block").removeClass("displayPanel").addClass("hidePanel");
     //not in test 
     if (view.MSTATE == ENUM_STATES.LOGGEDIN) {
         $("#pnlResults").removeClass("hidePanel").addClass("displayPanel");     
@@ -244,12 +249,7 @@ View.prototype.UpdateView= function (view) {
             this.cacheResultsList = JSON.parse(JSON.stringify(view.results));
             this.CreateResultList(view.results) ;
         }
-        
-        // answer mode header
-        //if (view.headerIdx == 1) {
-        //$("#header-answer-block").removeClass("displayPanel").addClass("hidePanel");
-        //$("#header-home-block").removeClass("hidePanel").addClass("displayPanel");           
-        //}
+ 
     }
     
     if (view.MSTATE == ENUM_STATES.INTEST) {//show questions
@@ -296,10 +296,6 @@ View.prototype.UpdateView= function (view) {
         $("#score-nav").removeClass("hidePanel").addClass("displayPanel");
         $("#question-nav").removeClass("hidePanel").addClass("displayPanel");
         
-        //if (view.headerIdx == 0) {            
-        //$("#header-answer-block").removeClass("hidePanel").addClass("displayPanel");
-        //$("#header-home-block").removeClass("displayPanel").addClass("hidePanel");
-        //}
     }
 
     if (view.MSTATE == ENUM_STATES.TESTSELECT) {                                                          //show web cats
