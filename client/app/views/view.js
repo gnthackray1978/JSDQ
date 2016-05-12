@@ -229,11 +229,16 @@ View.prototype.UpdateView= function (view) {
     
     $('#login').html(view.loginMessage);    
     
-    $('#username').html('Logged in as: '+ view.loginName);
+    
       
     if (view.MSTATE == ENUM_STATES.LOGGEDOUT) {
         //header
         $("#header-loggedout-block").removeClass("hidePanel").addClass("displayPanel");
+        $('#username').html('Please Log In');
+    }
+    else
+    {
+        $('#username').html('Logged in as: '+ view.loginName);
     }
 
     //display nothing$("#header-loggedout-block").removeClass("displayPanel").addClass("hidePanel");
