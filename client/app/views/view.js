@@ -458,9 +458,10 @@ View.prototype.PublishCorrectAnswerButtonEvent = function () {
 View.prototype.PublishLoginClickEvent = function (callback, context) {
     var that = this;
     $('#login').bind("vclick", function (e) { 
-        
         that._channel.publish( "LoginClick", { value: e});
-
+    });
+    $('#mainlogin').bind("vclick", function (e) { 
+        that._channel.publish( "LoginClick", { value: e});
     });
 };
 
