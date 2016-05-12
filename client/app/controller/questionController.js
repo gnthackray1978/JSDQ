@@ -149,12 +149,12 @@ var QuestionController = function (quizObj,drive,channel) {
 QuestionController.prototype = {
     
     init:function(){
-        var that = this;
+        // var that = this;
         
-        this.scoreTracker.GetResults('','',function(results){
-           that.model.results = results;
-           that.updateView();
-        });
+        // this.scoreTracker.GetResults('','',function(results){
+        //   that.model.results = results;
+        //   that.updateView();
+        // });
        
     },
     
