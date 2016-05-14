@@ -269,7 +269,7 @@ MyDrive.prototype.CreateFile = function(driveLoaded){
     //gapi.client.drive.files.create({ "name" : "savefile.txt" }).execute(function(file) { console.log("Created file " + file.name + " id: " + file.id); });
     
     var body = {
-        'title': title,
+        'title': 'test',
         'mimeType': "application/vnd.google-apps.drive-sdk"
     };
     
