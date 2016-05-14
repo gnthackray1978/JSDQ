@@ -39,6 +39,7 @@ function View(channel) {
     this.PublishResetQuestionEvent();
     this.PublishCorrectAnswerButtonEvent();
     this.PublishLoginClickEvent();
+    this.PublishCreateTestClickEvent();
 } 
 
 View.prototype.FormatAnswerSoFar =function (currentQuestionState) {
@@ -465,4 +466,9 @@ View.prototype.PublishLoginClickEvent = function (callback, context) {
     });
 };
 
-
+View.prototype.PublishCreateTestClickEvent = function(callback, context){
+    var that = this;
+    $('#createtestbtn').bind("vclick", function (e) { 
+        that._channel.publish( "createtestclicked", { value: e});
+    });
+};
