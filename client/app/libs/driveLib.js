@@ -266,7 +266,22 @@ MyDrive.prototype.CreateFile = function(driveLoaded){
     var that = this;
 
     //    gapi.auth.authorize({'client_id': that.CLIENT_ID, 'scope': that.SCOPES, 'immediate': true},$.proxy(that.autherizeResult, that));
-    gapi.client.drive.files.create({ "name" : "savefile.txt" }).execute(function(file) { console.log("Created file " + file.name + " id: " + file.id); });
+    //gapi.client.drive.files.create({ "name" : "savefile.txt" }).execute(function(file) { console.log("Created file " + file.name + " id: " + file.id); });
+    
+    var body = {
+        'title': title,
+        'mimeType': "application/vnd.google-apps.drive-sdk"
+    };
+    
+    var request = gapi.client.drive.files.insert({
+        'resource': body
+    });
+    
+    request.execute(function(resp) {
+        console.log('File ID: ' + resp.id);
+    });
+      
+  
  
 };
 
