@@ -223,7 +223,8 @@ QuestionController.prototype = {
         this.answerQuestion(evt);
     },
     createtestclicked:function(evt){
-     
+        console.log('createtestclicked');
+        this.drive.CreateFile();
     },
     qryCreatetestmodeselected:function(evt){
         this.model.MSTATE = ENUM_STATES.TESTCREATE;
