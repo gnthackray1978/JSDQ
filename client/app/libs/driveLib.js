@@ -270,7 +270,7 @@ MyDrive.prototype.CreateFile = function(driveLoaded){
     
     var body = {
         'title': 'test',
-        'mimeType': "application/vnd.google-apps.drive-sdk"
+        'mimeType': "application/vnd.google-apps.spreadsheet"
     };
     
     var request = gapi.client.drive.files.insert({
