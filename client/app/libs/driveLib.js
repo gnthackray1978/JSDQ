@@ -261,6 +261,15 @@ MyDrive.prototype.ReadSheet = function(sheetUrl, ocallback){
     
 };
 
+MyDrive.prototype.CreateFile = function(driveLoaded){
+ 
+    var that = this;
+
+    //    gapi.auth.authorize({'client_id': that.CLIENT_ID, 'scope': that.SCOPES, 'immediate': true},$.proxy(that.autherizeResult, that));
+    gapi.client.drive.files.create({ "name" : "savefile.txt" }).execute(function(file) { console.log("Created file " + file.name + " id: " + file.id); });
+ 
+};
+
 function writeStatement(statement){
    console.log(statement);
      var d = new Date();
