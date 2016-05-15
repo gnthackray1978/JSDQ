@@ -268,22 +268,94 @@ MyDrive.prototype.CreateFile = function(driveLoaded){
     //    gapi.auth.authorize({'client_id': that.CLIENT_ID, 'scope': that.SCOPES, 'immediate': true},$.proxy(that.autherizeResult, that));
     //gapi.client.drive.files.create({ "name" : "savefile.txt" }).execute(function(file) { console.log("Created file " + file.name + " id: " + file.id); });
     
-    var body = {
-        'title': 'test',
-        'mimeType': "application/vnd.google-apps.spreadsheet"
-    };
+    // var body = {
+    //     'title': 'test',
+    //     'mimeType': "application/vnd.google-apps.spreadsheet"
+    // };
     
-    var request = gapi.client.drive.files.insert({
-        'resource': body
-    });
+    // var request = gapi.client.drive.files.insert({
+    //     'resource': body
+    // });
     
-    request.execute(function(resp) {
-        console.log('File ID: ' + resp.id);
-    });
+    // request.execute(function(resp) {
+    //     console.log('File ID: ' + resp.id);
+    // });
       
-  
+    this.RunScript();
  
 };
+
+MyDrive.prototype.RunScript = function(){
+    
+     var scriptId = "MY-Myk9KaOAMscHfKgZpwIfZQHuFeqzZk";
+
+        // Create an execution request object.
+        var request = {
+            'function': 'createSheet'
+            };
+
+        // Make the API request.
+        var op = gapi.client.request({
+            'root': 'https://script.googleapis.com',
+            'path': 'v1/scripts/' + scriptId + ':run',
+            'method': 'POST',
+            'body': request
+        });
+
+        op.execute(function(resp) {
+          if (resp.error && resp.error.status) {
+            // The API encountered a problem before the script
+            // started executing.
+            appendPre('Error calling API:');
+            appendPre(JSON.stringify(resp, null, 2));
+          } else if (resp.error) {
+            // The API executed, but the script returned an error.
+
+            // Extract the first (and only) set of error details.
+            // The values of this object are the script's 'errorMessage' and
+            // 'errorType', and an array of stack trace elements.
+            var error = resp.error.details[0];
+            appendPre('Script error message: ' + error.errorMessage);
+
+            if (error.scriptStackTraceElements) {
+              // There may not be a stacktrace if the script didn't start
+              // executing.
+              appendPre('Script error stacktrace:');
+              for (var i = 0; i < error.scriptStackTraceElements.length; i++) {
+                var trace = error.scriptStackTraceElements[i];
+                appendPre('\t' + trace.function + ':' + trace.lineNumber);
+              }
+            }
+          } else {
+            // The structure of the result will depend upon what the Apps
+            // Script function returns. Here, the function returns an Apps
+            // Script Object with String keys and values, and so the result
+            // is treated as a JavaScript object (folderSet).
+            var folderSet = resp.response.result;
+            if (Object.keys(folderSet).length == 0) {
+                appendPre('No folders returned!');
+            } else {
+              appendPre('Folders under your root folder:');
+              Object.keys(folderSet).forEach(function(id){
+                appendPre('\t' + folderSet[id] + ' (' + id  + ')');
+              });
+            }
+          }
+        });
+      }
+
+      /**
+       * Append a pre element to the body containing the given message
+       * as its text node.
+       *
+       * @param {string} message Text to be placed in pre element.
+       */
+      function appendPre(message) {
+        console.log(message);
+      }
+};
+
+
 
 function writeStatement(statement){
    console.log(statement);
