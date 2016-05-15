@@ -342,7 +342,7 @@ MyDrive.prototype.RunScript = function(){
             }
           }
         });
-      }
+      
 
       /**
        * Append a pre element to the body containing the given message
