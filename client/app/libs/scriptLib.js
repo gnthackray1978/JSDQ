@@ -12,6 +12,8 @@ var ScriptLib = function (view,channel) {
 
     this._view = view;
     this.driveLoaded;
+    
+    this.LogInGoogle();
 };
 
 ScriptLib.prototype.LogInGoogle= function(){
