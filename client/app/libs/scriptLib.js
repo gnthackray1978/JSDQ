@@ -22,7 +22,7 @@ ScriptLib.prototype.LogInGoogle= function(){
     //gapi.auth.authorize({'client_id': that.CLIENT_ID, 'scope': that.SCOPES, 'immediate': true},$.proxy(that.autherizeResult, that));
     
     gapi.auth.authorize(
-          {client_id: that.CLIENT_ID, scope: that.SCOPES, immediate: false},
+          {client_id: that.CLIENT_ID, scope: that.SCOPES, immediate: true},
           $.proxy(that.autherizeResult, that) );//handleAuthResult
         return false;
 };
