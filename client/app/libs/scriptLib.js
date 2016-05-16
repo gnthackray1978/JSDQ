@@ -1,7 +1,7 @@
 /*global gapi*/
 
 var ScriptLib = function (view,channel) {
-    this.scriptId = "MY-Myk9KaOAMscHfKgZpwIfZQHuFeqzZk";
+    this.scriptId = "MQ9uI5jQzqKm4wt01EV3l5pIG0z7T6jhI";
     this.CLIENT_ID = '183174195107-spa00qp12u40nj4kb8od7nudc149l74q.apps.googleusercontent.com';
     this.SCOPES = 'https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/plus.me https://www.googleapis.com/auth/spreadsheets';
     //this.SCOPES = 'https://www.googleapis.com/auth/plus.me';
@@ -115,19 +115,13 @@ ScriptLib.prototype.CreateFile = function(driveLoaded){
 
 ScriptLib.prototype.RunScript = function(req,callback){
     
-        var scriptId = "MQ9uI5jQzqKm4wt01EV3l5pIG0z7T6jhI";
-
-        // Create an execution request object.
-        var request = {
-            'function': 'getLoggedInUser'
-            };
-
+ 
         // Make the API request.
         var op = gapi.client.request({
             'root': 'https://script.googleapis.com',
-            'path': 'v1/scripts/' + scriptId + ':run',
+            'path': 'v1/scripts/' + this.scriptId + ':run',
             'method': 'POST',
-            'body': request
+            'body': req
         });
 
         op.execute(function(resp) {
@@ -143,17 +137,19 @@ ScriptLib.prototype.RunScript = function(req,callback){
             // The values of this object are the script's 'errorMessage' and
             // 'errorType', and an array of stack trace elements.
             var error = resp.error.details[0];
-            appendPre('Script error message: ' + error.errorMessage);
-
+            
             if (error.scriptStackTraceElements) {
               // There may not be a stacktrace if the script didn't start
               // executing.
-              appendPre('Script error stacktrace:');
+       
               for (var i = 0; i < error.scriptStackTraceElements.length; i++) {
                 var trace = error.scriptStackTraceElements[i];
-                appendPre('\t' + trace.function + ':' + trace.lineNumber);
+                console.log(trace);
               }
             }
+            
+            console.log(error);
+            
           } else {
             callback(resp.response.result);
             
