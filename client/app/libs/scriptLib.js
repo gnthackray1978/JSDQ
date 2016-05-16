@@ -121,8 +121,18 @@ ScriptLib.prototype.SearchForQuizFolder = function(name, ocallback){
 };
 
 ScriptLib.prototype.ReadSheet = function(sheetUrl, ocallback){
+    var that =this;
     
-
+    var request = {
+        'function': 'quizCategoryQuestions',
+        "parameters": [sheetUrl,'']
+    };
+    
+    that.RunScript(request, function(resp){
+       ocallback(resp.catData,resp.csvData);
+    })
+    
+    
 };
 
 ScriptLib.prototype.CreateFile = function(driveLoaded){
