@@ -19,7 +19,7 @@ var ScriptLib = function (view,channel) {
 ScriptLib.prototype.LogInGoogle= function(){
     console.log('Login Google');
     var that = this;
-    //gapi.auth.authorize({'client_id': that.CLIENT_ID, 'scope': that.SCOPES, 'immediate': false},$.proxy(that.autherizeResult, that));
+    //gapi.auth.authorize({'client_id': that.CLIENT_ID, 'scope': that.SCOPES, 'immediate': true},$.proxy(that.autherizeResult, that));
     
     gapi.auth.authorize(
           {client_id: that.CLIENT_ID, scope: that.SCOPES, immediate: false},
