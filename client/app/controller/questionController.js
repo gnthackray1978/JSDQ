@@ -278,15 +278,15 @@ QuestionController.prototype = {
         
         if (that.quizObj !== null) {
             that.quizObj.selectedCSV = evt;
-            that.drive.ReadSheet(that.quizObj.SelectedTestName().url, function(csv,cats){
-                that.questionLib.ParseCats(csv, function(csv,cats){
+            that.drive.ReadSheet(that.quizObj.SelectedTestName().url, function(cats,csv){
+                //that.questionLib.ParseCats(csv, function(csv,cats){
                     that.quizObj.rawCSVData = csv;
                     that.quizObj.categories = cats;
                     
-                    that.model.catList = cats.D;
+                    that.model.catList = cats;
                     that.model.MSTATE = ENUM_STATES.CATEGORYSELECT;
                     that.updateView();
-                });
+                //});
                 
             });
             
