@@ -115,17 +115,19 @@ ScriptLib.prototype.CreateFile = function(driveLoaded){
 
 ScriptLib.prototype.RunScript = function(req,callback){
     
+        var scriptId = "MQ9uI5jQzqKm4wt01EV3l5pIG0z7T6jhI";
+
         // Create an execution request object.
         var request = {
-            'function': 'createSheet'
+            'function': 'getLoggedInUser'
             };
 
         // Make the API request.
         var op = gapi.client.request({
             'root': 'https://script.googleapis.com',
-            'path': 'v1/scripts/' + this.scriptId + ':run',
+            'path': 'v1/scripts/' + scriptId + ':run',
             'method': 'POST',
-            'body': req
+            'body': request
         });
 
         op.execute(function(resp) {
