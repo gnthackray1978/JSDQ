@@ -90,7 +90,7 @@ ScriptLib.prototype.init = function(driveLoaded){
 
 };
 
-ScriptLib.prototype.SearchForQuizFiles = function(parentId, ocallback){
+ScriptLib.prototype.SearchForQuizFiles = function(ocallback){
     var that =this;
     
     var fileArray = [];
@@ -116,7 +116,7 @@ ScriptLib.prototype.SearchForQuizFiles = function(parentId, ocallback){
 ScriptLib.prototype.SearchForQuizFolder = function(name, ocallback){
     var that = this;
 
-    this.SearchForQuizFiles(ocallback);
+    this.SearchForQuizFiles( ocallback);
 
 };
 
