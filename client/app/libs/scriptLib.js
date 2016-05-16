@@ -107,12 +107,16 @@ ScriptLib.prototype.SearchForQuizFiles = function(parentId, ocallback){
                 
             idx++;
         }
+        
+        ocallback(fileArray);
     })
   
 };
 
 ScriptLib.prototype.SearchForQuizFolder = function(name, ocallback){
     var that = this;
+
+    this.SearchForQuizFiles(ocallback);
 
 };
 
