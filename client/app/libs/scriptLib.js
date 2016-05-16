@@ -102,8 +102,8 @@ ScriptLib.prototype.SearchForQuizFiles = function(parentId, ocallback){
     that.RunScript(request, function(resp){
         var idx =0;
         
-        while(idx < resp.quizNames.length){
-            fileArray.push({ key: idx, value: resp.quizNames[idx], url : resp.quizNames[idx] });
+        while(idx < resp.length){
+            fileArray.push({ key: idx, value: resp[idx], url : resp[idx] });
                 
             idx++;
         }
