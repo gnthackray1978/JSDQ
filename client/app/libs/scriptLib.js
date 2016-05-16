@@ -1,6 +1,6 @@
 /*global gapi*/
 
-var MyDrive = function (view,channel) {
+var ScriptLib = function (view,channel) {
     this.scriptId = "MY-Myk9KaOAMscHfKgZpwIfZQHuFeqzZk";
     this.CLIENT_ID = '67881158341-i31rcec2rf6bi26elnf8njnrb7v9ij8q.apps.googleusercontent.com';
     this.SCOPES = 'https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/plus.me https://www.googleapis.com/auth/spreadsheets';
@@ -14,7 +14,7 @@ var MyDrive = function (view,channel) {
     this.driveLoaded;
 };
 
-MyDrive.prototype.LogInGoogle= function(){
+ScriptLib.prototype.LogInGoogle= function(){
     console.log('Login Google');
     var that = this;
     //gapi.auth.authorize({'client_id': that.CLIENT_ID, 'scope': that.SCOPES, 'immediate': false},$.proxy(that.autherizeResult, that));
@@ -25,13 +25,13 @@ MyDrive.prototype.LogInGoogle= function(){
         return false;
 };
 
-MyDrive.prototype.LogOutGoogle= function(){
+ScriptLib.prototype.LogOutGoogle= function(){
     console.log('Logout Google');
     window.open("https://accounts.google.com/logout");
 }; 
     
      
-MyDrive.prototype.autherizeResult = function(authResult) {
+ScriptLib.prototype.autherizeResult = function(authResult) {
     var that = this;
     if (authResult && !authResult.error) {
         writeStatement('Authenticated');
@@ -69,31 +69,31 @@ MyDrive.prototype.autherizeResult = function(authResult) {
     }
 };     
     
-MyDrive.prototype.init = function(driveLoaded){
+ScriptLib.prototype.init = function(driveLoaded){
 
 };
 
-MyDrive.prototype.SearchForQuizFiles = function(parentId, ocallback){
+ScriptLib.prototype.SearchForQuizFiles = function(parentId, ocallback){
 
   
 };
 
-MyDrive.prototype.SearchForQuizFolder = function(name, ocallback){
+ScriptLib.prototype.SearchForQuizFolder = function(name, ocallback){
     var that = this;
 
 };
 
-MyDrive.prototype.ReadSheet = function(sheetUrl, ocallback){
+ScriptLib.prototype.ReadSheet = function(sheetUrl, ocallback){
     
 
 };
 
-MyDrive.prototype.CreateFile = function(driveLoaded){
+ScriptLib.prototype.CreateFile = function(driveLoaded){
  
 
 };
 
-MyDrive.prototype.RunScript = function(req,callback){
+ScriptLib.prototype.RunScript = function(req,callback){
     
         // Create an execution request object.
         var request = {

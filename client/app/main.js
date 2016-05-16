@@ -19,7 +19,7 @@ $(document).bind("pageinit", function () {
     var driveLoadedF = function(){
         if(driveLoaded){
             
-            var drive = new MyDrive(appView,channel);
+            var drive = new ScriptLib(appView,channel);
             
             var appController = new QuestionController(new BasicQuestioner(channel), drive,channel);
             
