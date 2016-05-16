@@ -41,7 +41,8 @@ ScriptLib.prototype.CheckLogin= function(){
             immediate: true
           },
           $.proxy(that.autherizeResult, that) );//handleAuthResult
-        return false;
+    
+    return false;
 };
 
 
@@ -60,13 +61,7 @@ ScriptLib.prototype.autherizeResult = function(authResult) {
        
         that._channel.publish( "Login", { value: false} );
         
-        // var request = {
-        //     'function': 'getLoggedInUser'
-        // };
         
-        // that.RunScript(request, function(resp){
-        //     that._channel.publish( "LoginData", { value: resp} );
-        // })
         
         
         gapi.client.load('plus', 'v1', function() {
@@ -96,7 +91,23 @@ ScriptLib.prototype.init = function(driveLoaded){
 };
 
 ScriptLib.prototype.SearchForQuizFiles = function(parentId, ocallback){
-
+    var that =this;
+    
+    var fileArray = [];
+    
+    var request = {
+        'function': 'readQuizs'
+    };
+    
+    that.RunScript(request, function(resp){
+        var idx =0;
+        
+        while(idx < resp.quizNames.length){
+            fileArray.push({ key: idx, value: resp.quizNames[idx], url : resp.quizNames[idx] });
+                
+            idx++;
+        }
+    })
   
 };
 
