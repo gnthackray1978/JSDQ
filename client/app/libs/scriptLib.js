@@ -13,19 +13,37 @@ var ScriptLib = function (view,channel) {
     this._view = view;
     this.driveLoaded;
     
-    this.LogInGoogle();
+    this.CheckLogin();
 };
 
 ScriptLib.prototype.LogInGoogle= function(){
     console.log('Login Google');
     var that = this;
-    //gapi.auth.authorize({'client_id': that.CLIENT_ID, 'scope': that.SCOPES, 'immediate': true},$.proxy(that.autherizeResult, that));
-    
+ 
     gapi.auth.authorize(
-          {client_id: that.CLIENT_ID, scope: that.SCOPES, immediate: true},
+          {
+            client_id: that.CLIENT_ID, 
+            scope: that.SCOPES.join(' '), 
+            immediate: false
+          },
           $.proxy(that.autherizeResult, that) );//handleAuthResult
         return false;
 };
+
+ScriptLib.prototype.CheckLogin= function(){
+    console.log('Login Google');
+    var that = this;
+ 
+    gapi.auth.authorize(
+          {
+            client_id: that.CLIENT_ID, 
+            scope: that.SCOPES.join(' '), 
+            immediate: true
+          },
+          $.proxy(that.autherizeResult, that) );//handleAuthResult
+        return false;
+};
+
 
 ScriptLib.prototype.LogOutGoogle= function(){
     console.log('Logout Google');
