@@ -2,7 +2,7 @@
 
 var ScriptLib = function (view,channel) {
     this.scriptId = "MY-Myk9KaOAMscHfKgZpwIfZQHuFeqzZk";
-    this.CLIENT_ID = '67881158341-i31rcec2rf6bi26elnf8njnrb7v9ij8q.apps.googleusercontent.com';
+    this.CLIENT_ID = '183174195107-spa00qp12u40nj4kb8od7nudc149l74q.apps.googleusercontent.com';
     this.SCOPES = 'https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/plus.me https://www.googleapis.com/auth/spreadsheets';
     //this.SCOPES = 'https://www.googleapis.com/auth/plus.me';
     this.data = null;
