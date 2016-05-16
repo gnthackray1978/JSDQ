@@ -60,27 +60,29 @@ ScriptLib.prototype.autherizeResult = function(authResult) {
        
         that._channel.publish( "Login", { value: false} );
         
-        var request = {
-            'function': 'getLoggedInUser'
-        };
+        // var request = {
+        //     'function': 'getLoggedInUser'
+        // };
         
-        that.RunScript(request, function(resp){
+        // that.RunScript(request, function(resp){
+        //     that._channel.publish( "LoginData", { value: resp} );
+        // })
+        
+        
+        gapi.client.load('plus', 'v1', function() {
+          var request = gapi.client.plus.people.get({
+            'userId': 'me'
+          });
+          request.execute(function(resp) {
+            //console.log(resp.displayName);  
             that._channel.publish( "LoginData", { value: resp} );
-        })
+          });
+        });
         
         // gapi.client.load('drive', 'v2', function(r){
         //     that.driveLoaded();
         // });
-        
-        // gapi.client.load('plus', 'v1', function() {
-        //   var request = gapi.client.plus.people.get({
-        //     'userId': 'me'
-        //   });
-        //   request.execute(function(resp) {
-        //     //console.log(resp.displayName);  
-        //     that._channel.publish( "LoginData", { value: resp} );
-        //   });
-        // });
+         
     }
     else {
         writeStatement('Couldnt authenticate displaying button!');
