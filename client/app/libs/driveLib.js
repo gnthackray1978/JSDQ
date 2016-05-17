@@ -115,7 +115,7 @@ MyDrive.prototype.SearchForQuizFiles = function(parentId, ocallback){
         if(fileList.length ==0) ocallback(-1);
         
         var idx =0;
-        while(idx < fileList.length){
+        c
             if(fileList[idx])
             {
                 writeStatement(fileList[idx].title);

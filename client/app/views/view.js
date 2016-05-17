@@ -469,6 +469,10 @@ View.prototype.PublishLoginClickEvent = function (callback, context) {
 View.prototype.PublishCreateTestClickEvent = function(callback, context){
     var that = this;
     $('#createtestbtn').bind("vclick", function (e) { 
-        that._channel.publish( "createtestclicked", { value: e});
+        
+        //create-box
+        var tp = $('#create-box').val();
+        
+        that._channel.publish( "createtestclicked", { value: tp});
     });
 };

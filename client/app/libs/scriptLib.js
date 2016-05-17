@@ -4,7 +4,6 @@ var ScriptLib = function (view,channel) {
     this.scriptId = "MQ9uI5jQzqKm4wt01EV3l5pIG0z7T6jhI";
     this.CLIENT_ID = '183174195107-spa00qp12u40nj4kb8od7nudc149l74q.apps.googleusercontent.com';
     this.SCOPES = 'https://www.googleapis.com/auth/drive https://www.googleapis.com/auth/plus.me https://www.googleapis.com/auth/spreadsheets';
-    //this.SCOPES = 'https://www.googleapis.com/auth/plus.me';
     this.data = null;
     this._channel = channel;
     
@@ -69,19 +68,15 @@ ScriptLib.prototype.autherizeResult = function(authResult) {
             'userId': 'me'
           });
           request.execute(function(resp) {
-            //console.log(resp.displayName);  
+   
             that._channel.publish( "LoginData", { value: resp} );
           });
         });
         
-        // gapi.client.load('drive', 'v2', function(r){
-        //     that.driveLoaded();
-        // });
-         
     }
     else {
         writeStatement('Couldnt authenticate displaying button!');
-        //that._view.CmdUpdateLogin(true,'Login');
+  
         that._channel.publish( "Login", { value: true} );
     }
 };     
@@ -136,7 +131,7 @@ ScriptLib.prototype.ReadSheet = function(sheetUrl, ocallback){
 };
 
 ScriptLib.prototype.CreateFile = function(driveLoaded){
- 
+    console.log(driveLoaded);
 
 };
 
