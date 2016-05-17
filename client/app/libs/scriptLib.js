@@ -130,9 +130,18 @@ ScriptLib.prototype.ReadSheet = function(sheetUrl, ocallback){
     
 };
 
-ScriptLib.prototype.CreateFile = function(driveLoaded){
-    console.log(driveLoaded);
-
+ScriptLib.prototype.CreateFile = function(name,callback){
+    console.log(name);
+    var that =this;
+    
+    var request = {
+        'function': 'createQuiz',
+        "parameters": [name]
+    };
+    
+    that.RunScript(request, function(resp){
+        callback(); 
+    })
 };
 
 ScriptLib.prototype.RunScript = function(req,callback){
