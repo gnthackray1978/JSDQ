@@ -143,6 +143,27 @@ ScriptLib.prototype.CreateFile = function(name,callback){
     })
 };
 
+ScriptLib.prototype.OpenFile = function(name){
+    console.log(name);
+    var that =this;
+    
+    var request = {
+        'function': 'getURLByName',
+        "parameters": [name]
+    };
+    
+    that.RunScript(request, function(resp){
+        
+        if(resp!= ""){
+            console.log(resp);
+            window.open(resp,'_blank');
+        }
+        else
+            console.log("Couldn't get URL");
+                
+    }) 
+}
+
 ScriptLib.prototype.RunScript = function(req,callback){
     
  

@@ -218,6 +218,7 @@ View.prototype.UpdateView= function (view) {
     $("#results-header-block").removeClass("displayPanel").addClass("hidePanel"); 
     $("#pnlCreateTest").removeClass("displayPanel").addClass("hidePanel");         //hide result panel
     $("#create-block").removeClass("displayPanel").addClass("hidePanel");
+    $("#edit-block").removeClass("displayPanel").addClass("hidePanel");
 
     //headers
     $("#header-answer-block").removeClass("displayPanel").addClass("hidePanel");
@@ -320,6 +321,7 @@ View.prototype.UpdateView= function (view) {
         $("#pnlCategories").removeClass("hidePanel").addClass("displayPanel");  //show categories
         //header
         $("#header-home-block").removeClass("hidePanel").addClass("displayPanel");
+        $("#edit-block").removeClass("hidePanel").addClass("displayPanel");
         
         //something has changed so display
         if(!listEqual(this.cacheCatList,view.catList)){
