@@ -59,10 +59,7 @@ ScriptLib.prototype.autherizeResult = function(authResult) {
         that.authResult = authResult;
        
         that._channel.publish( "Login", { value: false} );
-        
-        
-        
-        
+
         gapi.client.load('plus', 'v1', function() {
           var request = gapi.client.plus.people.get({
             'userId': 'me'
@@ -140,7 +137,9 @@ ScriptLib.prototype.CreateFile = function(name,callback){
     };
     
     that.RunScript(request, function(resp){
-        callback(); 
+        if(resp)
+            that._channel.publish( "FileCreated", { value: name} );
+        //do something else if failed
     })
 };
 
