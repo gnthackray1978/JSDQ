@@ -40,6 +40,7 @@ function View(channel) {
     this.PublishCorrectAnswerButtonEvent();
     this.PublishLoginClickEvent();
     this.PublishCreateTestClickEvent();
+    this.PublishEditClickEvent();
 } 
 
 View.prototype.FormatAnswerSoFar =function (currentQuestionState) {
