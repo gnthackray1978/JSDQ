@@ -231,7 +231,7 @@ QuestionController.prototype = {
         this.drive.CreateFile(evt);
     },
     edittestclicked:function(evt){
-        this.drive.OpenFile(this.quizObj.selectedCSV);
+        this.drive.OpenFile(this.model.testName);
     },
     qryCreatetestmodeselected:function(evt){
         this.model.MSTATE = ENUM_STATES.TESTCREATE;
