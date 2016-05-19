@@ -142,6 +142,10 @@ var QuestionController = function (quizObj,drive,channel) {
     this._channel.subscribe("createtestclicked", function(data, envelope) {
         that.createtestclicked(data.value);
     });
+    //edittestclicked
+    this._channel.subscribe("edittestclicked", function(data, envelope) {
+        that.edittestclicked(data.value);
+    });
     
     this.init();
 };
@@ -225,6 +229,9 @@ QuestionController.prototype = {
     createtestclicked:function(evt){
         console.log('createtestclicked');
         this.drive.CreateFile(evt);
+    },
+    edittestclicked:function(evt){
+        this.drive.OpenFile(this.quizObj.selectedCSV);
     },
     qryCreatetestmodeselected:function(evt){
         this.model.MSTATE = ENUM_STATES.TESTCREATE;
@@ -379,6 +386,7 @@ QuestionController.prototype = {
         $("#rqs").trigger('create');
 
     },
+    
     
     answerQuestion: function () {
         

@@ -478,3 +478,14 @@ View.prototype.PublishCreateTestClickEvent = function(callback, context){
         that._channel.publish( "createtestclicked", { value: tp});
     });
 };
+
+View.prototype.PublishEditClickEvent = function(callback, context){
+    var that = this;
+    $('#edittestbtn').bind("vclick", function (e) { 
+        
+        //create-box
+        //var tp = $('#edittestbtn').val();
+        
+        that._channel.publish( "edittestclicked", { value: tp});
+    });
+};
