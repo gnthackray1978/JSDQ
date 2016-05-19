@@ -487,6 +487,6 @@ View.prototype.PublishEditClickEvent = function(callback, context){
         //create-box
         //var tp = $('#edittestbtn').val();
         
-        that._channel.publish( "edittestclicked", { value: tp});
+        that._channel.publish( "edittestclicked", { value: e});
     });
 };
