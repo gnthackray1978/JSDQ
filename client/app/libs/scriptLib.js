@@ -156,7 +156,7 @@ ScriptLib.prototype.OpenFile = function(name){
         
         if(resp!= ""){
             console.log(resp);
-            window.open(resp,'_blank');
+            window.open(resp);
         }
         else
             console.log("Couldn't get URL");
